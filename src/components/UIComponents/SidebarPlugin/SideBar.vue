@@ -40,7 +40,7 @@
     props: {
       title: {
         type: String,
-        default: 'Vue LBD'
+        default: 'VO Components'
       },
       backgroundColor: {
         type: String,
