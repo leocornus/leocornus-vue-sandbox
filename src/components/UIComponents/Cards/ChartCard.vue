@@ -44,15 +44,19 @@
     data () {
       return {
         chartId: 'no-id',
+        // using the $ to tell this is an Object.
         $Chartist: null,
         chart: null
       }
     },
+
     methods: {
       /***
-       * Initializes the chart by merging the chart options sent via props and the default chart options
+       * Initializes the chart by merging the chart options sent via props 
+       * and the default chart options
        */
       initChart () {
+        // NOTE: how to get a 
         var chartIdQuery = `#${this.chartId}`
         this.chart = this.$Chartist[this.chartType](chartIdQuery, this.chartData, this.chartOptions, this.responsiveOptions)
         this.$emit('initialized', this.chart)

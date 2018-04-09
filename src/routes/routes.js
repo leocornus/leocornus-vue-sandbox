@@ -11,6 +11,9 @@ import Icons from '../components/Dashboard/Views/Icons.vue'
 import Maps from '../components/Dashboard/Views/Maps.vue'
 import Notifications from '../components/Dashboard/Views/Notifications.vue'
 
+// real estate dashboard.
+import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
+
 const routes = [
   {
     path: '/',
@@ -26,6 +29,11 @@ const routes = [
         path: 'overview',
         name: 'Overview',
         component: Overview
+      },
+      {
+        path: 'realestate',
+        name: 'Real Estate',
+        component: RealEstate
       },
       {
         path: 'user',
