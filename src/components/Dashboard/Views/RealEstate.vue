@@ -159,11 +159,14 @@
   </div>
 </template>
 <script>
+  import * as d3 from 'd3'
   import ChartCard from '@/components/UIComponents/Cards/ChartCard.vue'
   import StatsCard from '@/components/UIComponents/Cards/StatsCard.vue'
   import Card from '@/components/UIComponents/Cards/Card.vue'
   import LTable from '@/components/UIComponents/Table.vue'
   import Checkbox from '@/components/UIComponents/Inputs/Checkbox.vue'
+
+  console.log(d3)
 
   export default {
     components: {
