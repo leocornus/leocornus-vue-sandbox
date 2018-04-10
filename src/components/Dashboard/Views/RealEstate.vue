@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <h2 class="mt-0">Insights of today's listings</h2>
+      <h2 class="mt-0">Today's Insights</h2>
       <div class="row">
         <div class="col-xl-3 col-md-6">
           <stats-card>
@@ -9,8 +9,8 @@
               <i class="nc-icon nc-chart text-warning"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Total Salary</p>
-              <h4 class="card-title">105GB</h4>
+              <p class="card-category">Total Listings</p>
+              <h4 class="card-title">{{strTotalListings}}</h4>
             </div>
           </stats-card>
         </div>
@@ -21,8 +21,8 @@
               <i class="nc-icon nc-light-3 text-success"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Employees</p>
-              <h4 class="card-title">{{totalEmployees}}</h4>
+              <p class="card-category">Total Listing Value</p>
+              <h4 class="card-title">{{strTotalValue}}</h4>
             </div>
           </stats-card>
         </div>
@@ -33,8 +33,8 @@
               <i class="nc-icon nc-vector text-danger"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Sectors</p>
-              <h4 class="card-title">23</h4>
+              <p class="card-category">Cities</p>
+              <h4 class="card-title">{{strTotalCities}}</h4>
             </div>
           </stats-card>
         </div>
@@ -45,8 +45,8 @@
               <i class="nc-icon nc-favourite-28 text-primary"></i>
             </div>
             <div slot="content">
-              <p class="card-category">Employers</p>
-              <h4 class="card-title">+45</h4>
+              <p class="card-category">Agents</p>
+              <h4 class="card-title">{{strTotalAgents}}</h4>
             </div>
           </stats-card>
         </div>
@@ -58,7 +58,7 @@
                       :chart-options="lineChart.options"
                       :responsive-options="lineChart.responsiveOptions">
             <template slot="header">
-              <h4 class="card-title">Salary Trends</h4>
+              <h4 class="card-title">Price trends</h4>
               <p class="card-category">10 years salary changes</p>
             </template>
             <template slot="footer">
@@ -78,7 +78,7 @@
         <div class="col-md-4">
           <chart-card :chart-data="pieChart.data" chart-type="Pie">
             <template slot="header">
-              <h4 class="card-title">2017 salary by sectors</h4>
+              <h4 class="card-title">Listings by propery typies</h4>
               <p class="card-category">salary break down by sectors</p>
             </template>
             <template slot="footer">
@@ -104,7 +104,7 @@
             :chart-responsive-options="barChart.responsiveOptions"
             chart-type="Bar">
             <template slot="header">
-              <h4 class="card-title">2017 Top employees</h4>
+              <h4 class="card-title">Top 10 cities (Houses)</h4>
               <p class="card-category">Top employees who got paied most</p>
             </template>
             <template slot="footer">
@@ -123,7 +123,7 @@
         <div class="col-md-6">
           <card>
             <template slot="header">
-              <h4 class="card-title">Sunshine List in News</h4>
+              <h4 class="card-title">Top 10 cities (Condo)</h4>
               <p class="category">News about sunshine list</p>
             </template>
             <l-table :data="tableData.data"
@@ -160,6 +160,7 @@
 </template>
 <script>
   import * as d3 from 'd3'
+  import axios from 'axios'
   import ChartCard from '@/components/UIComponents/Cards/ChartCard.vue'
   import StatsCard from '@/components/UIComponents/Cards/StatsCard.vue'
   import Card from '@/components/UIComponents/Cards/Card.vue'
@@ -178,13 +179,29 @@
       StatsCard
     },
     computed: {
-      totalEmployees() {
+      strTotalValue() {
         var f = d3.format(",.2f");
-        return f(23456.45789);
+        return "$" + f(this.totalValue);
+      },
+      strTotalListings() {
+        var f = d3.format(",");
+        return f(this.totalHits);
+      },
+      strTotalCities() {
+        var f = d3.format(",");
+        return f(this.totalCities);
+      },
+      strTotalAgents() {
+        var f = d3.format(",");
+        return f(this.totalAgents);
       }
     },
     data () {
       return {
+        totalHits: 0,
+        totalValue: 0,
+        totalCities: 0,
+        totalAgents: 0,
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
         pieChart: {
@@ -268,6 +285,48 @@
           ]
         }
       }
+    },
+
+    /**
+     */
+    methods: {
+      /**
+       * search to collect some basic summary of listings.
+       */
+      summarySearch() {
+        var self = this;
+
+        var searchUrl = 'https://test.com/searchApi/search';
+        console.log(searchUrl);
+        var payload = {
+          workflow: "customsearch",
+          query: "table:xmldata",
+          facets: [
+            "city(maxBuckets=-1)",
+            "agentname(maxBuckets=-1)",
+            "listvalue_i(statistics=true)"
+          ]
+        };
+
+        console.log(d3.version);
+        axios.post(searchUrl, payload)
+        .then(function(response) {
+          console.log(response);
+          self.totalHits = response.data.totalHits;
+          self.totalCities = response.data.facets[0].buckets.length;
+          self.totalAgents = response.data.facets[1].buckets.length;
+          self.stats = response.data.facets[2].statistics;
+          self.totalValue = self.stats['sum'];
+        })
+        .catch(function(error) {
+          self.resultSummary = "Query Error!";
+          console.log(error);
+        });
+      }
+    },
+
+    mounted() {
+      this.summarySearch();
     }
   }
 </script>
