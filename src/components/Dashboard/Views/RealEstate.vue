@@ -22,7 +22,7 @@
             </div>
             <div slot="content">
               <p class="card-category">Employees</p>
-              <h4 class="card-title">$1,345</h4>
+              <h4 class="card-title">{{totalEmployees}}</h4>
             </div>
           </stats-card>
         </div>
@@ -166,7 +166,8 @@
   import LTable from '@/components/UIComponents/Table.vue'
   import Checkbox from '@/components/UIComponents/Inputs/Checkbox.vue'
 
-  console.log(d3)
+  console.log("type of d3: " + typeof(d3))
+  console.log(d3.select("div"));
 
   export default {
     components: {
@@ -175,6 +176,12 @@
       LTable,
       ChartCard,
       StatsCard
+    },
+    computed: {
+      totalEmployees() {
+        var f = d3.format(",.2f");
+        return f(23456.45);
+      }
     },
     data () {
       return {
