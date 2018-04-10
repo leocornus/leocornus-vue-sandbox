@@ -296,7 +296,7 @@
       summarySearch() {
         var self = this;
 
-        var searchUrl = 'https://test.com/searchApi/search';
+        var searchUrl = 'https://example.com/search';
         console.log(searchUrl);
         var payload = {
           workflow: "customsearch",
@@ -325,7 +325,10 @@
       }
     },
 
-    mounted() {
+    /**
+     * bind to the created hook.
+     */
+    created() {
       this.summarySearch();
     }
   }
