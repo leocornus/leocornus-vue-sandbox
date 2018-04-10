@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="container-fluid">
-      <h1 class="mt-0">Insights of today's listings</h1>
+      <h2 class="mt-0">Insights of today's listings</h2>
       <div class="row">
         <div class="col-xl-3 col-md-6">
           <stats-card>
@@ -166,8 +166,8 @@
   import LTable from '@/components/UIComponents/Table.vue'
   import Checkbox from '@/components/UIComponents/Inputs/Checkbox.vue'
 
-  console.log("type of d3: " + typeof(d3))
-  console.log(d3.select("div"));
+  // quick test to make sure d3 is available.
+  console.log("d3 version: " + d3.version)
 
   export default {
     components: {
@@ -180,7 +180,7 @@
     computed: {
       totalEmployees() {
         var f = d3.format(",.2f");
-        return f(23456.45);
+        return f(23456.45789);
       }
     },
     data () {

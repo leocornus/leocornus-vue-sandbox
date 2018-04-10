@@ -1,5 +1,3 @@
-import * as d3 from 'd3'
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
