@@ -12,12 +12,9 @@
   </div>
 </template>
 <script>
-  import Card from './Card.vue'
-
   export default {
     name: 'chart-card',
     components: {
-      Card
     },
     props: {
       chartType: {
