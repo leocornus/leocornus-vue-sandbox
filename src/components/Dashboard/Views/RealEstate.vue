@@ -42,7 +42,7 @@
         <div class="col-xl-3 col-md-6">
           <stats-card>
             <div slot="header" class="icon-info">
-              <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <i class="nc-icon nc-single-02 text-primary"></i>
             </div>
             <div slot="content">
               <p class="card-category">Agents</p>
@@ -189,7 +189,7 @@
       },
       strTotalCities() {
         var f = d3.format(",");
-        return f(this.totalCities);
+        return f(this.cityBuckets.length);
       },
       strTotalAgents() {
         var f = d3.format(",");
@@ -200,7 +200,7 @@
       return {
         totalHits: 0,
         totalValue: 0,
-        totalCities: 0,
+        cityBuckets: [],
         totalAgents: 0,
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
@@ -297,7 +297,6 @@
         var self = this;
 
         var searchUrl = 'https://example.com/search';
-        console.log(searchUrl);
         var payload = {
           workflow: "customsearch",
           query: "table:xmldata",
@@ -313,7 +312,7 @@
         .then(function(response) {
           console.log(response);
           self.totalHits = response.data.totalHits;
-          self.totalCities = response.data.facets[0].buckets.length;
+          self.cityBuckets = response.data.facets[0].buckets;
           self.totalAgents = response.data.facets[1].buckets.length;
           self.stats = response.data.facets[2].statistics;
           self.totalValue = self.stats['sum'];
@@ -324,6 +323,10 @@
         });
       }
     },
+
+    /**
+     * list by cites.
+     */
 
     /**
      * bind to the created hook.
