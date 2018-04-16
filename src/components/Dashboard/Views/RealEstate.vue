@@ -54,9 +54,7 @@
       </div>
       <div class="row">
         <div class="col-md-8">
-          <chart-card :chart-data="lineChart.data"
-                      :chart-options="lineChart.options"
-                      :responsive-options="lineChart.responsiveOptions">
+          <bar-chart-card :chart-data="cityBuckets">
             <template slot="header">
               <h4 class="card-title">Price trends</h4>
               <p class="card-category">10 years salary changes</p>
@@ -72,11 +70,11 @@
                 <i class="fa fa-history"></i> Pick a sector 
               </div>
             </template>
-          </chart-card>
+          </bar-chart-card>
         </div>
 
         <div class="col-md-4">
-          <chart-card :chart-data="pieChart.data" chart-type="Pie">
+          <card chart-type="Pie">
             <template slot="header">
               <h4 class="card-title">Listings by propery typies</h4>
               <p class="card-category">salary break down by sectors</p>
@@ -92,16 +90,13 @@
                 <i class="fa fa-clock-o"></i> Pick the Calendar Year 
               </div>
             </template>
-          </chart-card>
+          </card>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6">
-          <chart-card
-            :chart-data="barChart.data"
-            :chart-options="barChart.options"
-            :chart-responsive-options="barChart.responsiveOptions"
+          <card
             chart-type="Bar">
             <template slot="header">
               <h4 class="card-title">Top 10 cities (Houses)</h4>
@@ -117,7 +112,7 @@
                 <i class="fa fa-check"></i> Data information certified
               </div>
             </template>
-          </chart-card>
+          </card>
         </div>
 
         <div class="col-md-6">
@@ -161,7 +156,7 @@
 <script>
   import * as d3 from 'd3'
   import axios from 'axios'
-  import ChartCard from '@/components/UIComponents/Cards/ChartCard.vue'
+  import BarChartCard from '@/components/UIComponents/Cards/BarChartCard.vue'
   import StatsCard from '@/components/UIComponents/Cards/StatsCard.vue'
   import Card from '@/components/UIComponents/Cards/Card.vue'
   import LTable from '@/components/UIComponents/Table.vue'
@@ -175,7 +170,7 @@
       Checkbox,
       Card,
       LTable,
-      ChartCard,
+      BarChartCard,
       StatsCard
     },
     computed: {
@@ -204,73 +199,6 @@
         totalAgents: 0,
         editTooltip: 'Edit Task',
         deleteTooltip: 'Remove',
-        pieChart: {
-          data: {
-            labels: ['40%', '20%', '40%'],
-            series: [40, 20, 40]
-          }
-        },
-        lineChart: {
-          data: {
-            labels: ['9:00AM', '12:00AM', '3:00PM', '6:00PM', '9:00PM', '12:00PM', '3:00AM', '6:00AM'],
-            series: [
-              [287, 385, 490, 492, 554, 586, 698, 695],
-              [67, 152, 143, 240, 287, 335, 435, 437],
-              [23, 113, 67, 108, 190, 239, 307, 308]
-            ]
-          },
-          options: {
-            low: 0,
-            high: 800,
-            showArea: false,
-            height: '245px',
-            axisX: {
-              showGrid: false
-            },
-            lineSmooth: true,
-            showLine: true,
-            showPoint: true,
-            fullWidth: true,
-            chartPadding: {
-              right: 50
-            }
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              axisX: {
-                labelInterpolationFnc (value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
-        barChart: {
-          data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            series: [
-              [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895],
-              [412, 243, 280, 580, 453, 353, 300, 364, 368, 410, 636, 695]
-            ]
-          },
-          options: {
-            seriesBarDistance: 10,
-            axisX: {
-              showGrid: false
-            },
-            height: '245px'
-          },
-          responsiveOptions: [
-            ['screen and (max-width: 640px)', {
-              seriesBarDistance: 5,
-              axisX: {
-                labelInterpolationFnc (value) {
-                  return value[0]
-                }
-              }
-            }]
-          ]
-        },
         tableData: {
           data: [
             {title: 'Sign contract for "What are conference organizers afraid of?"', checked: false},
@@ -301,7 +229,7 @@
           workflow: "customsearch",
           query: "table:xmldata",
           facets: [
-            "city(maxBuckets=-1)",
+            "city(maxBuckets=15)",
             "agentname(maxBuckets=-1)",
             "listvalue_i(statistics=true)"
           ]
