@@ -111,9 +111,12 @@ export default {
         bar.append("rect")
             .attr("class", "bar-rect")
             //.attr("x", function(d) { return x(d.sales); })
-            .attr("width", function(d) {return x(d.count); } )
             .attr("y", function(d) { return y(d.value); })
-            .attr("height", y.bandwidth());
+            .attr("height", y.bandwidth())
+            .transition("width")
+            .duration(1000)
+            .delay(function(d, i) { return i * 100; })
+            .attr("width", function(d) {return x(d.count); } );
         // try to append text.
         //var barText = bar.selectAll(".bar-text")
         //    .data(function(d) {return d;})
