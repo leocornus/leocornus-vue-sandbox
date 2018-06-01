@@ -13,6 +13,8 @@ import Notifications from '../components/Dashboard/Views/Notifications.vue'
 
 // real estate dashboard.
 import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
+// D3 tryout page.
+import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 
 const routes = [
   {
@@ -34,6 +36,11 @@ const routes = [
         path: 'realestate',
         name: 'Real Estate',
         component: RealEstate
+      },
+      {
+        path: 'd3tryout',
+        name: 'D3 Tryout',
+        component: D3Tryout 
       },
       {
         path: 'user',

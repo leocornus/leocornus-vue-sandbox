@@ -10,6 +10,10 @@
         <i class="nc-icon nc-circle-09"></i>
         <p>Real Estate</p>
       </sidebar-link>
+      <sidebar-link to="/admin/d3tryout">
+        <i class="nc-icon nc-circle-09"></i>
+        <p>D3 Tryout</p>
+      </sidebar-link>
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>
