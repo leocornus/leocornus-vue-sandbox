@@ -81,9 +81,16 @@
        * load some sample data.
        */
       loadData() {
-        this.inputText = "abc \
-        cde";
+
+        var self = this;
+        d3.text('/static/files/list.txt').then(function(data) {
+          self.inputText = data;
+        });
       },
+
+      /**
+       *
+       */
 
       simpleCopy() {
         this.outputText = this.inputText;
