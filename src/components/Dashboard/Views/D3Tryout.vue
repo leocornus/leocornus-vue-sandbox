@@ -3,7 +3,7 @@
 
   <div class="text-center">
     <div class="container">
-      <h3 class="heading">D3 Tryout Page</h3>
+      <h3 class="heading">D3 (Version {{d3Version}}) Tryout Page</h3>
       <p class="lead text-muted">A playground to try D3 functions.</p>
       <!-- p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
@@ -51,4 +51,12 @@
 <script>
   import * as d3 from 'd3'
 
+  export default {
+
+    computed: {
+      d3Version() {
+        return d3.version;
+      }
+    }
+  }
 </script>
