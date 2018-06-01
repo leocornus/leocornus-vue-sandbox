@@ -19,19 +19,25 @@
 <div class="form-group">
     <label for="exampleFormControlTextarea1">Input textarea</label>
         <textarea class="form-control" id="exampleInput" 
-                  style="height:auto"
+                  style="height:auto" v-model="inputText"
                   rows="15"></textarea>
 </div>
         </div>
       </div>
     </div>
     <div class="col-md-2">
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="btn-group">
-              <a id="simpleCopy" class="btn btn-primary">Simple Copy Data</a>
-            </div>
-            <!-- small class="text-muted">9 mins</small -->
-          </div>
+      <!-- d-flex will make the btn-group stay in one line -->
+      <div class="justify-content-between align-items-center">
+        <div class="btn-group">
+          <a class="btn btn-primary" 
+             v-on:click="loadData">Load Sample Data</a>
+        </div>
+        <div class="btn-group">
+          <a id="simpleCopy" class="btn btn-primary" 
+             v-on:click="simpleCopy">Simple Copy Data</a>
+        </div>
+        <!-- small class="text-muted">9 mins</small -->
+      </div>
     </div>
     <div class="col-md-5">
       <div class="card mb-4">
@@ -39,7 +45,7 @@
 <div class="form-group">
     <label for="exampleFormControlTextarea1">Output textarea</label>
         <textarea class="form-control" id="exampleOutput" 
-                  style="height:auto"
+                  style="height:auto" v-model="outputText"
                   rows="15"></textarea>
 </div>
         </div>
@@ -56,6 +62,31 @@
     computed: {
       d3Version() {
         return d3.version;
+      }
+    },
+
+    /**
+     * we have to set this as a function
+     */
+    data() {
+      return {
+        inputText: '',
+        outputText: ''
+      }
+    },
+
+    methods: {
+
+      /**
+       * load some sample data.
+       */
+      loadData() {
+        this.inputText = "abc \
+        cde";
+      },
+
+      simpleCopy() {
+        this.outputText = this.inputText;
       }
     }
   }
