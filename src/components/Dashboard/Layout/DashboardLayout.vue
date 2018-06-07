@@ -14,6 +14,10 @@
         <i class="nc-icon nc-circle-09"></i>
         <p>D3 Tryout</p>
       </sidebar-link>
+      <sidebar-link to="/admin/sptryout">
+        <i class="nc-icon nc-circle-09"></i>
+        <p>Sharepoint Tryout</p>
+      </sidebar-link>
     </side-bar>
     <div class="main-panel">
       <top-navbar></top-navbar>

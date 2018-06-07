@@ -15,6 +15,7 @@ import Notifications from '../components/Dashboard/Views/Notifications.vue'
 import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
 // D3 tryout page.
 import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
+import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 
 const routes = [
   {
@@ -41,6 +42,11 @@ const routes = [
         path: 'd3tryout',
         name: 'D3 Tryout',
         component: D3Tryout 
+      },
+      {
+        path: 'sptryout',
+        name: 'Sharepoint Tryout',
+        component: SPTryout 
       },
       {
         path: 'user',
