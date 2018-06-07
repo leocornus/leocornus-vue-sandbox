@@ -91,9 +91,17 @@
       /**
        *
        */
+      changeToPHPArray() {
+
+        var self = this;
+
+        self.inputText.split('\n').forEach(function(row, index) {
+          
+        });
+      },
 
       simpleCopy() {
-        this.outputText = this.inputText;
+        this.outputText = this.inputText.split('\n');
       }
     }
   }
