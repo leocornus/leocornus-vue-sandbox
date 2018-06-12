@@ -33,8 +33,8 @@
              v-on:click="loadData">Load Sample Data</a>
         </div>
         <div class="btn-group">
-          <a id="simpleCopy" class="btn btn-primary" 
-             v-on:click="simpleCopy">Simple Copy Data</a>
+          <a id="changeToPHPArray" class="btn btn-primary" 
+             v-on:click="changeToPHPArray">Simple Copy Data</a>
         </div>
         <!-- small class="text-muted">9 mins</small -->
       </div>
@@ -95,8 +95,10 @@
 
         var self = this;
 
+        self.outputText = '';
+
         self.inputText.split('\n').forEach(function(row, index) {
-          
+          self.outputText = self.outputText + index + '. ' + row + '\n';  
         });
       },
 
