@@ -34,7 +34,7 @@
         </div>
         <div class="btn-group">
           <a id="changeToPHPArray" class="btn btn-primary" 
-             v-on:click="changeToPHPArray">Simple Copy Data</a>
+             v-on:click="simpleCopy">Simple Copy Data</a>
         </div>
         <!-- small class="text-muted">9 mins</small -->
       </div>
@@ -103,7 +103,33 @@
       },
 
       simpleCopy() {
-        this.outputText = this.inputText.split('\n');
+
+        var self = this;
+
+        // d3.csvParseRows to load the data as an array of arraies.
+        var neighbourhoods = d3.csvParseRows(this.inputText, function(d, i){
+          // d will be current row,
+          // i will be the index.
+          // the first column is the region name.
+          var region = d[0];
+          // new row will be an object with
+          var newRow = {};
+          d.forEach(function(e, index) {
+            // e as element.
+            if(index == 0) {
+              // this is the region name,
+              // do nothing here.
+            } else {
+              newRow[e] = region;
+              //console.log(e);
+              self.outputText = self.outputText + e + ':' + region + '\n';
+            }
+          });
+
+          return newRow;
+        });
+        //this.outputText = this.inputText.split('\n');
+        //this.outputText = neighbourhoods;
       }
     }
   }
