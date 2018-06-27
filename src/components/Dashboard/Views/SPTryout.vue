@@ -56,6 +56,7 @@
 </template>
 <script>
   import * as d3 from 'd3'
+  import axios from 'axios'
 
   export default {
 
@@ -83,8 +84,24 @@
       loadData() {
 
         var self = this;
-        d3.text('/static/files/list.txt').then(function(data) {
+        console.log(self.$localSettings);
+        var authToken = "Bearer " + self.$localSettings.accessToken;
+        var baseUrl = self.$localSettings.targetSource + 
+                      self.$localSettings.sharepointSite;
+        axios.get(baseUrl + '/_api/',
+            {
+              headers: {
+                  "Authorization": authToken
+              }
+            }
+        )
+        .then(function(data) {
+          console.log(data);
           self.inputText = data;
+        })
+        .catch(function(error) {
+          // 
+          self.inputText = error;
         });
       },
 
