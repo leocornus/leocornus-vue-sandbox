@@ -28,7 +28,7 @@
 
   <div class="card mb-1" v-if="detailsData">
   <div class="card-header">
-    <h5 class="mb-0">Data in Details</h5>
+    <h4 class="mb-0">Data in Details {{dataType}}</h4>
   </div>
   <div class="card-body">
 <table class="table table-striped">
@@ -115,6 +115,8 @@
         outputText: '',
         // the SPO api call.
         apiUrl: '/_api/',
+        // type of the data.
+        dataType: '',
         // the detailsData.
         detailsData: null
       }
@@ -149,7 +151,9 @@
           var odata = response.data;
           var type = odata["odata.type"];
           console.log("type=" + type);
+
           self.detailsData = odata;
+          self.dataType = type;
         })
         .catch(function(error) {
           // 
