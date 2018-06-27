@@ -224,7 +224,8 @@
       summarySearch() {
         var self = this;
 
-        var searchUrl = 'https://example.com/search';
+        //var searchUrl = 'https://example.com/search';
+        var searchUrl = self.$localSettings.reSearchUrl;
         var payload = {
           workflow: "customsearch",
           query: "table:xmldata",
