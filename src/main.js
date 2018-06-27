@@ -5,11 +5,15 @@ import App from './App.vue'
 // LightBootstrap plugin
 import LightBootstrap from './light-bootstrap-main'
 
+// local settings
+import LocalSettings from './local-settings.js'
+
 // router setup
 import routes from './routes/routes'
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
+Vue.use(LocalSettings)
 
 // configure router
 const router = new VueRouter({
