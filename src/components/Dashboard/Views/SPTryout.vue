@@ -12,6 +12,21 @@
     </div>
   </div>
 
+<div class="container">
+  <div id="search-app">
+    <div class="input-group mb-2">
+      <input type="text" class="form-control form-control-lg" id="apiUrl"
+             v-model="apiUrl"
+             v-on:keyup.enter="inspectCall"
+             placeholder="Set the API call...">
+      <span class="input-group-btn">
+        <button class="btn btn-outline-primary" type="submit"
+                v-on:click="inspectCall">Inspect!</button>
+      </span>
+    </div>
+  </div>
+</div>
+
   <div class="row">
     <div class="col-md-5">
       <div class="card mb-4">
@@ -72,11 +87,40 @@
     data() {
       return {
         inputText: '',
-        outputText: ''
+        outputText: '',
+        // the SPO api call.
+        apiUrl: '/_api/'
       }
     },
 
     methods: {
+
+      /**
+       * inspect the api call.
+       */
+      inspectCall() {
+
+        var self = this;
+        var authToken = "Bearer " + self.$localSettings.accessToken;
+        var theUrl = self.$localSettings.targetSource + 
+                     self.$localSettings.sharepointSite +
+                     self.apiUrl;
+
+        axios.get(theUrl,
+            {
+              headers: {
+                  "Authorization": authToken
+              }
+            }
+        )
+        .then(function(data) {
+          console.log(data);
+          self.inputText = JSON.stringify(data); })
+        .catch(function(error) {
+          // 
+          self.inputText = error;
+        });
+      },
 
       /**
        * load some sample data.
@@ -84,7 +128,7 @@
       loadData() {
 
         var self = this;
-        console.log(self.$localSettings);
+        //console.log(self.$localSettings);
         var authToken = "Bearer " + self.$localSettings.accessToken;
         var baseUrl = self.$localSettings.targetSource + 
                       self.$localSettings.sharepointSite;
@@ -96,7 +140,7 @@
             }
         )
         .then(function(data) {
-          console.log(data);
+          //console.log(data);
           self.inputText = data;
         })
         .catch(function(error) {
