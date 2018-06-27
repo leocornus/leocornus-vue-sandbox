@@ -16,3 +16,6 @@ selenium-debug.log
 *.njsproj
 *.sln
 *.swp
+
+# ignore the local-settings.js
+*/local-settings.js
