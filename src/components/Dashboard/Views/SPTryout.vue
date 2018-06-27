@@ -25,6 +25,31 @@
       </span>
     </div>
   </div>
+
+  <div class="card mb-1" v-if="detailsData">
+  <div class="card-header">
+    <h5 class="mb-0">Data in Details</h5>
+  </div>
+  <div class="card-body">
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" width="20px">#</th>
+      <th scope="col" width="88px">Field</th>
+      <th scope="col">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="(fieldName, index) in Object.keys(detailsData)"
+        :index="index" :fieldName="fieldName">
+      <th scope="row">{{index}}</th>
+      <td>{{fieldName}}</td>
+      <td>{{detailsData[fieldName]}}</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+  </div>
 </div>
 
   <div class="row">
@@ -89,7 +114,9 @@
         inputText: '',
         outputText: '',
         // the SPO api call.
-        apiUrl: '/_api/'
+        apiUrl: '/_api/',
+        // the detailsData.
+        detailsData: null
       }
     },
 
@@ -113,9 +140,17 @@
               }
             }
         )
-        .then(function(data) {
-          console.log(data);
-          self.inputText = JSON.stringify(data); })
+        .then(function(response) {
+          // log the full data.
+          //console.log(response);
+          // display on the text area.
+          self.inputText = JSON.stringify(response, null, 2);
+
+          var odata = response.data;
+          var type = odata["odata.type"];
+          console.log("type=" + type);
+          self.detailsData = odata;
+        })
         .catch(function(error) {
           // 
           self.inputText = error;
