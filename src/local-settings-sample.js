@@ -12,6 +12,11 @@ export default {
         this.$localSettings = {
 
             /**
+             * some common settings
+             */
+            topNavBarBrandTitle: "Title in local",
+
+            /**
              * local settings for real estate try out.
              */
             reSearchUrl: 'https://search.example.com/rest/searchApi/search',

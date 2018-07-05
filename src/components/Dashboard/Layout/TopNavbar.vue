@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">VO Components</a>
+      <a class="navbar-brand" href="#">{{topNavBarBrandTitle}}</a>
       <button type="button"
               class="navbar-toggler navbar-toggler-right"
               :class="{toggled: $sidebar.showSidebar}"
@@ -37,6 +37,10 @@
 <script>
   export default {
     computed: {
+      topNavBarBrandTitle() {
+        return this.$localSettings.topNavBarBrandTitle;
+      },
+
       routeName () {
         const {name} = this.$route
         return this.capitalizeFirstLetter(name)
