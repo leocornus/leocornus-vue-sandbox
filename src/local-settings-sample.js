@@ -17,6 +17,7 @@ export default {
             sideBarTitle: "in local",
             sideBarTitleLogo: "static/img/vue-logo.png",
             topNavBarBrandTitle: "Title in local",
+            footerTitle: "Footer title",
 
             /**
              * set the side bar links.

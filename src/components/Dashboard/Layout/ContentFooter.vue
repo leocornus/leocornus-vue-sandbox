@@ -4,7 +4,7 @@
       <nav>
         <ul class="footer-menu">
           <li>
-            <router-link :to="{path:'/admin'}">VO Components</router-link>
+            <router-link :to="{path:'/admin'}">{{this.$localSettings.footerTitle}}</router-link>
           </li>
         </ul>
       </nav>
@@ -16,8 +16,8 @@
   </footer>
 </template>
 <script>
-  export default {}
-
+export default {
+}
 </script>
 <style>
 
