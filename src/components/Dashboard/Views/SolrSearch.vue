@@ -56,6 +56,7 @@ import axios from 'axios'
 export default {
     data() {
       return {
+        restBaseUrl: 'http://search.example.com',
         query: '*:*',
         facetFields: "project_id,customer_name",
         totalHits: 0,
@@ -67,11 +68,6 @@ export default {
     },
 
     computed: {
-      // the base URL will include the ending /
-      restBaseUrl() {
-        return this.$localSettings.solrRestBaseUrl;
-      },
-
       // produce the csv format.
       resultsInCSV: function() {
           return "TODO: result list in CSV format!";
@@ -216,6 +212,10 @@ export default {
 
             return retFacets;
         }
+    },
+
+    created() {
+      this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
     }
 }
 </script>
