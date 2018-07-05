@@ -19,6 +19,24 @@ export default {
             topNavBarBrandTitle: "Title in local",
 
             /**
+             * set the side bar links.
+             */
+            sideBarLinks: [
+              {to: '/admin/overview', 
+               iconClass: 'nc-icon nc-chart-pie-35',
+               title: 'Overview'},
+              {to: '/admin/realestate', 
+               iconClass: 'nc-icon nc-circle-09',
+               title: 'Real Estate'},
+              {to: '/admin/d3tryout', 
+               iconClass: 'nc-icon nc-circle-09',
+               title: 'D3 Tryout'},
+              {to: '/admin/sptryout', 
+               iconClass: 'nc-icon nc-circle-09',
+               title: 'SPO Metadata'}
+            ],
+
+            /**
              * local settings for real estate try out.
              */
             reSearchUrl: 'https://search.example.com/rest/searchApi/search',

@@ -2,21 +2,10 @@
   <div class="wrapper">
     <side-bar :title="sideBarTitle" :logoImg="sideBarTitleLogo">
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link to="/admin/overview">
-        <i class="nc-icon nc-chart-pie-35"></i>
-        <p>Overview</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/realestate">
-        <i class="nc-icon nc-circle-09"></i>
-        <p>Real Estate</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/d3tryout">
-        <i class="nc-icon nc-circle-09"></i>
-        <p>D3 Tryout</p>
-      </sidebar-link>
-      <sidebar-link to="/admin/sptryout">
-        <i class="nc-icon nc-circle-09"></i>
-        <p>Sharepoint Tryout</p>
+      <sidebar-link v-for="link in this.$localSettings.sideBarLinks"
+                    :to="link.to">
+        <i :class="link.iconClass"></i>
+        <p>{{link.title}}</p>
       </sidebar-link>
     </side-bar>
     <div class="main-panel">
