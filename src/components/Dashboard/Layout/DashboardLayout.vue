@@ -2,8 +2,8 @@
   <div class="wrapper">
     <side-bar :title="sideBarTitle" :logoImg="sideBarTitleLogo">
       <mobile-menu slot="content"></mobile-menu>
-      <sidebar-link v-for="link in this.$localSettings.sideBarLinks"
-                    :to="link.to">
+      <sidebar-link v-for="(link, index) in this.$localSettings.sideBarLinks"
+                    :to="link.to" :key="index">
         <i :class="link.iconClass"></i>
         <p>{{link.title}}</p>
       </sidebar-link>
