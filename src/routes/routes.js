@@ -16,6 +16,7 @@ import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
 // D3 tryout page.
 import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
+import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
 
 const routes = [
   {
@@ -47,6 +48,11 @@ const routes = [
         path: 'sptryout',
         name: 'Sharepoint Tryout',
         component: SPTryout 
+      },
+      {
+        path: 'solrsearch',
+        name: 'Solr Search',
+        component: SolrSearch
       },
       {
         path: 'user',

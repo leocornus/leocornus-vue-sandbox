@@ -31,6 +31,9 @@ export default {
               {to: '/admin/d3tryout', 
                iconClass: 'nc-icon nc-circle-09',
                title: 'D3 Tryout'},
+              {to: '/admin/solrsearch', 
+               iconClass: 'nc-icon nc-circle-09',
+               title: 'Solr Search'},
               {to: '/admin/sptryout', 
                iconClass: 'nc-icon nc-circle-09',
                title: 'SPO Metadata'}
