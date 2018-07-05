@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <side-bar :title="sideBarTitle">
+    <side-bar :title="sideBarTitle" :logoImg="sideBarTitleLogo">
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/admin/overview">
         <i class="nc-icon nc-chart-pie-35"></i>
@@ -42,6 +42,9 @@
     computed: {
       sideBarTitle() {
         return this.$localSettings.sideBarTitle;
+      },
+      sideBarTitleLogo() {
+        return this.$localSettings.sideBarTitleLogo;
       }
     },
     components: {

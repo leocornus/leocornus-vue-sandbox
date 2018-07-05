@@ -15,6 +15,7 @@ export default {
              * some common settings
              */
             sideBarTitle: "in local",
+            sideBarTitleLogo: "static/img/vue-logo.png",
             topNavBarBrandTitle: "Title in local",
 
             /**

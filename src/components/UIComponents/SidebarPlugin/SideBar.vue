@@ -7,7 +7,7 @@
       <div class="logo">
         <a href="#" class="simple-text">
             <div class="logo-img">
-                <img src="static/img/vue-logo.png" alt="">
+                <img :src="logoImg" alt="">
             </div>
           {{title}}
         </a>
@@ -41,6 +41,10 @@
       title: {
         type: String,
         default: 'VO Components'
+      },
+      logoImg: {
+        type: String,
+        default: 'static/img/vue-logo.png'
       },
       backgroundColor: {
         type: String,
