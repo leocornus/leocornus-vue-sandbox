@@ -41,6 +41,11 @@ export default {
             ],
 
             /**
+             * settings for Solr search
+             */
+            solrRestBaseUrl: "https://search.example.com/solr/projects/",
+
+            /**
              * local settings for real estate try out.
              */
             reSearchUrl: 'https://search.example.com/rest/searchApi/search',
