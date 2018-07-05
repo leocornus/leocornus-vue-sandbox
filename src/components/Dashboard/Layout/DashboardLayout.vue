@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <side-bar>
+    <side-bar :title="sideBarTitle">
       <mobile-menu slot="content"></mobile-menu>
       <sidebar-link to="/admin/overview">
         <i class="nc-icon nc-chart-pie-35"></i>
@@ -39,6 +39,11 @@
   import DashboardContent from './Content.vue'
   import MobileMenu from './MobileMenu.vue'
   export default {
+    computed: {
+      sideBarTitle() {
+        return this.$localSettings.sideBarTitle;
+      }
+    },
     components: {
       TopNavbar,
       ContentFooter,

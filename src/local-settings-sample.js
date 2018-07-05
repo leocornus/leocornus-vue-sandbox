@@ -14,6 +14,7 @@ export default {
             /**
              * some common settings
              */
+            sideBarTitle: "in local",
             topNavBarBrandTitle: "Title in local",
 
             /**
