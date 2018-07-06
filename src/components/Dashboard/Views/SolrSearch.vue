@@ -1,16 +1,16 @@
 <template>
 <div class="content container">
   <div id="search-app">
-    <div class="input-group mb-2">
-      <input type="text" class="form-control form-control-lg" id="inputQuery"
+    <b-input-group size="lg" class="mb-2">
+      <b-form-input type="text" id="inputQuery"
              v-model="query"
              v-on:keyup.enter="simpleSearch"
-             placeholder="Search for...">
-      <span class="input-group-btn">
+             placeholder="Search b-form-group for..."/>
+      <b-input-group-append>
         <b-button variant="outline-primary" size="lg"
                 v-on:click="simpleSearch">Search!</b-button>
-      </span>
-    </div>
+      </b-input-group-append>
+    </b-input-group>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
@@ -50,14 +50,21 @@
 </template>
 
 <script>
+// components from bootstrap-vue.
+import bButton from 'bootstrap-vue/es/components/button/button'
+import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
+import bInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-group-append'
+import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
-import bButton from 'bootstrap-vue/es/components/button/button'
 
 export default {
     components: {
-      ListingDetails,
+      'listing-details': ListingDetails,
+      'b-input-group': bInputGroup,
+      'b-input-group-append': bInputGroupAppend,
+      'b-form-input': bFormInput,
       'b-button': bButton
     },
 
