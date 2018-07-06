@@ -1,16 +1,14 @@
 <template>
-<div class="card mb-1">
-<div class="card-header" :id="listingID">
+<b-card class="mb-1">
+<b-card-header :id="listingID">
   <h5 class="mb-0">
-    <button class="btn btn-link" data-toggle="collapse" :data-target="targetCollapseID" 
-            aria-expanded="true" :aria-controls="collapseID">
+    <b-button v-b-toggle="collapseID">
       {{caption}}
-    </button>
+    </b-button>
   </h5>
-</div>
-<div :id="collapseID" class="collapse" :aria-labelledby="listingID" 
-     data-parent="#accordion">
-  <div class="card-body">
+</b-card-header>
+<b-collapse :id="collapseID"> 
+  <b-card-body>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -28,14 +26,37 @@
     </tr>
   </tbody>
 </table>
-  </div>
-</div>
-</div>
+  </b-card-body>
+</b-collapse>
+</b-card>
 </template>
 
 <script>
 
+// bootstrap-vue components.
+import bCard from 'bootstrap-vue/es/components/card/card'
+import bCardHeader from 'bootstrap-vue/es/components/card/card-header'
+import bCardBody from 'bootstrap-vue/es/components/card/card-body'
+import bCollapse from 'bootstrap-vue/es/components/collapse/collapse'
+import bButton from 'bootstrap-vue/es/components/button/button'
+// bootstrap-vue directives
+import vBToggle from 'bootstrap-vue/es/directives/toggle/toggle'
+
 export default {
+
+    components: {
+      'b-button': bButton,
+      'b-card': bCard,
+      'b-card-header': bCardHeader,
+      'b-card-body': bCardBody,
+      'b-collapse': bCollapse
+    },
+
+    directives: {
+      // Vue will automatically prefix the directive name with 'v-'
+      // so we will use it like this: v-b-toggle.
+      'b-toggle': vBToggle
+    },
 
     name: "listing-details",
 
@@ -57,7 +78,7 @@ export default {
         },
 
         targetCollapseID() {
-            return "#collapse" + this.doc['id'].replace(/[@\.\/]/g, '');
+            return "'collapse" + this.doc['id'].replace(/[@\.\/]/g, '') + "'";
         },
 
         /**
