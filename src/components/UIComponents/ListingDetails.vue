@@ -2,7 +2,7 @@
 <b-card class="mb-1">
 <b-card-header :id="listingID">
   <h5 class="mb-0">
-    <b-button v-b-toggle="collapseID">
+    <b-button class="btn-link" v-b-toggle="collapseID">
       {{caption}}
     </b-button>
   </h5>
