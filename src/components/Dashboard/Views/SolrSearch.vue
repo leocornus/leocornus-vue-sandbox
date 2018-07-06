@@ -33,13 +33,13 @@
       <h3>{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
-          <statistics :stats="stats"></statistics>
+          <!-- statistics :stats="stats"></statistics>
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
-          </facet-buckets>
+          </facet-buckets -->
         </div>
         <div class="col-9 accordion">
-          <results-list :docs="results" v-if="results">
-          </results-list>
+          <!-- results-list :docs="results" v-if="results">
+          </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
           </listing-details>
         </div>
@@ -52,8 +52,13 @@
 <script>
 
 import axios from 'axios'
+import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 
 export default {
+    components: {
+      ListingDetails
+    },
+
     data() {
       return {
         restBaseUrl: 'http://search.example.com',
