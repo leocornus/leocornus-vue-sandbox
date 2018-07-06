@@ -7,8 +7,8 @@
              v-on:keyup.enter="simpleSearch"
              placeholder="Search for...">
       <span class="input-group-btn">
-        <button class="btn btn-outline-primary btn-lg" type="submit"
-                v-on:click="simpleSearch">Search!</button>
+        <b-button variant="outline-primary" size="lg"
+                v-on:click="simpleSearch">Search!</b-button>
       </span>
     </div>
     <div class="input-group mb-2">
@@ -53,10 +53,12 @@
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
+import bButton from 'bootstrap-vue/es/components/button/button'
 
 export default {
     components: {
-      ListingDetails
+      ListingDetails,
+      'b-button': bButton
     },
 
     data() {
