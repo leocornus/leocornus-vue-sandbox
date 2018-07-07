@@ -33,9 +33,9 @@
       <h3>{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
-          <!-- statistics :stats="stats"></statistics>
+          <!-- statistics :stats="stats"></statistics -->
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
-          </facet-buckets -->
+          </facet-buckets>
         </div>
         <div class="col-9 accordion">
           <!-- results-list :docs="results" v-if="results">
@@ -58,10 +58,12 @@ import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
+import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
 export default {
     components: {
       'listing-details': ListingDetails,
+      'facet-buckets': FacetBuckets,
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
       'b-form-input': bFormInput,
