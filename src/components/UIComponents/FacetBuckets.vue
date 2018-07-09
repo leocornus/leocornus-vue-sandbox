@@ -6,14 +6,14 @@
     {{facetLabel}} - {{facetBuckets.length}}
     </a>
     <div class="d-none">{{facetBucketsCSV}}</div>
-    <span class="badge badge-light badge-not-pill float-right ml-1">
+    <!-- span class="badge badge-light badge-not-pill float-right ml-1">
       <a v-on:click="showListGroup" href="#" class="card-link"
       ><i class="fas fa-list"></i></a>
     </span>
     <span class="badge badge-warning badge-not-pill float-right ml-1">
       <a v-on:click="showHorizontalBar" href="#" class="card-link"
       ><i class="fas fa-chart-bar"></i></a>
-    </span>
+    </span -->
   </b-card-header>
   <b-collapse :id="facetCollapseID">
   <ul class="list-group list-group-flush">
