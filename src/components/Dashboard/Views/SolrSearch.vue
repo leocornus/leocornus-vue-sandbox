@@ -140,6 +140,7 @@ export default {
                 params: {
                   rows: 25,
                   start: 0,
+                  //fq: ["c4c_type:project"],
                   facet: "on",
                   // using array for multiple values
                   // in association with multiple values in HTTP parameters.

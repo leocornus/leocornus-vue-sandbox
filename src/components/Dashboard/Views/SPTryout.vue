@@ -3,7 +3,7 @@
 
   <div class="text-center">
     <div class="container">
-      <h3 class="heading">Sharepoint Tryout Page</h3>
+      <h3 class="mt-1 mb-1">Sharepoint Tryout Page</h3>
       <p class="lead text-muted">A playground to try Sharepoint APIs.</p>
       <!-- p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
