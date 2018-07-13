@@ -11,6 +11,10 @@
                 v-on:click="simpleSearch">Search!</b-button>
       </b-input-group-append>
     </b-input-group>
+
+    <!-- the input group row -->
+    <div class="row">
+      <div class="col">
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
@@ -20,6 +24,8 @@
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com">
     </div>
+      </div>
+      <div class="col">
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="facetFields-addon" class="input-group-text">Pick facets, separate by ,: </span>
@@ -29,6 +35,10 @@
              v-model="facetFields"
              placeholder="project_id, customer_name">
     </div>
+      </div>
+    </div>
+
+    <!-- result list -->
     <p>
       <h3>{{resultSummary}}</h3>
       <div class="row">
