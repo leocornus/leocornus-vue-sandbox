@@ -1,6 +1,7 @@
 <template>
 <div class="content container">
   <div id="search-app">
+
     <b-input-group size="lg" class="mb-2">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
@@ -12,9 +13,6 @@
       </b-input-group-append>
     </b-input-group>
 
-    <!-- the input group row -->
-    <div class="row">
-      <div class="col">
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
@@ -24,8 +22,27 @@
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com">
     </div>
+
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
       </div>
-      <div class="col">
+      <input type="text" class="form-control" id="filterQuery"
+             aria-describedby="filterQuery-addon"
+             v-model="filterQuery"
+             placeholder="set filter query here">
+    </div>
+
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span id="fieldList-addon" class="input-group-text">Field List: </span>
+      </div>
+      <input type="text" class="form-control" id="fieldList"
+             aria-describedby="fieldList-addon"
+             v-model="fieldList"
+             placeholder="set a list of fields to return">
+    </div>
+
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="facetFields-addon" class="input-group-text">Pick facets, separate by ,: </span>
@@ -34,8 +51,6 @@
              aria-describedby="facetFields-addon"
              v-model="facetFields"
              placeholder="project_id, customer_name">
-    </div>
-      </div>
     </div>
 
     <!-- result list -->
@@ -85,6 +100,8 @@ export default {
         restBaseUrl: 'http://search.example.com',
         query: '*:*',
         facetFields: "project_id,customer_name",
+        filterQuery: "project_id:123456",
+        fieldList: "id,project_id,customer_id",
         totalHits: 0,
         facets: null,
         stats: null,
