@@ -140,7 +140,13 @@ export default {
                 params: {
                   rows: 25,
                   start: 0,
+
+                  // filter query list.
                   //fq: ["c4c_type:project"],
+
+                  // field list, control what fields to return in response.
+                  //fl: ["id","project_id"],
+
                   facet: "on",
                   // using array for multiple values
                   // in association with multiple values in HTTP parameters.
