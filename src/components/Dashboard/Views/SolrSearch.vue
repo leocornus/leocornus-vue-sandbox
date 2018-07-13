@@ -2,6 +2,16 @@
 <div class="content container">
   <div id="search-app">
 
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
+        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
+      </div>
+      <input type="text" class="form-control" id="restBaseUrl"
+             aria-describedby="restBaseUrl-addon"
+             v-model="restBaseUrl"
+             placeholder="RESTful API base URL https://www.rest.com">
+    </div>
+
     <b-input-group size="lg" class="mb-2">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
@@ -15,22 +25,12 @@
 
     <div class="input-group mb-2">
       <div class="input-group-prepend">
-        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
-      </div>
-      <input type="text" class="form-control" id="restBaseUrl"
-             aria-describedby="restBaseUrl-addon"
-             v-model="restBaseUrl"
-             placeholder="RESTful API base URL https://www.rest.com">
-    </div>
-
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
         <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
       </div>
       <input type="text" class="form-control" id="filterQuery"
              aria-describedby="filterQuery-addon"
              v-model="filterQuery"
-             placeholder="set filter query here">
+             placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
     </div>
 
     <div class="input-group mb-2">
@@ -40,7 +40,7 @@
       <input type="text" class="form-control" id="fieldList"
              aria-describedby="fieldList-addon"
              v-model="fieldList"
-             placeholder="set a list of fields to return">
+             placeholder="set a list of fields to return: id,project_id,customer_id">
     </div>
 
     <div class="input-group mb-2">
@@ -50,7 +50,7 @@
       <input type="text" class="form-control" id="facetFields"
              aria-describedby="facetFields-addon"
              v-model="facetFields"
-             placeholder="project_id, customer_name">
+             placeholder="for example: project_id,customer_name">
     </div>
 
     <!-- result list -->
@@ -99,9 +99,15 @@ export default {
       return {
         restBaseUrl: 'http://search.example.com',
         query: '*:*',
-        facetFields: "project_id,customer_name",
-        filterQuery: "project_id:123456",
-        fieldList: "id,project_id,customer_id",
+        // default facet field is empty.
+        facetFields: "",
+
+        // set the default filter query to empty.
+        filterQuery: "",
+
+        // set default field list to empty, which will return all fields.
+        fieldList: "",
+
         totalHits: 0,
         facets: null,
         stats: null,
