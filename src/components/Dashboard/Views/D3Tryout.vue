@@ -30,6 +30,10 @@
       <div class="justify-content-between align-items-center">
         <div class="btn-group">
           <a class="btn btn-primary" 
+             v-on:click="csvLoadMergeAdd">Load and Merge</a>
+        </div>
+        <div class="btn-group">
+          <a class="btn btn-primary" 
              v-on:click="loadData">Load Sample Data</a>
         </div>
         <div class="btn-group">
@@ -76,6 +80,45 @@
     },
 
     methods: {
+
+      /**
+       * load csv data 
+       */
+      csvLoadMergeAdd() {
+
+        d3.csv('/static/files/pd-20180716.csv', function(d) {
+          // Here, we could tweak the data columns and values.
+          //console.log(d["Account Name"]);
+          // we will process row by row.
+          var newRow = {
+            id: d['SAP ID'] + "|" + d["Service Tracking Number"],
+            customer_name: d["Account Name"],
+            customer_id: d["SAP ID"],
+            project_detail_name: d["Project Detail Name"],
+            master_contract_number: d["Master Contract Number"],
+            project_id: d["Service Tracking Number"],
+            project_detail_id: d["Project Detail ID"],
+            project_status: d["Project Status"],
+            primary_contact_name: d["Primary Contact: Full Name"],
+            primary_contact_email: d["Primary Contact Email"],
+            ps_number: d["PO Number"],
+            planned_start_date: d["Planned Start Date"],
+            planned_delivery_date: d["Planned Delivery Date"],
+            service_delivery_person: d["Service Delivery Person: Full Name"],
+            service_delivery_person_email: d["Service Deliver Person Email"],
+            service_delivery_person_phone: d["Service Deliver Person Phone"],
+            certificate_id: d["Certificate Number"],
+            customer_project_name: d["Customer Project Name"],
+            standards: d["Standards"],
+            customer_product_description: d["Customer Product Description"],
+            project_scope: d["Scope"],
+            c4c_type: 'project'
+          };
+          return newRow;
+        }).then(function(data) {
+          console.log(data);
+        });
+      },
 
       /**
        * load some sample data.
