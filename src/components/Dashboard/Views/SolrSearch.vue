@@ -15,7 +15,7 @@
     <b-input-group size="lg" class="mb-2">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
-             v-on:keyup.enter="simpleSearch"
+             v-on:keyup.enter.native="simpleSearch"
              placeholder="Search b-form-group for..."/>
       <b-input-group-append>
         <b-button variant="outline-primary" size="lg"
@@ -121,6 +121,12 @@ export default {
       resultsInCSV: function() {
           return "TODO: result list in CSV format!";
       }
+
+      // the input event keyup.enter is broken in the 
+      // b-form-input component.
+      // we will using he $listeners property to override
+      // check this page for details:
+      // https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
     },
 
     methods: {
