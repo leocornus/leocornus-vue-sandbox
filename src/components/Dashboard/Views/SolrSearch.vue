@@ -172,29 +172,25 @@ export default {
                 "facet.field": "project_id",
                 "facet.field": "customer_id"
             };
+
+            // the parameters for query.
+            // we will use Object assign to merge them all together.
+            var params = Object.assign({
+              rows: 25,
+              start: 0
+              // filter query list.
+              //fq: ["c4c_type:project"],
+
+              // field list, control what fields to return in response.
+              //fl: ["id","project_id"],
+            }, self.getFacetFields()
+            );
+
             // this will show how to use query parameters in a JSON request.
             var postParams = {
                 query: this.query,
                 // we could mix parameters and JSON request.
-                params: {
-                  rows: 25,
-                  start: 0,
-
-                  // filter query list.
-                  //fq: ["c4c_type:project"],
-
-                  // field list, control what fields to return in response.
-                  //fl: ["id","project_id"],
-
-                  facet: "on",
-                  // using array for multiple values
-                  // in association with multiple values in HTTP parameters.
-                  // ?facet_field=project_id&facet_field=customer_id
-                  //"facet.field":["project_id", "customer_id"]
-                  "facet.field": self.facetFields.split(',')
-                  // here is for single value
-                  //"facet.field":"customer_id"
-                }
+                params: params
             }
 
             // the query url should be some thing like this: 
@@ -222,6 +218,28 @@ export default {
               self.resultSummary = "Query Error!";
               console.log(error);
             });
+        },
+
+        /**
+         * this will return the facet fields query parameters.
+         */
+        getFacetFields() {
+
+            if(self.facetFields === "") {
+                // return an empty object.
+                return {};
+            } else {
+                return {
+                  facet: "on",
+                  // using array for multiple values
+                  // in association with multiple values in HTTP parameters.
+                  // ?facet_field=project_id&facet_field=customer_id
+                  //"facet.field":["project_id", "customer_id"]
+                  // here is for single value
+                  //"facet.field":"customer_id"
+                  "facet.field": self.facetFields.split(",")
+                };
+            }
         },
 
         /**
