@@ -89,8 +89,8 @@
 
         var self = this;
 
-        //d3.csv('/static/files/pd-20180716.csv', function(d) {
-        d3.csv('/static/files/sfq-20180716.csv', 
+        //d3.csv('/static/files/pd-20180716.csv',
+        d3.csv('/static/files/sfq-20180716.csv',
                // the first parameter is a row,
                // the second parameter is the index, starts from 0
                function(d, index) {
@@ -125,7 +125,7 @@
             customer_product_description: d["Customer Product Description"],
             standards: d["Standards"],
             project_scope: d["Scope"],
-            c4c_type: "project-test"
+            c4c_type: "project"
           };
 
           // send payload to Solr for every row is very costy!
