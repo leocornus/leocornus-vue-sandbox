@@ -97,7 +97,7 @@
           // Here, we could tweak the data columns and values.
           //console.log(d["Account Name"]);
           // we will process row by row.
-          console.log("index = " + index);
+          //console.log("index = " + index);
           return d;
           var newRow =  
           {
@@ -134,6 +134,13 @@
           console.log(data);
           //self.inputText = JSON.stringify(data[100],null, 2);
           //self.postPayload(data[100]);
+          while(data.length > 0) {
+            var rows = [];
+            // the method splice will remove records and return them as 
+            // a new array
+            rows = data.splice(0, 1000);
+            console.log(rows);
+          }
         });
       },
 
