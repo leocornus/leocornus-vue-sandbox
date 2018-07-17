@@ -3,7 +3,7 @@
 
   <div class="text-center">
     <div class="container">
-      <h3 class="heading">D3 (Version {{d3Version}}) Tryout Page</h3>
+      <h3 class="mt-1 mb-1">D3 (Version {{d3Version}}) Tryout Page</h3>
       <p class="lead text-muted">A playground to try D3 functions.</p>
       <!-- p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
@@ -89,10 +89,16 @@
 
         var self = this;
 
-        d3.csv('/static/files/pd-20180716.csv', function(d) {
+        //d3.csv('/static/files/pd-20180716.csv', function(d) {
+        d3.csv('/static/files/sfq-20180716.csv', 
+               // the first parameter is a row,
+               // the second parameter is the index, starts from 0
+               function(d, index) {
           // Here, we could tweak the data columns and values.
           //console.log(d["Account Name"]);
           // we will process row by row.
+          console.log("index = " + index);
+          return d;
           var newRow =  
           {
             id: d['SAP ID'] + "|" + d["Service Tracking Number"],
@@ -119,8 +125,10 @@
             c4c_type: "project"
           };
 
-          // TODO: send as a payload.
-          self.postPayload(newRow);
+          // send payload to Solr for every row is very costy!
+          // the better way is group a set of rows (for example 1000) to 
+          // send at one time.
+          //self.postPayload(newRow);
           return newRow;
         }).then(function(data) {
           console.log(data);
@@ -131,6 +139,28 @@
 
       /**
        * quick try for the post payload.
+       * 
+       * single doc payload example:
+       *  {
+       *    id: "abcd",
+       *    keyone: "value one",
+       *    keytwo: "value two"
+       *  }
+       *
+       * multiple docs payload exmaple:
+       *  [
+       *    {
+       *      id: "abcd",
+       *      keyone: "value one",
+       *      keytwo: "value two"
+       *    },
+       *    {
+       *      id: "abcd-1",
+       *      keyone: "value one one",
+       *      keytwo: "value two two"
+       *    }
+       *  ]
+       * 
        */
       postPayload(payload) {
 
