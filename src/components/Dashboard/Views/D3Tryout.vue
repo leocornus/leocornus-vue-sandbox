@@ -98,29 +98,32 @@
           //console.log(d["Account Name"]);
           // we will process row by row.
           //console.log("index = " + index);
-          return d;
+          //return d;
           var newRow =  
           {
-            id: d['SAP ID'] + "|" + d["Service Tracking Number"],
-            customer_name: d["Account Name"],
-            customer_id: d["SAP ID"],
-            project_detail_name: d["Project Detail Name"],
-            master_contract_number: d["Master Contract Number"],
+            id: "p|" + d["Service Tracking Number"],
+            customer_id: d["Customer: SAP ID"],
             project_id: d["Service Tracking Number"],
-            project_detail_id: d["Project Detail ID"],
+            certificate_id: d["Certificate Number"],
+            master_contract_number: d["Certificate Master Contract ID"],
+
+            customer_name: d["Customer: Account Name"],
+            customer_detail_id: d["Customer: Account ID"],
+            project_detail_name: d["Project Detail: Project Detail Name"],
+            project_detail_id: d["Project Detail: ID"],
             project_status: d["Project Status"],
-            primary_contact_name: d["Primary Contact: Full Name"],
+            primary_contact_name: d["Primary Contact"],
             primary_contact_email: d["Primary Contact Email"],
             po_number: d["PO Number"],
             planned_start_date: d["Planned Start Date"],
             planned_delivery_date: d["Planned Delivery Date"],
-            service_delivery_person: d["Service Delivery Person: Full Name"],
+            service_delivery_person: d["Service Delivery Person"],
             service_delivery_person_email: d["Service Deliver Person Email"],
             service_delivery_person_phone: d["Service Deliver Person Phone"],
-            certificate_id: d["Certificate Number"],
             customer_project_name: d["Customer Project Name"],
-            standards: d["Standards"],
+            customer_project_status: d["Customer Project Status"],
             customer_product_description: d["Customer Product Description"],
+            standards: d["Standards"],
             project_scope: d["Scope"],
             c4c_type: "project"
           };
