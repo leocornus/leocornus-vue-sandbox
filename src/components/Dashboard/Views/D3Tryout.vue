@@ -102,10 +102,10 @@
           var newRow =  
           {
             id: "p|" + d["Service Tracking Number"],
-            customer_id: d["Customer: SAP ID"],
-            project_id: d["Service Tracking Number"],
-            certificate_id: d["Certificate Number"],
-            master_contract_number: d["Certificate Master Contract ID"],
+            customer_id: +d["Customer: SAP ID"],
+            project_id: +d["Service Tracking Number"],
+            certificate_id: +d["Certificate Number"],
+            master_contract_number: +d["Certificate Master Contract ID"],
 
             customer_name: d["Customer: Account Name"],
             customer_detail_id: d["Customer: Account ID"],
@@ -125,7 +125,7 @@
             customer_product_description: d["Customer Product Description"],
             standards: d["Standards"],
             project_scope: d["Scope"],
-            c4c_type: "project"
+            c4c_type: "project-test"
           };
 
           // send payload to Solr for every row is very costy!
@@ -142,7 +142,8 @@
             // the method splice will remove records and return them as 
             // a new array
             rows = data.splice(0, 1000);
-            console.log(rows);
+            //console.log(rows);
+            self.postPayload(rows);
           }
         });
       },
