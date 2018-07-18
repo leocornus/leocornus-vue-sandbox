@@ -85,12 +85,6 @@ import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
-import simple from '@/libs/simple'
-// set up options for solr.
-simple.options = {
-    base: "in action now"
-}
-
 export default {
     components: {
       'listing-details': ListingDetails,
@@ -143,7 +137,6 @@ export default {
 
             var self = this;
             //console.log('I am in...');
-            console.log("Version = " + simple.getSimpleVersion());
 
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.
@@ -344,9 +337,6 @@ export default {
     created() {
 
       this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
-      simple.options = {
-        base: this.$localSettings.sideBarTitle
-      };
     }
 }
 </script>
