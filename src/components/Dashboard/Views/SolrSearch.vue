@@ -85,9 +85,9 @@ import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
-import solrsearch from '@/libs/solr-search'
+import simple from '@/libs/solr-search'
 // set up options for solr.
-solrsearch.options = {
+simple.options = {
     base: "in action now"
 }
 
@@ -143,7 +143,7 @@ export default {
 
             var self = this;
             //console.log('I am in...');
-            console.log("SolrVersion = " + solrsearch.getSolrVersion());
+            console.log("SolrVersion = " + simple.getSolrVersion());
 
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.
@@ -344,7 +344,7 @@ export default {
     created() {
 
       this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
-      solrsearch.options = {
+      simple.options = {
         base: this.$localSettings.sideBarTitle
       };
     }
