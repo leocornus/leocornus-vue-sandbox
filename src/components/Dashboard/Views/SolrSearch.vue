@@ -198,12 +198,19 @@ export default {
             // it is seems easier to use query parameters in a JSON request.
             axios.post(this.restBaseUrl + 'select', postParams)
             .then(function(response) {
+
                 console.log(response.data);
                 self.totalHits = response.data.response.numFound;
+
                 self.results = response.data.response.docs;
                 console.log(self.results);
+
+                // check if we have facets in response.
+                // Object hasOwnProperty is like hasKey but more complex.
+                if(response.data.hasOwnProperty('facet_counts')) {
                 //self.facets = response.data.facets;
-                self.facets = self.getReadyFacets(response.data.facet_counts.facet_fields);
+                    self.facets = self.getReadyFacets(response.data.facet_counts.facet_fields);
+                }
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 self.resultSummary = "Found " + self.totalHits + " docs in total!"
