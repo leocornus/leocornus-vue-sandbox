@@ -85,7 +85,7 @@ import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
-import simple from '@/libs/solr-search'
+import simple from '@/libs/simple'
 // set up options for solr.
 simple.options = {
     base: "in action now"
