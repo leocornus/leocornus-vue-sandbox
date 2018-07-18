@@ -1,11 +1,15 @@
 var solrsearch = {
 
+    options: {
+        base: "testing"
+    },
+
     /**
      * quick test fucntion.
      */
     getSolrVersion: function() {
-    
-        return "Solr Version";
+
+        return "Solr Version: " + this.options.base;
     }
 };
 

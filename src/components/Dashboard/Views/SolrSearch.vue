@@ -86,6 +86,10 @@ import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
 import solrsearch from '@/libs/solr-search'
+// set up options for solr.
+solrsearch.options = {
+    base: "in action now"
+}
 
 export default {
     components: {
@@ -333,8 +337,16 @@ export default {
         }
     },
 
+    /**
+     * created will be called after Vue mode is created.
+     * Vue mode is avaiable now!
+     */
     created() {
+
       this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
+      solrsearch.options = {
+        base: this.$localSettings.sideBarTitle
+      };
     }
 }
 </script>
