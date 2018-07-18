@@ -143,7 +143,7 @@ export default {
 
             var self = this;
             //console.log('I am in...');
-            console.log("SolrVersion = " + simple.getSolrVersion());
+            console.log("Version = " + simple.getSimpleVersion());
 
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.

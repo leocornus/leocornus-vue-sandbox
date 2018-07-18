@@ -1,4 +1,9 @@
-var solrsearch = {
+/**
+ * this is a simple java script lib for testing
+ *
+ * the name here is completly private
+ */
+var simple = {
 
     options: {
         base: "testing"
@@ -7,10 +12,10 @@ var solrsearch = {
     /**
      * quick test fucntion.
      */
-    getSolrVersion: function() {
+    getSimpleVersion: function() {
 
-        return "Solr Version: " + this.options.base;
+        return "Simple Version: " + this.options.base;
     }
 };
 
-export default solrsearch;
+export default simple;
