@@ -179,11 +179,8 @@ export default {
             var params = Object.assign({
               rows: 25,
               start: 0
-              // filter query list.
-              //fq: ["c4c_type:project"],
-
-            }, self.getFacetFields(), self.getFieldList()
-            );
+            }, self.getFacetFields(), self.getFieldList(), 
+            self.getFilterQuery());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
@@ -262,6 +259,22 @@ export default {
                   //fl: ["id","project_id"],
                   fl: this.fieldList.split(",")
                 };
+            }
+        },
+
+        /**
+         * prepare the filter query for search.
+         */
+        getFilterQuery() {
+
+            if(this.filterQuery === "") {
+                return {};
+            } else {
+                return {
+                  // filter query list.
+                  //fq: ["c4c_type:project"],
+                  fq: this.filterQuery.split(",")
+                }
             }
         },
 
