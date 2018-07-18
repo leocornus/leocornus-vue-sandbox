@@ -5,7 +5,7 @@
        href="#" class="card-link text-white">
     {{facetLabel}} - {{facetBuckets.length}}
     </a>
-    <div class="d-none">{{facetBucketsCSV}}</div>
+    <div class="d-none">{NO{facetBucketsCSV}NO}</div>
     <!-- span class="badge badge-light badge-not-pill float-right ml-1">
       <a v-on:click="showListGroup" href="#" class="card-link"
       ><i class="fas fa-list"></i></a>
