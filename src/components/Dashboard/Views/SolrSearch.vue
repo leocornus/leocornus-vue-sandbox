@@ -85,6 +85,8 @@ import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
+import solr from '@/libs/solr'
+
 export default {
     components: {
       'listing-details': ListingDetails,
@@ -137,6 +139,8 @@ export default {
 
             var self = this;
             //console.log('I am in...');
+            solr.config.baseUrl = self.restBaseUrl;
+            solr.ping();
 
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.
