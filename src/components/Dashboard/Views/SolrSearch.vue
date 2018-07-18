@@ -182,9 +182,7 @@ export default {
               // filter query list.
               //fq: ["c4c_type:project"],
 
-              // field list, control what fields to return in response.
-              //fl: ["id","project_id"],
-            }, self.getFacetFields()
+            }, self.getFacetFields(), self.getFieldList()
             );
 
             // this will show how to use query parameters in a JSON request.
@@ -254,6 +252,17 @@ export default {
          * get field list.
          */
         getFieldList() {
+
+            if(this.fieldList === "") {
+                // not fieldList specified, return an enpty object.
+                return {};
+            } else {
+                return {
+                  // field list, control what fields to return in response.
+                  //fl: ["id","project_id"],
+                  fl: this.fieldList.split(",")
+                };
+            }
         },
 
         /**
