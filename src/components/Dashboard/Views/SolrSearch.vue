@@ -135,8 +135,9 @@ export default {
          */
         simpleSearch() {
 
-            self = this;
-            console.log('I am in...');
+            var self = this;
+            //console.log('I am in...');
+
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.
             self.results = null;
@@ -232,7 +233,7 @@ export default {
          */
         getFacetFields() {
 
-            if(self.facetFields === "") {
+            if(this.facetFields === "") {
                 // return an empty object.
                 return {};
             } else {
@@ -244,9 +245,15 @@ export default {
                   //"facet.field":["project_id", "customer_id"]
                   // here is for single value
                   //"facet.field":"customer_id"
-                  "facet.field": self.facetFields.split(",")
+                  "facet.field": this.facetFields.split(",")
                 };
             }
+        },
+
+        /**
+         * get field list.
+         */
+        getFieldList() {
         },
 
         /**
