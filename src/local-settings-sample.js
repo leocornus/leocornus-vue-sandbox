@@ -44,6 +44,8 @@ export default {
              * settings for Solr search
              */
             solrRestBaseUrl: "https://search.example.com/solr/projects/",
+            // the base URL for tracking core.
+            solrTrackingUrl: "https://search.example.com/solr/track/",
 
             /**
              * local settings for real estate try out.

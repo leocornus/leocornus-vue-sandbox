@@ -193,6 +193,8 @@ export default {
                 params: params
             }
 
+            // track the post parameters.
+            solr.track(postParams);
             // the query url should be some thing like this: 
             // - 'https://one.sites.leocorn.com/rest/searchApi/search',
             // it is seems easier to use query parameters in a JSON request.
@@ -341,6 +343,8 @@ export default {
     created() {
 
       this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
+      // set the tracking base url.
+      solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
     }
 }
 </script>
