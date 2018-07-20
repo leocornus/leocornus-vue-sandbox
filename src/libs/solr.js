@@ -10,7 +10,9 @@ var solr = {
      * the configuration for the solr client.
      */
     config: {
-        baseUrl: "https://solr.example.com/"
+        // the base url to the solr core or collection.
+        // make sure we have the ending slash!
+        baseUrl: "https://solr.example.com/solr/core_one/"
     },
 
     /**
