@@ -90,7 +90,7 @@
         var self = this;
 
         //d3.csv('/static/files/pd-20180716.csv',
-        d3.csv('/static/files/sfq-20180716.csv',
+        d3.csv('/static/files/sfq-20180719.csv',
                // the first parameter is a row,
                // the second parameter is the index, starts from 0
                function(d, index) {
@@ -112,6 +112,7 @@
             project_detail_name: d["Project Detail: Project Detail Name"],
             project_detail_id: d["Project Detail: ID"],
             project_status: d["Project Status"],
+            certificate_detail_id: d["Certificate Id"],
             primary_contact_name: d["Primary Contact"],
             primary_contact_email: d["Primary Contact Email"],
             po_number: d["PO Number"],
