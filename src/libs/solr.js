@@ -5,6 +5,7 @@ import axios from 'axios'
  * the solr lib, actually the solrclient lib.
  */
 var solr = {
+
     /**
      * the configuration for the solr client.
      */
@@ -19,7 +20,11 @@ var solr = {
         
         var endPoint = this.config.baseUrl + "admin/ping";
         axios.get(endPoint).then(function(response) {
+            // showing the whole reponse.
             console.log(response);
+
+            // response status.
+            var status = response.status;
         }).catch(function(error) {
             console.log(error);
         });
