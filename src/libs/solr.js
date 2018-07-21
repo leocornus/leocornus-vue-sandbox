@@ -67,17 +67,50 @@ var solr = {
         // generate the MD5 has for the raw content.
         var md5Hash = md5(rawContent);
 
+        // TODO: query the count first. if we could not find anything,
+        // count will be 0
+        var theCount = this.getTrackingCount(md5Hash);
+        console.log("count = " + theCount);
+
         // TODO: assume we are working on query payload.
         var thePayload = {
           // using the MD5 hash as the id
           id : md5Hash,
+          count : theCount + 1,
           table : "tracking",
           content : rawContent,
+          // load the original query string.
           query: input.query,
           params: input.params
         };
 
         return thePayload;
+    },
+
+    /**
+     * return the count for this tracking..
+     * which will tell how many times this behavior has been executed.
+     */
+    getTrackingCount: function(theHash) {
+
+        var searchApi = this.config.trackingBaseUrl + "select";
+        // the default value is 0, no such tracking yet!
+        var count = 0;
+
+        // an solr qurery to get the count.
+        axios.post(searchApi, {"query":"id:" + theHash})
+        .then(function(response) {
+             var docs = response.data.response.docs;
+             console.log("docs");
+             console.log(docs);
+             count = docs[0].count[0];
+             return count;
+        })
+        .catch(function(error) {
+            console.log(error);
+            return count;
+        });
+
     }
 }
 
