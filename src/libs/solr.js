@@ -57,13 +57,16 @@ var solr = {
             // the default value is 0, no such tracking yet!
             var count = 0;
             var docs = response.data.response.docs;
-            console.log("docs for id");
             console.log(docs);
-            // TODO: no docs, set count to 0
-            // One doc,
-            //  has count value. get the value
-            //  has NO count value, use 0
-            count = docs[0].count[0];
+            // no docs, set count to 0
+            if(docs.length > 0) {
+                // One doc,
+                if(docs[0].hasOwnProperty('count')) {
+                    //  has count value. get the value
+                    //  has NO count value, use 0
+                    count = docs[0].count[0];
+                }
+            }
 
             // update payload.
             tPayload["count"] = count + 1;
