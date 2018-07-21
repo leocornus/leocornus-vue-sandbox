@@ -40,22 +40,50 @@ var solr = {
      */
     track: function(payload) {
 
+        // preparing the track payload.
+        var tPayload = this.trackPayload(payload);
+
+        // TODO: query the count first. if we could not find anything,
+        // count will be 0
         // we will need the parameter commit = true.
         var endPoint = this.config.trackingBaseUrl + 
                        "update/json/docs?commit=true";
+        // the endpoint for query.
+        var searchApi = this.config.trackingBaseUrl + "select";
 
-        // preparing the track payload.
-        var tPayload = this.trackPayload(payload);
-        axios.post(endPoint, tPayload).then(function(response) {
+        // an solr qurery to get the count.
+        axios.post(searchApi, {"query":"id:" + tPayload.id})
+        .then(function(response) {
+            // the default value is 0, no such tracking yet!
+            var count = 0;
+            var docs = response.data.response.docs;
+            console.log("docs for id");
+            console.log(docs);
+            // TODO: no docs, set count to 0
+            // One doc,
+            //  has count value. get the value
+            //  has NO count value, use 0
+            count = docs[0].count[0];
 
-            // what we do if success?
-            console.log(response);
+            // update payload.
+            tPayload["count"] = count + 1;
+            //console.log(tPayload);
+
+            axios.post(endPoint, tPayload).then(function(response) {
+
+                // what we do if success?
+                console.log(response);
+            })
+            .catch(function(error) {
+
+                // still need return normally even it's failed to track.
+                console.log(error);
+            });
         })
         .catch(function(error) {
-
-            // still need return normally even it's failed to track.
             console.log(error);
         });
+
     },
 
     /**
@@ -67,16 +95,10 @@ var solr = {
         // generate the MD5 has for the raw content.
         var md5Hash = md5(rawContent);
 
-        // TODO: query the count first. if we could not find anything,
-        // count will be 0
-        var theCount = this.getTrackingCount(md5Hash);
-        console.log("count = " + theCount);
-
         // TODO: assume we are working on query payload.
         var thePayload = {
           // using the MD5 hash as the id
           id : md5Hash,
-          count : theCount + 1,
           table : "tracking",
           content : rawContent,
           // load the original query string.
@@ -85,33 +107,8 @@ var solr = {
         };
 
         return thePayload;
-    },
-
-    /**
-     * return the count for this tracking..
-     * which will tell how many times this behavior has been executed.
-     */
-    getTrackingCount: function(theHash) {
-
-        var searchApi = this.config.trackingBaseUrl + "select";
-        // the default value is 0, no such tracking yet!
-        var count = 0;
-
-        // an solr qurery to get the count.
-        axios.post(searchApi, {"query":"id:" + theHash})
-        .then(function(response) {
-             var docs = response.data.response.docs;
-             console.log("docs");
-             console.log(docs);
-             count = docs[0].count[0];
-             return count;
-        })
-        .catch(function(error) {
-            console.log(error);
-            return count;
-        });
-
     }
+
 }
 
 export default solr;
