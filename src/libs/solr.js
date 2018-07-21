@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import md5 from 'md5'
 
 /**
  * the solr lib, actually the solrclient lib.
@@ -62,11 +63,18 @@ var solr = {
      */
     trackPayload: function(input) {
 
+        var rawContent = JSON.stringify(input);
+        // generate the MD5 has for the raw content.
+        var md5Hash = md5(rawContent);
+
         // TODO: assume we are working on query payload.
         var thePayload = {
           // using the MD5 hash as the id
-          id : "quicktest",
-          content: JSON.stringify(input)
+          id : md5Hash,
+          table : "tracking",
+          content : rawContent,
+          query: input.query,
+          params: input.params
         };
 
         return thePayload;
