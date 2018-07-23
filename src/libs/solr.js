@@ -94,9 +94,14 @@ var solr = {
      */
     trackPayload: function(input) {
 
+        // store the input as string, using stringify function.
         var rawContent = JSON.stringify(input);
         // generate the MD5 has for the raw content.
         var md5Hash = md5(rawContent);
+
+        // find the first slash (/) in the full URL.
+        // the 10 comes from prototal and // for example https://some.com
+        var firstSlash = input.end_point.indexOf("/", 10);
 
         // TODO: assume we are working on query payload.
         var thePayload = {
@@ -104,7 +109,8 @@ var solr = {
           id : md5Hash,
           table : "tracking",
           content : rawContent,
-          rest_api : input.end_point,
+          rest_domain: input.end_point.substring(0,firstSlash),
+          rest_path: input.end_point.substring(firstSlash),
           // load the original query string.
           query : input.query,
           params : input.params
