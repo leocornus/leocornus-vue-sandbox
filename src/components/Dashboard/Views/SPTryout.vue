@@ -24,6 +24,16 @@
                 v-on:click="inspectCall">Inspect!</button>
       </span>
     </div>
+    <div class="input-group mb-2">
+      <input type="text" class="form-control form-control-lg" id="startFolders"
+             v-model="startFolders"
+             v-on:keyup.enter="processFolderBtn"
+             placeholder="Set the start fodlers.">
+      <span class="input-group-btn">
+        <button class="btn btn-outline-primary" type="submit"
+                v-on:click="processFolderBtn">Process Folder!</button>
+      </span>
+    </div>
   </div>
 
   <div class="card mb-1" v-if="detailsData">
@@ -77,6 +87,9 @@
              v-on:click="simpleCopy">Simple Copy Data</a>
         </div>
         <!-- small class="text-muted">9 mins</small -->
+        <div>
+          <p>Folder Count: {{folderCount}}</p>
+        </div>
       </div>
     </div>
     <div class="col-md-5">
@@ -119,6 +132,9 @@
         apiUrl: '/_api/',
         // type of the data.
         dataType: '',
+        startFolders: 'Customer Group A',
+        // folder count.
+        folderCount: 0,
         // the detailsData.
         detailsData: null
       }
@@ -163,6 +179,49 @@
         .catch(function(error) {
           // 
           self.inputText = error;
+        });
+      },
+
+      /**
+       * process folder event.
+       */
+      processFolderBtn() {
+
+          var vm = this;
+          vm.processFolder(vm.startFolders);
+      },
+
+      /**
+       * try to interate into a folder.
+       */
+      processFolder(folderName) {
+
+        var vm = this;
+
+        var theUrl = vm.$localSettings.targetSource + 
+                     vm.$localSettings.sharepointSite +
+                     "/_api/web/GetFolderByServerRelativeUrl('" +
+                     encodeURIComponent(folderName) + "')";
+        console.log(theUrl);
+        var authHeaders = {
+            headers: {
+                "Authorization": "Bearer " + vm.$localSettings.accessToken
+            }
+        };
+
+        // list files.
+
+        // process sub folders.
+        axios.get(theUrl + "/Folders", authHeaders).then(function(response) {
+            console.log(response);
+            response.data.value.forEach(function(folder) {
+                console.log(folder);
+                var subFolderName = folder.Name;
+                vm.folderCount ++;
+                vm.processFolder(folderName + "/" + subFolderName);
+            });
+        }).catch(function(error) {
+            console.log(error);
         });
       },
 
