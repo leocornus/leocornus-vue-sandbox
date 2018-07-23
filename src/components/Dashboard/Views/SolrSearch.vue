@@ -193,12 +193,17 @@ export default {
                 params: params
             }
 
+            var endPoint = this.restBaseUrl + "select";
             // track the post parameters.
-            solr.track(postParams);
+            // the Object assign will merge / copy source object to target
+            // object.
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             postParams);
+            solr.track(trackPayload);
             // the query url should be some thing like this: 
             // - 'https://one.sites.leocorn.com/rest/searchApi/search',
             // it is seems easier to use query parameters in a JSON request.
-            axios.post(this.restBaseUrl + 'select', postParams)
+            axios.post(endPoint, postParams)
             .then(function(response) {
 
                 console.log(response.data);

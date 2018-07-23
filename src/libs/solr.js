@@ -104,9 +104,10 @@ var solr = {
           id : md5Hash,
           table : "tracking",
           content : rawContent,
+          rest_api : input.end_point,
           // load the original query string.
-          query: input.query,
-          params: input.params
+          query : input.query,
+          params : input.params
         };
 
         return thePayload;
