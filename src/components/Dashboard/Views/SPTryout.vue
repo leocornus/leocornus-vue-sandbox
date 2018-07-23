@@ -98,6 +98,8 @@
   import * as d3 from 'd3'
   import axios from 'axios'
 
+  import solr from '@/libs/solr'
+
   export default {
 
     computed: {
@@ -134,6 +136,9 @@
         var theUrl = self.$localSettings.targetSource + 
                      self.$localSettings.sharepointSite +
                      self.apiUrl;
+
+        // track the API call.
+        solr.track({"end_point": theUrl});
 
         axios.get(theUrl,
             {
@@ -203,6 +208,16 @@
       simpleCopy() {
         this.outputText = this.inputText.split('\n');
       }
+    },
+
+    /**
+     * created will be called after Vue mode is created.
+     * Vue mode is avaiable now!
+     */
+    created() {
+
+      // set the tracking base url.
+      solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
     }
   }
 </script>
