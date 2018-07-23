@@ -18,11 +18,13 @@
     </tr>
   </thead>
   <tbody>
-    <tr v-for="(fieldName, index) in Object.keys(doc)" 
-        :index="index" :fieldName="fieldName">
+    <!-- tr v-for="(fieldName, index) in Object.keys(doc)"
+        :index="index" :fieldName="fieldName" -->
+    <tr v-for="(field, index) in fields"
+        :index="index" :field="field">
       <th scope="row">{{index}}</th>
-      <td>{{fieldName}}</td>
-      <td>{{doc[fieldName]}}</td>
+      <td>{{field["fieldName"]}}</td>
+      <td>{{field["fieldValue"]}}</td>
     </tr>
   </tbody>
 </table>
@@ -106,6 +108,30 @@ export default {
               default:
                 return caption;
             }
+        },
+
+        /**
+         * preparing the fields and values for each doc.
+         */
+        fields() {
+
+            var vm = this;
+
+            // get the fields name for each doc.
+            var docFields = [];
+            Object.keys(vm.doc).forEach(function(fieldName) {
+
+                // if we not process the field value, set the value as it is.
+                var theValue = vm.doc[fieldName];
+
+                var docField = {
+                    fieldName: fieldName,
+                    fieldValue: theValue
+                };
+                docFields.push(docField);
+            });
+
+            return docFields;
         }
     }
 }
