@@ -3,7 +3,7 @@
 
   <div class="text-center">
     <div class="container">
-      <h3 class="mt-1 mb-1">Sharepoint Tryout Page</h3>
+      <h3 class="mt-1 mb-1">Sharepoint Sandbox Page</h3>
       <p class="lead text-muted">A playground to try Sharepoint APIs.</p>
       <!-- p>
         <a href="#" class="btn btn-primary my-2">Main call to action</a>
@@ -197,6 +197,8 @@
       processFolder(folderName) {
 
         var vm = this;
+        // count the folder.
+        vm.folderCount ++;
 
         var theUrl = vm.$localSettings.targetSource + 
                      vm.$localSettings.sharepointSite +
@@ -217,7 +219,6 @@
             response.data.value.forEach(function(folder) {
                 console.log(folder);
                 var subFolderName = folder.Name;
-                vm.folderCount ++;
                 vm.processFolder(folderName + "/" + subFolderName);
             });
         }).catch(function(error) {
