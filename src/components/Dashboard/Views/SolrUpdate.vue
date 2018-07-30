@@ -11,7 +11,7 @@
              placeholder="search all">
       <span class="input-group-btn">
         <button class="btn btn-outline-primary btn-lg" type="submit" 
-                v-on:click="executeIngest">Execute</button>
+                v-on:click="executeAction">Execute</button>
       </span>
     </div>
     <div class="input-group mb-2">
@@ -51,5 +51,45 @@ import axios from 'axios'
 
 export default {
     // JavaScript goes here.
+
+    data() {
+        return {
+            baseUrl: 'https://base.restapi.com',
+            // empty payload as default.
+            payload: '{}',
+            actionName: 'Name of Action',
+            /**
+             * logging messages.
+             */
+            messages: null
+        }
+    },
+
+    // define the methods.
+    methods: {
+
+        /**
+         * execute ingest
+         */
+        executeAction: function() {
+
+            var vm = this;
+
+            // get ready the messages area. reset!
+            vm.messages=[];
+
+            // TODO: check action and payload.
+            var payload = JSON.parse(vm.payload);
+            switch(vm.actionName) {
+                case "select":
+                    // simple search
+                    //vm.simpleSelect(payload);
+                    break;
+                default:
+                    vm.messages.push("Not supported Action: " + vm.actionName);
+                    // do nothing for now.
+            }
+        },
+    }
 }
 </script>
