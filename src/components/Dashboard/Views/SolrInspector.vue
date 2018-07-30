@@ -83,13 +83,50 @@ export default {
             switch(vm.actionName) {
                 case "select":
                     // simple search
-                    //vm.simpleSelect(payload);
+                    vm.simpleSelect(payload);
                     break;
                 default:
                     vm.messages.push("Not supported Action: " + vm.actionName);
                     // do nothing for now.
             }
         },
+
+        /**
+         * simple select for quick check.
+         */
+        simpleSelect: function(payload) {
+
+            var vm = this;
+
+            // make sure we have valid end point.
+            var endPoint = vm.baseUrl.endsWith("/") ?
+                           vm.baseUrl + "select" : vm.baseUrl + "/select";
+
+            // we will assume the payload are valid JSON.
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             payload);
+            solr.track(trackPayload);
+            axios.post(endPoint, payload)
+            .then(function(response) {
+                vm.messages.push("Got Response:");
+                vm.messages.push(response);
+            })
+            .catch(function(error) {
+                vm.messages.push("ERROR!");
+                vm.messages.push(error);
+            });
+        }
+    },
+
+    /**
+     * created will be called after Vue mode is created.
+     * Vue mode is avaiable now!
+     */
+    created() {
+
+        this.baseUrl = this.$localSettings.solrRestBaseUrl;
+        // set the tracking base url.
+        solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
     }
 }
 </script>
