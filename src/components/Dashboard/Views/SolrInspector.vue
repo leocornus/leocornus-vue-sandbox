@@ -18,9 +18,10 @@
       <div class="input-group-prepend">
         <span id="payload-addon" class="input-group-text">Payload: </span>
       </div>
-      <textarea class="form-control" aria-label="payload" rows="8"
+      <div ref="jsoneditor" style="width: 800px; height: 300px;"></div>
+      <!-- textarea class="form-control" aria-label="payload" rows="8"
                 v-model="payload"
-      ></textarea>
+      ></textarea -->
     </div>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
@@ -46,6 +47,9 @@
 <script>
 
 // import 3rd libs.
+import JSONEditor from 'jsoneditor/dist/jsoneditor.min.js'
+import 'jsoneditor/dist/jsoneditor.min.css'
+
 import solr from '@/libs/solr'
 import axios from 'axios'
 
@@ -58,6 +62,8 @@ export default {
             // empty payload as default.
             payload: '{}',
             actionName: 'Name of Action',
+            // the JSONEditor object.
+            editor: null,
             /**
              * logging messages.
              */
@@ -79,7 +85,8 @@ export default {
             vm.messages=[];
 
             // TODO: check action and payload.
-            var payload = JSON.parse(vm.payload);
+            //var payload = JSON.parse(vm.payload);
+            var payload = vm.editor.get();
             switch(vm.actionName) {
                 case "select":
                     // simple search
@@ -127,6 +134,17 @@ export default {
         this.baseUrl = this.$localSettings.solrRestBaseUrl;
         // set the tracking base url.
         solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
+    },
+
+    /**
+     * mounted
+     */
+    mounted() {
+        const container = this.$refs.jsoneditor
+        const options = {}
+
+        this.editor = new JSONEditor(container, options)
+        this.editor.set({})
     }
 }
 </script>
