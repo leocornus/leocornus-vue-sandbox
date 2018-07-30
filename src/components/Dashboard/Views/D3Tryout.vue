@@ -90,7 +90,8 @@
         var self = this;
 
         //d3.csv('/static/files/pd-20180716.csv',
-        d3.csv('/static/files/sfq-20180719.csv',
+        //d3.csv('/static/files/sfq-20180719.csv',
+        d3.csv('/static/files/sfp-20180727.csv',
                // the first parameter is a row,
                // the second parameter is the index, starts from 0
                function(d, index) {
@@ -142,7 +143,7 @@
             var rows = [];
             // the method splice will remove records and return them as 
             // a new array
-            rows = data.splice(0, 1000);
+            rows = data.splice(0, 500);
             //console.log(rows);
             self.postPayload(rows);
           }
