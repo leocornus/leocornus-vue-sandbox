@@ -17,7 +17,7 @@ import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
 import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
-import SolrUpdate from '../components/Dashboard/Views/SolrUpdate.vue'
+import SolrInspector from '../components/Dashboard/Views/SolrInspector.vue'
 
 const routes = [
   {
@@ -56,9 +56,9 @@ const routes = [
         component: SolrSearch
       },
       {
-        path: 'solrupdate',
-        name: 'Solr Update',
-        component: SolrUpdate
+        path: 'solrinspector',
+        name: 'Solr Inspector',
+        component: SolrInspector
       },
       {
         path: 'user',
