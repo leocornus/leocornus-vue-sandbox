@@ -24,12 +24,31 @@
       </span>
     </div>
     <div class="row">
+<div class="col">
+  <div class="card">
+    <div class="card-header">
+      Payload
+    </div>
+    <div class="card-body">
+      <div ref="payloadEditor" style="height: 400px;"></div>
+    </div>
+  </div>
+</div>
+<div class="col">
+  <div class="card">
+    <div class="card-header">
+      Response
+    </div>
+    <div class="card-body">
+      <div ref="outputEditor" style="height: 400px;"></div>
+    </div>
+  </div>
+</div>
     </div>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="payload-addon" class="input-group-text">Payload: </span>
       </div>
-      <div ref="jsoneditor" style="width: 800px; height: 300px;"></div>
       <!-- textarea class="form-control" aria-label="payload" rows="8"
                 v-model="payload"
       ></textarea -->
@@ -65,7 +84,8 @@ export default {
             payload: '{}',
             actionName: 'Name of Action',
             // the JSONEditor object.
-            editor: null,
+            payloadEditor: null,
+            outputEditor: null,
             /**
              * logging messages.
              */
@@ -88,7 +108,7 @@ export default {
 
             // TODO: check action and payload.
             //var payload = JSON.parse(vm.payload);
-            var payload = vm.editor.get();
+            var payload = vm.payloadEditor.get();
             switch(vm.actionName) {
                 case "select":
                     // simple search
@@ -118,11 +138,13 @@ export default {
             axios.post(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
-                vm.messages.push(JSON.stringify(response, null, 2));
+                vm.outputEditor.set(response);
+                //vm.messages.push(JSON.stringify(response, null, 2));
                 //vm.payload = JSON.stringify(response, null, 2);
             })
             .catch(function(error) {
                 vm.messages.push("ERROR!");
+                vm.outputEditor.set(error);
                 vm.messages.push(error);
             });
         }
@@ -143,11 +165,16 @@ export default {
      * mounted
      */
     mounted() {
-        const container = this.$refs.jsoneditor
+        const reqEditor = this.$refs.payloadEditor
+        const resEditor = this.$refs.outputEditor
         const options = {}
 
-        this.editor = new JSONEditor(container, options)
-        this.editor.set({query:"*.*"})
+        this.payloadEditor = new JSONEditor(reqEditor, options)
+        // set default to query everything.
+        this.payloadEditor.set({query:"*.*"})
+
+        this.outputEditor = new JSONEditor(resEditor, options)
+        this.outputEditor.set({})
     }
 }
 </script>
