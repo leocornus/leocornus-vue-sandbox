@@ -23,7 +23,7 @@
                 v-on:click="executeAction">Execute</button>
       </span>
     </div>
-    <div class="row">
+    <div class="row mb-2">
 <div class="col">
   <div class="card">
     <div class="card-header">
@@ -45,22 +45,14 @@
   </div>
 </div>
     </div>
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span id="payload-addon" class="input-group-text">Payload: </span>
-      </div>
-      <!-- textarea class="form-control" aria-label="payload" rows="8"
-                v-model="payload"
-      ></textarea -->
-    </div>
-    <p>
-      <h3>Status:</h3>
+    <div>
+      <h3 class="mt-2">Status:</h3>
       <ul class="list-group">
         <li class="list-group-item" v-for="(msg, index) in messages" :key="index">
           {{index + 1}} : {{msg}}
         </li>
       </ul>
-    </p>
+    </div>
   </div>
 </div>
 </template>
@@ -80,10 +72,8 @@ export default {
     data() {
         return {
             baseUrl: 'https://base.restapi.com',
-            // empty payload as default.
-            payload: '{}',
             actionName: 'Name of Action',
-            // the JSONEditor object.
+            // the JSONEditors object.
             payloadEditor: null,
             outputEditor: null,
             /**
