@@ -167,7 +167,13 @@ export default {
     mounted() {
         const reqEditor = this.$refs.payloadEditor
         const resEditor = this.$refs.outputEditor
-        const options = {}
+        const options = {
+            // default mode.
+            mode: 'view',
+            // allowed modes.
+            //modes: ['code', 'form', 'text', 'tree', 'view']
+            modes: ['code', 'tree', 'view']
+        }
 
         this.payloadEditor = new JSONEditor(reqEditor, options)
         // set default to query everything.
