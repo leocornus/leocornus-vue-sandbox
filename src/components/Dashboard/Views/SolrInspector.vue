@@ -3,6 +3,15 @@
   <div id="query-app">
     <div class="input-group mb-2">
       <div class="input-group-prepend">
+        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
+      </div>
+      <input type="text" class="form-control" id="restBaseUrl"
+             aria-describedby="restBaseUrl-addon"
+             v-model="baseUrl"
+             placeholder="RESTful API base URL https://www.rest.com">
+    </div>
+    <div class="input-group mb-2">
+      <div class="input-group-prepend">
         <span id="action-addon" class="input-group-text">Action: </span>
       </div>
       <input type="text" class="form-control form-control-lg" id="action" 
@@ -14,6 +23,8 @@
                 v-on:click="executeAction">Execute</button>
       </span>
     </div>
+    <div class="row">
+    </div>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="payload-addon" class="input-group-text">Payload: </span>
@@ -22,15 +33,6 @@
       <!-- textarea class="form-control" aria-label="payload" rows="8"
                 v-model="payload"
       ></textarea -->
-    </div>
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
-      </div>
-      <input type="text" class="form-control" id="restBaseUrl"
-             aria-describedby="restBaseUrl-addon"
-             v-model="baseUrl"
-             placeholder="RESTful API base URL https://www.rest.com">
     </div>
     <p>
       <h3>Status:</h3>
@@ -116,7 +118,8 @@ export default {
             axios.post(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
-                vm.messages.push(response);
+                vm.messages.push(JSON.stringify(response, null, 2));
+                //vm.payload = JSON.stringify(response, null, 2);
             })
             .catch(function(error) {
                 vm.messages.push("ERROR!");
@@ -144,7 +147,7 @@ export default {
         const options = {}
 
         this.editor = new JSONEditor(container, options)
-        this.editor.set({})
+        this.editor.set({query:"*.*"})
     }
 }
 </script>
