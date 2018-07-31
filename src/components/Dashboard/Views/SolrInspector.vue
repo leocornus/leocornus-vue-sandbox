@@ -114,10 +114,38 @@ export default {
                     // simple search
                     vm.simpleSelect(payload);
                     break;
+                case "update":
+                    // simple update.
+                    vm.simpleUpdate(payload);
+                    break;
                 default:
                     vm.messages.push("Not supported Action: " + vm.actionName);
                     // do nothing for now.
             }
+        },
+
+        /**
+         * simple update action.
+         */
+        simpleUpdate: function(payload) {
+
+            var vm = this;
+            const endPoint = vm.baseUrl.endsWith("/") ?
+                             vm.baseUrl + "update/json/docs?commit=true" :
+                             vm.baseUrl + "/update/json/docs?commit=true";
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             payload);
+            solr.track(trackPayload);
+
+            axios.post(endPoint, payload)
+            .then(function(response) {
+                vm.messages.push("Update Success!");
+                vm.outputEditor.set(response);
+            })
+            .catch(function(error) {
+                vm.messages.push("Update Failed!");
+                vm.outputEditor.set(error);
+            });
         },
 
         /**
