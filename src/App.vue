@@ -1,12 +1,40 @@
 <template>
   <div :class="{'nav-open': $sidebar.showSidebar}">
     <notifications></notifications>
-    <router-view></router-view>
+    <router-view @authenticated="setAuthenticated"></router-view>
   </div>
 </template>
 
 <script>
-  export default {}
+export default {
+    data() {
+        return {
+            authenticated: false,
+            mockAccount: {
+               username:"seanchen", 
+               password:"supervue1"
+            }
+        }
+    },
+
+    mounted() {
+        if(!this.authenticated) {
+            this.$router.replace({name:"login"});
+        }
+    },
+
+    methods: {
+        setAuthenticated(status) {
+
+            this.authenticated = status;
+        },
+
+        logout() {
+
+            this.authenticated = false;
+        }
+    }
+}
 </script>
 <style lang="scss">
   .vue-notifyjs.notifications{
