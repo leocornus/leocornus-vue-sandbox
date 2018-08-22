@@ -18,7 +18,7 @@ export default {
     },
 
     mounted() {
-        if(!this.authenticated) {
+        if(localStorage.getItem('user') == null) {
             this.$router.replace({name:"login"});
         }
     },

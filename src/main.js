@@ -30,10 +30,16 @@ const router = new VueRouter({
 
 // use the before each to restric access.
 router.beforeEach((to, from, next) => {
-    console.log(to);
-    console.log("authenticated = " + this.authenticated);
-    console.log("username: " + localStorage.getItem('user'));
-    next();
+    if(to.fullPath == "/login") {
+        next();
+    } else if(localStorage.getItem('user') == null) {
+        next({
+            name: "login",
+            params: { nextUrl: to.fullPath }
+        });
+    } else {
+        next();
+    }
 });
 
 /* eslint-disable no-new */
