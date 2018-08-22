@@ -21,7 +21,11 @@
         methods: {
             login() {
                 if(this.input.username != "" && this.input.password != "") {
-                    if(this.input.username == this.$parent.mockAccount.username && this.input.password == this.$parent.mockAccount.password) {
+                    if(this.input.username == this.$parent.mockAccount.username &&
+                       this.input.password == this.$parent.mockAccount.password) {
+
+                        localStorage.setItem("user", this.input.username);
+
                         this.$emit("authenticated", true);
                         this.$router.replace({ name: "Overview" });
                     } else {

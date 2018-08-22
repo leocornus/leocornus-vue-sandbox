@@ -28,6 +28,14 @@ const router = new VueRouter({
   linkActiveClass: 'nav-item active'
 })
 
+// use the before each to restric access.
+router.beforeEach((to, from, next) => {
+    console.log(to);
+    console.log("authenticated = " + this.authenticated);
+    console.log("username: " + localStorage.getItem('user'));
+    next();
+});
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
