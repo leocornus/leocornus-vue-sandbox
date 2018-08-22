@@ -29,6 +29,11 @@
               About
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" @click="logout">
+              Logout
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -52,6 +57,11 @@
       }
     },
     methods: {
+      logout() {
+
+        localStorage.removeItem('user');
+        this.$router.push({name:'login'});
+      },
       capitalizeFirstLetter (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },
