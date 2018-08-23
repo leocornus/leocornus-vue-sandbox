@@ -180,6 +180,15 @@ export default {
         /**
          * this is for end point searchApi/simpleCgi.
          * it will tabl Get.
+         *
+         * The simplest payload will be:
+         *  {
+         *  "params": {
+         *      "q":"*:*"
+         *     }
+         *  }
+         * axios get will wrap up all values in params to build the
+         * HTTP query param string.
          */
         simpleCgi: function(payload) {
             var vm = this;
