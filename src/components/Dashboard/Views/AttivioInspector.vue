@@ -101,9 +101,13 @@ export default {
             //var payload = JSON.parse(vm.payload);
             var payload = vm.payloadEditor.get();
             switch(vm.actionName) {
-                case "select":
+                case "search":
                     // simple search
-                    vm.simpleSelect(payload);
+                    vm.simpleSearch(payload);
+                    break;
+                case "simplecgi":
+                    // simple search
+                    vm.simpleCgi(payload);
                     break;
                 // no update for now.
                 //case "update":
@@ -141,21 +145,56 @@ export default {
         },
 
         /**
-         * simple select for quick check.
+         * simple searchApi/search for quick check.
+         * This endpoint is a simplified JSON query request.
+         * it required to use POST.
          */
-        simpleSelect: function(payload) {
+        simpleSearch: function(payload) {
 
             var vm = this;
 
             // make sure we have valid end point.
             var endPoint = vm.baseUrl.endsWith("/") ?
-                           vm.baseUrl + "select" : vm.baseUrl + "/select";
+                           vm.baseUrl + "searchApi/search" : 
+                           vm.baseUrl + "/searchApi/search";
 
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
             solr.track(trackPayload);
+
             axios.post(endPoint, payload)
+            .then(function(response) {
+                vm.messages.push("Got Response:");
+                vm.outputEditor.set(response);
+                //vm.messages.push(JSON.stringify(response, null, 2));
+                //vm.payload = JSON.stringify(response, null, 2);
+            })
+            .catch(function(error) {
+                vm.messages.push("ERROR!");
+                vm.outputEditor.set(error);
+                vm.messages.push(error);
+            });
+        },
+
+        /**
+         * this is for end point searchApi/simpleCgi.
+         * it will tabl Get.
+         */
+        simpleCgi: function(payload) {
+            var vm = this;
+
+            // make sure we have valid end point.
+            var endPoint = vm.baseUrl.endsWith("/") ?
+                           vm.baseUrl + "searchApi/simpleCgi" : 
+                           vm.baseUrl + "/searchApi/simpleCgi";
+
+            // we will assume the payload are valid JSON.
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             payload);
+            solr.track(trackPayload);
+
+            axios.get(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
                 vm.outputEditor.set(response);
