@@ -1,6 +1,7 @@
 <template>
 <div class="content container">
   <div id="query-app">
+    <div class="h3 mt-2">Solr REST API Inspector</div>
     <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
