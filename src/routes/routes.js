@@ -20,6 +20,7 @@ import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
 import SolrInspector from '../components/Dashboard/Views/SolrInspector.vue'
+import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
         path: 'solrinspector',
         name: 'Solr Inspector',
         component: SolrInspector
+      },
+      {
+        path: 'attivioinspector',
+        name: 'Attivio Inspector',
+        component: AttivioInspector
       },
       {
         path: 'user',
