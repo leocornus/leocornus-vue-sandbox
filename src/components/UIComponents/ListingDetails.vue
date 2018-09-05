@@ -1,4 +1,5 @@
 <template>
+
 <b-card class="mb-1">
 <b-card-header :id="listingID">
   <h5 class="mb-0">
@@ -22,7 +23,7 @@
         :index="index" :fieldName="fieldName" -->
     <tr v-for="(field, index) in fields"
         :index="index" :field="field">
-      <th scope="row">{{index}}</th>
+      <th scope="row">{{formatIndex(index)}}</th>
       <td>{{field["fieldName"]}}</td>
       <td>{{field["fieldValue"]}}</td>
     </tr>
@@ -132,6 +133,21 @@ export default {
             });
 
             return docFields;
+        }
+
+    },
+
+    /**
+     * methods.
+     */
+    methods: {
+
+        /**
+         * format the index.
+         */
+        formatIndex(index) {
+
+            return index + ".)";
         }
     }
 }
