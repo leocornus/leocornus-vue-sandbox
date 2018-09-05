@@ -23,8 +23,9 @@
         :index="index" :fieldName="fieldName" -->
     <tr v-for="(field, index) in fields"
         :index="index" :field="field">
-      <th scope="row">{{formatIndex(index)}}</th>
-      <td>{{field["fieldName"]}}</td>
+      <!-- th scope="row">{{formatIndex(index)}}</th -->
+      <th scope="row">{{index}}</th>
+      <td><span v-html='field["fieldName"]'></span></td>
       <td>{{field["fieldValue"]}}</td>
     </tr>
   </tbody>
@@ -124,9 +125,17 @@ export default {
 
                 // if we not process the field value, set the value as it is.
                 var theValue = vm.doc[fieldName];
+                var theName = fieldName;
+
+                if(fieldName.length > 30) {
+                    // NOTE: We will need v-html directive to load raw HTML.
+                    theName = '<a href="#" data-toggle="tooltip" title="' +
+                              fieldName + '">' +
+                              fieldName.substring(0, 25) + '...</a>';
+                }
 
                 var docField = {
-                    fieldName: fieldName,
+                    fieldName: theName,
                     fieldValue: theValue
                 };
                 docFields.push(docField);
@@ -134,7 +143,6 @@ export default {
 
             return docFields;
         }
-
     },
 
     /**
