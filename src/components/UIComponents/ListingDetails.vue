@@ -123,10 +123,7 @@ export default {
             var docFields = [];
             Object.keys(vm.doc).forEach(function(fieldName) {
 
-                // if we not process the field value, set the value as it is.
-                var theValue = vm.doc[fieldName];
                 var theName = fieldName;
-
                 if(fieldName.length > 30) {
                     // NOTE: We will need v-html directive to load raw HTML.
                     theName = '<a href="#" data-toggle="tooltip" title="' +
@@ -134,11 +131,27 @@ export default {
                               fieldName.substring(0, 25) + '...</a>';
                 }
 
+                // if we not process the field value, set the value as it is.
+                var theValue = vm.doc[fieldName];
+
                 var docField = {
                     fieldName: theName,
                     fieldValue: theValue
                 };
                 docFields.push(docField);
+            });
+
+            // sort by field name.
+            docFields.sort(function(a, b) {
+                if(a.fieldName < b.fieldName) {
+                    return -1;
+                }
+
+                if(a.fieldName > b.fieldName) {
+                    return 1;
+                }
+
+                return 0;
             });
 
             return docFields;
