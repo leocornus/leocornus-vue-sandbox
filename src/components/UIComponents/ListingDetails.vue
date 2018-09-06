@@ -124,12 +124,6 @@ export default {
             Object.keys(vm.doc).forEach(function(fieldName) {
 
                 var theName = fieldName;
-                if(fieldName.length > 30) {
-                    // NOTE: We will need v-html directive to load raw HTML.
-                    theName = '<a href="#" data-toggle="tooltip" title="' +
-                              fieldName + '">' +
-                              fieldName.substring(0, 25) + '...</a>';
-                }
 
                 // if we not process the field value, set the value as it is.
                 var theValue = vm.doc[fieldName];
