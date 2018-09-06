@@ -192,7 +192,8 @@ export default {
             // we will use Object assign to merge them all together.
             var params = Object.assign({
               rows: 25,
-              start: 0
+              start: 0,
+              sort: self.sort
             }, self.getFacetFields(), self.getFieldList(), 
             self.getFilterQuery());
 
