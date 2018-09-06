@@ -31,6 +31,13 @@
              aria-describedby="filterQuery-addon"
              v-model="filterQuery"
              placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
+      <div class="input-group-prepend">
+        <span id="sort-addon" class="input-group-text">Sort: </span>
+      </div>
+      <input type="text" class="form-control" id="sort"
+             aria-describedby="sort-addon"
+             v-model="sort"
+             placeholder="set sort here: id desc,type asc">
     </div>
 
     <div class="input-group mb-2">
@@ -106,6 +113,9 @@ export default {
 
         // set the default filter query to empty.
         filterQuery: "",
+
+        // set the default sort
+        sort: "",
 
         // set default field list to empty, which will return all fields.
         fieldList: "",
