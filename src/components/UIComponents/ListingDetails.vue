@@ -26,7 +26,7 @@
       <!-- th scope="row">{{formatIndex(index)}}</th -->
       <th scope="row">{{index}}</th>
       <td><span v-html='field["fieldName"]'></span></td>
-      <td>{{field["fieldValue"]}}</td>
+      <td><span v-html='field["fieldValue"]'></span></td>
     </tr>
   </tbody>
 </table>
@@ -154,7 +154,15 @@ export default {
                 return 0;
             });
 
-            return docFields;
+            // using array map to customize field values:
+            if(vm.$localSettings.hasOwnProperty("customizeField")) {
+                //console.log(vm.$localSettings.customizeField);
+                // the customizeField will follow the specification of
+                // Array.map callback function.
+                return docFields.map(vm.$localSettings.customizeField);
+            } else {
+                return docFields;
+            }
         }
     },
 

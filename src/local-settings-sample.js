@@ -47,6 +47,15 @@ export default {
             // the base URL for tracking core.
             solrTrackingUrl: "https://search.example.com/solr/track/",
 
+            // the function to customize each field: field name and field value.
+            // NOTE: It is used in ListingDetails component.
+            // the field will be an Object with 2 properties:
+            // {fieldName: "a name", fieldValue: "a value"}
+            customizeField: function(field) {
+                // This is a callback for Array.map
+                return field;
+            },
+
             /**
              * local settings for real estate try out.
              */

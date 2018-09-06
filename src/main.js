@@ -20,6 +20,7 @@ Vue.use(BootstrapVue)
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
+// use local settings.
 Vue.use(LocalSettings)
 
 // configure router
