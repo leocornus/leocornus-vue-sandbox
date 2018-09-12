@@ -20,6 +20,7 @@ import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
 import SolrInspector from '../components/Dashboard/Views/SolrInspector.vue'
+import SolrEventQueue from '../components/Dashboard/Views/SolrEventQueue.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 
 const routes = [
@@ -69,6 +70,11 @@ const routes = [
         component: SolrInspector
       },
       {
+        path: 'solreventqueue',
+        name: 'Solr Event Queue',
+        component: SolrEventQueue
+      },
+      {
         path: 'attivioinspector',
         name: 'Attivio Inspector',
         component: AttivioInspector
@@ -86,7 +92,7 @@ const routes = [
       {
         path: 'typography',
         name: 'Typography',
-        component: Typography
+       component: Typography
       },
       {
         path: 'icons',
