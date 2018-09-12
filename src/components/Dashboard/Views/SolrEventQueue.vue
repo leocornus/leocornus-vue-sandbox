@@ -4,7 +4,7 @@
 
     <b-input-group class="mb-2">
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
+        <span id="restBaseUrl-addon" class="input-group-text">Choose A Event Queue: </span>
       </b-input-group-append>
       <b-form-input type="text" class="form-control" id="restBaseUrl"
              aria-describedby="restBaseUrl-addon"
@@ -107,6 +107,74 @@ export default {
     },
 
     methods: {
+
+        /**
+         */
+        loadEvents() {
+
+            var vm = this;
+
+            vm.resultSummary = "Searching Events ...";
+            vm.results = null;
+
+            // the parameters for query.
+            // we will use Object assign to merge them all together.
+            var params = Object.assign({
+              rows: 25,
+              start: 0,
+              sort: "eventSummary.messageTime desc"
+            }, vm.getFacetFields(), vm.getFilterQuery());
+
+            // this will show how to use query parameters in a JSON request.
+            var postParams = {
+                query: "eventData.ItemUrl:[* TO *]",
+                // we could mix parameters and JSON request.
+                params: params
+            }
+
+            var endPoint = this.restBaseUrl + "select";
+
+            // track the post parameters.
+            // the Object assign will merge / copy source object to target
+            // object.
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             postParams);
+            solr.track(trackPayload);
+
+            // the query url should be some thing like this: 
+            // - 'https://one.sites.leocorn.com/rest/searchApi/search',
+            // it is seems easier to use query parameters in a JSON request.
+            axios.post(endPoint, postParams)
+            .then(function(response) {
+
+                console.log(response.data);
+                vm.totalHits = response.data.response.numFound;
+
+                vm.results = response.data.response.docs;
+                //console.log(vm.results);
+
+                // check if we have facets in response.
+                // Object hasOwnProperty is like hasKey but more complex.
+                if(response.data.hasOwnProperty('facet_counts')) {
+                //self.facets = response.data.facets;
+                    vm.facets = vm.getReadyFacets(response.data.facet_counts.facet_fields);
+                }
+                //self.stats = self.facets[self.facets.length - 1].statistics;
+                //console.log("statistics: " + self.stats);
+                vm.resultSummary = "Found " + vm.totalHits + " events in total!"
+                if(self.totalHits > 0) {
+                    console.log('total hits: ' + vm.totalHits);
+                    //console.log(JSON.stringify(self.facets));
+                    //console.log(JSON.stringify(response.data.documents[0]));
+                    //console.log(response.data.documents[0].fields['title']);
+                }
+            })
+            .catch(function(error) {
+              vm.resultSummary = "Query Error!";
+              console.log(error);
+            });
+        },
+
         /**
          * simple search function to demonstrate Solr search function.
          */
@@ -215,38 +283,16 @@ export default {
          */
         getFacetFields() {
 
-            if(this.facetFields === "") {
-                // return an empty object.
-                return {};
-            } else {
-                return {
-                  facet: "on",
-                  // using array for multiple values
-                  // in association with multiple values in HTTP parameters.
-                  // ?facet_field=project_id&facet_field=customer_id
-                  //"facet.field":["project_id", "customer_id"]
-                  // here is for single value
-                  //"facet.field":"customer_id"
-                  "facet.field": this.facetFields.split(",")
-                };
-            }
-        },
-
-        /**
-         * get field list.
-         */
-        getFieldList() {
-
-            if(this.fieldList === "") {
-                // not fieldList specified, return an enpty object.
-                return {};
-            } else {
-                return {
-                  // field list, control what fields to return in response.
-                  //fl: ["id","project_id"],
-                  fl: this.fieldList.split(",")
-                };
-            }
+            return {
+              facet: "on",
+              // using array for multiple values
+              // in association with multiple values in HTTP parameters.
+              // ?facet_field=project_id&facet_field=customer_id
+              //"facet.field":["project_id", "customer_id"]
+              // here is for single value
+              //"facet.field":"customer_id"
+              "facet.field": ["process_status", "eventData.ListTitle"] 
+            };
         },
 
         /**
@@ -254,15 +300,9 @@ export default {
          */
         getFilterQuery() {
 
-            if(this.filterQuery === "") {
-                return {};
-            } else {
-                return {
-                  // filter query list.
-                  //fq: ["c4c_type:project"],
-                  fq: this.filterQuery.split(",")
-                }
-            }
+            // return empty for now.
+            // TODO: will have this based on user's actions on front-end.
+            return {};
         },
 
         /**
@@ -323,11 +363,11 @@ export default {
      */
     created() {
 
-      this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
+      this.restBaseUrl = this.$localSettings.solr.eventQueues[0].url;
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
 
-      this.simpleSearch();
+      this.loadEvents();
     }
 }
 </script>
