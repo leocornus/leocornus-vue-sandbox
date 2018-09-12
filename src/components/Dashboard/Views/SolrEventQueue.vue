@@ -12,7 +12,7 @@
              placeholder="RESTful API base URL https://www.rest.com"/>
     </b-input-group>
 
-    <b-input-group size="lg" class="mb-2">
+    <b-input-group size="lg" class="mb-2 d-none">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
              v-on:keyup.enter.native="simpleSearch"
@@ -25,7 +25,6 @@
 
     <!-- result list -->
     <p>
-      <h3>{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
           <!-- statistics :stats="stats"></statistics -->
@@ -33,6 +32,9 @@
           </facet-buckets>
         </div>
         <div class="col-9 accordion">
+          <h3 class="m-0">{{resultSummary}}
+            <a href="#" class="badge badge-pill badge-primary float-right">refresh</a>
+          </h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
@@ -324,6 +326,8 @@ export default {
       this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
+
+      this.simpleSearch();
     }
 }
 </script>
