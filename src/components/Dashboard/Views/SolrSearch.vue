@@ -2,15 +2,15 @@
 <div class="content container">
   <div id="search-app">
 
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
+    <b-input-group class="mb-2">
+      <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
-      </div>
-      <input type="text" class="form-control" id="restBaseUrl"
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="restBaseUrl"
              aria-describedby="restBaseUrl-addon"
              v-model="restBaseUrl"
-             placeholder="RESTful API base URL https://www.rest.com">
-    </div>
+             placeholder="RESTful API base URL https://www.rest.com"/>
+    </b-input-group>
 
     <b-input-group size="lg" class="mb-2">
       <b-form-input type="text" id="inputQuery"
