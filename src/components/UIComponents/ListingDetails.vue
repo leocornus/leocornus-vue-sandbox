@@ -87,29 +87,19 @@ export default {
 
         /**
          * title for each doc.
+         * we will depends on the parent to customize the caption
          */
         caption() {
-            // we will tweak the caption based on table.
-            var table = this.doc['name'];
+
             // by default, we will using id as the caption.
             var caption = this.doc['id'];
 
-            switch(table) {
-              case 'xmldata':
-                return caption + ' - ' +
-                    this.doc.fields.title[0] + ', ' +
-                    this.doc.fields.city[0] + ' -- ' +
-                    this.doc.fields.avgScore[0];
-              case 'offlisting':
-                return caption + ' - ' +
-                    this.doc.fields.title[0] + ', ' +
-                    this.doc.fields.city[0];
-              case 'userprefs':
-                return caption + ' - ' +
-                    this.doc.fields.useremail[0];
-              default:
-                return caption;
+            // check the parent component:
+            if(this.$parent.hasOwnProperty("customizeListingDetailsCaption")) {
+                caption = this.$parent.customizeListingDetailsCaption(this.doc);
             }
+
+            return caption;
         },
 
         /**

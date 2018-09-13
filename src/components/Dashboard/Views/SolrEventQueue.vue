@@ -207,6 +207,20 @@ export default {
         },
 
         /**
+         * The opportunity to customize the caption for each listing.
+         */
+        customizeListingDetailsCaption(oneDoc) {
+
+            if(this.$localSettings.solr.eventQueue
+                   .hasOwnProperty("customizeListingDetailsCaption")) {
+                return this.$localSettings.solr.eventQueue
+                    .customizeListingDetailsCaption(oneDoc);
+            } else {
+                return oneDoc['id'];
+            }
+        },
+
+        /**
          * simple search function to demonstrate Solr search function.
          */
         simpleSearch() {
