@@ -4,7 +4,7 @@
 
     <b-input-group class="mb-2">
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Choose A Event Queue: </span>
+        <span id="restBaseUrl-addon" class="input-group-text">Choose Event Queue: </span>
       </b-input-group-append>
       <b-form-input type="text" class="form-control" id="restBaseUrl"
              aria-describedby="restBaseUrl-addon"
@@ -33,7 +33,8 @@
         </div>
         <div class="col-9 accordion">
           <h3 class="m-0">{{resultSummary}}
-            <a href="#" class="badge badge-pill badge-primary float-right">refresh</a>
+            <a href="#" class="badge badge-pill badge-primary float-right"
+               v-on:click="loadEvents">refresh</a>
           </h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
@@ -283,16 +284,22 @@ export default {
          */
         getFacetFields() {
 
-            return {
-              facet: "on",
-              // using array for multiple values
-              // in association with multiple values in HTTP parameters.
-              // ?facet_field=project_id&facet_field=customer_id
-              //"facet.field":["project_id", "customer_id"]
-              // here is for single value
-              //"facet.field":"customer_id"
-              "facet.field": ["process_status", "eventData.ListTitle"] 
-            };
+            // check the local settings for customization.
+            // {
+            //   solr: {
+            //     eventQueue: {
+            //       customizeGetFacetFields: function() {
+            //       }
+            //     }
+            //   }
+            // }
+            if(this.$localSettings.solr.eventQueue
+                   .hasOwnProperty("customizeGetFacetFields")) {
+                return this.$localSettings.solr.eventQueue
+                           .customizeGetFacetFields();
+            } else {
+                return {};
+            }
         },
 
         /**
