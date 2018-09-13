@@ -3,6 +3,9 @@
   <div id="search-app">
 
     <b-input-group class="mb-2">
+      <b-dropdown right text="Choose Event Queue">
+        <b-dropdown-item>Queue One</b-dropdown-item>
+      </b-dropdown>
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Choose Event Queue: </span>
       </b-input-group-append>
@@ -54,6 +57,8 @@ import bButton from 'bootstrap-vue/es/components/button/button'
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
 import bInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-group-append'
 import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
+import bDropdown from 'bootstrap-vue/es/components/dropdown/dropdown'
+import bDropdownItem from 'bootstrap-vue/es/components/dropdown/dropdown-item'
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
@@ -65,6 +70,8 @@ export default {
     components: {
       'listing-details': ListingDetails,
       'facet-buckets': FacetBuckets,
+      'b-dropdown': bDropdown,
+      'b-dropdown-item': bDropdownItem,
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
       'b-form-input': bFormInput,
