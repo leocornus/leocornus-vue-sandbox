@@ -1,6 +1,6 @@
 <template>
-<b-card class="border-success mb-2">
-  <b-card-header class="bg-success text-white" :id="facetID">
+<b-card no-body class="border-success mb-2">
+  <b-card-header class="bg-success text-white p-1" :id="facetID">
     <a v-b-toggle="facetCollapseID"
        href="#" class="card-link text-white">
     {{facetLabel}} - {{facetBuckets.length}}
