@@ -1,6 +1,6 @@
 <template>
 
-<b-card class="mb-1">
+<b-card no-body class="mb-1">
 <b-card-header :id="listingID" class="p-0">
   <h5 class="mb-0">
     <b-button class="btn-link" v-b-toggle="collapseID">
