@@ -193,10 +193,14 @@ export default {
         /**
          * hook on the click event on queue selection dropdown.
          * we could use the inline JavaScript statement to pass the queue name.
+         * here is a example:
+         * <b-dropdown-item v-for="(queue, index) in eventQueues"
+         *        v-on:click="switchQueue(queue.name, index)">
          */
         switchQueue(queueName, index) {
 
-            console.log("["+ index + "] " + queueName);
+            //console.log("["+ index + "] " + queueName);
+
             this.queueLabel = this.eventQueues[index].name;
             this.restBaseUrl = this.eventQueues[index].url;
             this.loadEvents();
