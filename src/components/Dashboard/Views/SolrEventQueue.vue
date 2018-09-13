@@ -4,7 +4,9 @@
 
     <b-input-group class="mb-2">
       <b-dropdown right text="Choose Event Queue">
-        <b-dropdown-item v-for="queue in eventQueues">{{queue.name}}</b-dropdown-item>
+        <b-dropdown-item v-for="(queue, index) in eventQueues"
+                         v-on:click="switchQueue(queue.name, index)"
+        >{{queue.name}}</b-dropdown-item>
       </b-dropdown>
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">{{queueLabel}}</span>
@@ -186,6 +188,18 @@ export default {
               vm.resultSummary = "Query Error!";
               console.log(error);
             });
+        },
+
+        /**
+         * hook on the click event on queue selection dropdown.
+         * we could use the inline JavaScript statement to pass the queue name.
+         */
+        switchQueue(queueName, index) {
+
+            console.log("["+ index + "] " + queueName);
+            this.queueLabel = this.eventQueues[index].name;
+            this.restBaseUrl = this.eventQueues[index].url;
+            this.loadEvents();
         },
 
         /**
