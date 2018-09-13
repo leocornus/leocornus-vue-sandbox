@@ -30,7 +30,7 @@
                         if(this.$route.params.nextUrl != null){
                             this.$router.push(this.$route.params.nextUrl)
                         } else {
-                            this.$router.replace({ name: "Overview" });
+                            this.$router.replace({ name: "Solr Search" });
                         }
                     } else {
                         console.log("The username and / or password is incorrect");
