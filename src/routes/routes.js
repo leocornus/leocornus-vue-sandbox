@@ -27,7 +27,7 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin/solrsearch'
+    redirect: '/admin/overview'
   },
   {
     path: '/login',

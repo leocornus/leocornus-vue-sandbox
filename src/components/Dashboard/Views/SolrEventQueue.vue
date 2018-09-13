@@ -4,7 +4,7 @@
 
     <b-input-group class="mb-2">
       <b-dropdown right text="Choose Event Queue">
-        <b-dropdown-item v-for="(queue, index) in eventQueues" :key="index"
+        <b-dropdown-item v-for="(queue, index) in eventQueues"
                          v-on:click="switchQueue(queue.name, index)"
         >{{queue.name}}</b-dropdown-item>
       </b-dropdown>

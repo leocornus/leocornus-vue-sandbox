@@ -11,8 +11,8 @@ export default {
         return {
             authenticated: false,
             mockAccount: {
-               username:"csagroup", 
-               password:"csagroup"
+               username:"seanchen", 
+               password:"supervue1"
             }
         }
     },
