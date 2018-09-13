@@ -27,6 +27,7 @@
     <p>
       <div class="row">
         <div class="col-3">
+          <h3 class="m-0">Facets</h3>
           <!-- statistics :stats="stats"></statistics -->
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
           </facet-buckets>
@@ -34,7 +35,7 @@
         <div class="col-9 accordion">
           <h3 class="m-0">{{resultSummary}}
             <a href="#" class="badge badge-pill badge-primary float-right"
-               v-on:click="loadEvents">refresh</a>
+               v-on:click="loadEvents">Refresh</a>
           </h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
