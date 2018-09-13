@@ -4,10 +4,10 @@
 
     <b-input-group class="mb-2">
       <b-dropdown right text="Choose Event Queue">
-        <b-dropdown-item>Queue One</b-dropdown-item>
+        <b-dropdown-item v-for="queue in eventQueues">{{queue.name}}</b-dropdown-item>
       </b-dropdown>
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Choose Event Queue: </span>
+        <span id="restBaseUrl-addon" class="input-group-text">{{queueLabel}}</span>
       </b-input-group-append>
       <b-form-input type="text" class="form-control" id="restBaseUrl"
              aria-describedby="restBaseUrl-addon"
@@ -81,6 +81,10 @@ export default {
     data() {
       return {
         restBaseUrl: 'http://search.example.com',
+        // available event queues.
+        eventQueues: [],
+        // label for the current event queue
+        eventLabel: "",
         query: '*:*',
         // default facet field is empty.
         facetFields: "",
@@ -378,7 +382,9 @@ export default {
      */
     created() {
 
-      this.restBaseUrl = this.$localSettings.solr.eventQueues[0].url;
+      this.eventQueues = this.$localSettings.solr.eventQueues;
+      this.restBaseUrl = this.eventQueues[0].url;
+      this.queueLabel = this.eventQueues[0].name;
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
 
