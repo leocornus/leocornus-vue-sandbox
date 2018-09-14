@@ -112,7 +112,7 @@ export default {
 
         // pagination properties.
         currentPage: 1,
-        perPage: 10,
+        perPage: 15,
 
         // 
         resultSummary: "Click search to start.."
@@ -229,6 +229,7 @@ export default {
 
             this.queueLabel = this.eventQueues[index].name;
             this.restBaseUrl = this.eventQueues[index].url;
+            this.currentPage = 1;
             this.loadEvents();
         },
 
