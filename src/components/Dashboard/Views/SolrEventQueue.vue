@@ -44,8 +44,12 @@
           </h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
+          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+                        v-model="currentPage" align="center"></b-pagination>
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
           </listing-details>
+          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+                        v-model="currentPage" align="center"></b-pagination>
         </div>
       </div>
     </p>
@@ -61,6 +65,7 @@ import bInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-gro
 import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 import bDropdown from 'bootstrap-vue/es/components/dropdown/dropdown'
 import bDropdownItem from 'bootstrap-vue/es/components/dropdown/dropdown-item'
+import bPagination from 'bootstrap-vue/es/components/pagination/pagination'
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
@@ -77,7 +82,8 @@ export default {
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
       'b-form-input': bFormInput,
-      'b-button': bButton
+      'b-button': bButton,
+      'b-pagination' : bPagination
     },
 
     data() {
@@ -104,6 +110,12 @@ export default {
         facets: null,
         stats: null,
         results: null,
+
+        // pagination properties.
+        currentPage: 1,
+        perPage: 10,
+
+        // 
         resultSummary: "Click search to start.."
       }
     },
@@ -121,6 +133,15 @@ export default {
       // https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
     },
 
+    watch: {
+      // watch current page.
+      currentPage: function(newValue) {
+          // reload page.
+          console.log("Watching currentPage: " + newValue);
+          this.loadEvents();
+      }
+    },
+
     methods: {
 
         /**
@@ -135,8 +156,8 @@ export default {
             // the parameters for query.
             // we will use Object assign to merge them all together.
             var params = Object.assign({
-              rows: 25,
-              start: 0,
+              rows: vm.perPage,
+              start: (vm.currentPage - 1) * vm.perPage,
               sort: "eventSummary.messageTime desc"
             }, vm.getFacetFields(), vm.getFilterQuery());
 
