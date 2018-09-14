@@ -152,11 +152,13 @@ export default {
             vm.resultSummary = "Searching Events ...";
             vm.results = null;
 
+            var startRow = (vm.currentPage - 1) * vm.perPage;
+
             // the parameters for query.
             // we will use Object assign to merge them all together.
             var params = Object.assign({
               rows: vm.perPage,
-              start: (vm.currentPage - 1) * vm.perPage,
+              start: startRow,
               sort: "eventSummary.messageTime desc"
             }, vm.getFacetFields(), vm.getFilterQuery());
 
@@ -196,7 +198,11 @@ export default {
                 }
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
-                vm.resultSummary = "Found " + vm.totalHits + " events in total!"
+                //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
+                vm.resultSummary =
+                    "Showing " + (startRow + 1) + " - " +
+                    Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
+                    vm.totalHits + " Events";
                 if(self.totalHits > 0) {
                     console.log('total hits: ' + vm.totalHits);
                     //console.log(JSON.stringify(self.facets));
