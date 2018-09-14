@@ -15,6 +15,10 @@
              aria-describedby="restBaseUrl-addon"
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com"/>
+      <b-input-group-append>
+         <b-button variant="outline-primary"
+            v-on:click="loadEvents">Refresh</b-button>
+      </b-input-group-append>
     </b-input-group>
 
     <b-input-group size="lg" class="mb-2 d-none">
@@ -38,14 +42,9 @@
           </facet-buckets>
         </div>
         <div class="col-9 accordion">
-          <h3 class="m-0">{{resultSummary}}
-            <a href="#" class="badge badge-pill badge-primary float-right"
-               v-on:click="loadEvents">Refresh</a>
-          </h3>
+          <h3 class="m-0">{{resultSummary}}</h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
-                        v-model="currentPage" align="center"></b-pagination>
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
