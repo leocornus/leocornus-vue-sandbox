@@ -21,6 +21,7 @@ import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
 import SolrInspector from '../components/Dashboard/Views/SolrInspector.vue'
 import SolrEventQueue from '../components/Dashboard/Views/SolrEventQueue.vue'
+import SolrTracking from '../components/Dashboard/Views/SolrTracking.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 
 const routes = [
@@ -73,6 +74,11 @@ const routes = [
         path: 'solreventqueue',
         name: 'Solr Event Queue',
         component: SolrEventQueue
+      },
+      {
+        path: 'solrtracking',
+        name: 'Solr Tracking',
+        component: SolrTracking
       },
       {
         path: 'attivioinspector',
