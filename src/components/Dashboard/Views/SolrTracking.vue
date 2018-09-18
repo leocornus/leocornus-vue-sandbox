@@ -5,7 +5,7 @@
     <b-input-group class="mb-2">
       <b-dropdown right text="Choose Tracking">
         <b-dropdown-item v-for="(collection, index) in collections" :key="index"
-                         v-on:click="switchQueue(collection.name, index)"
+                         v-on:click="switchCollection(collection.name, index)"
         >{{collection.name}}</b-dropdown-item>
       </b-dropdown>
       <b-input-group-append>
@@ -134,31 +134,20 @@ export default {
     methods: {
 
         /**
+         * load items for this colleciton.
          */
         loadItems() {
 
             var vm = this;
 
+            // reset results
             vm.resultSummary = "Searching Items ...";
             vm.results = null;
 
-            var startRow = (vm.currentPage - 1) * vm.perPage;
+            // get ready the query:
+            var postParams = vm.buildQuery(vm);
 
-            // the parameters for query.
-            // we will use Object assign to merge them all together.
-            var params = Object.assign({
-              rows: vm.perPage,
-              start: startRow,
-              sort: "count desc"
-            }, vm.getFacetFields(), vm.getFilterQuery());
-
-            // this will show how to use query parameters in a JSON request.
-            var postParams = {
-                query: "table:tracking",
-                // we could mix parameters and JSON request.
-                params: params
-            }
-
+            // get ready the end point.
             var endPoint = this.restBaseUrl + "select";
 
             // track the post parameters.
@@ -189,6 +178,7 @@ export default {
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
+                var startRow = postParams.params.start;
                 vm.resultSummary =
                     "Showing " + (startRow + 1) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
@@ -207,15 +197,40 @@ export default {
         },
 
         /**
+         * create a facility function to get ready post query.
+         */
+        buildQuery(thisVm) {
+
+            var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
+
+            // the parameters for query.
+            // we will use Object assign to merge them all together.
+            var params = Object.assign({
+              rows: thisVm.perPage,
+              start: startRow,
+              sort: "count desc"
+            }, thisVm.getFacetFields(), thisVm.getFilterQuery());
+
+            // this will show how to use query parameters in a JSON request.
+            var postParams = {
+                query: "table:tracking",
+                // we could mix parameters and JSON request.
+                params: params
+            }
+
+            return postParams;
+        },
+
+        /**
          * hook on the click event on queue selection dropdown.
          * we could use the inline JavaScript statement to pass the queue name.
          * here is a example:
          * <b-dropdown-item v-for="(collection, index) in collections"
-         *        v-on:click="switchQueue(collection.name, index)">
+         *        v-on:click="switchCollection(collection.name, index)">
          */
-        switchQueue(queueName, index) {
+        switchCollection(collectionName, index) {
 
-            //console.log("["+ index + "] " + queueName);
+            //console.log("["+ index + "] " + collectionName);
 
             this.collectionLabel = this.collections[index].name;
             this.restBaseUrl = this.collections[index].url;
