@@ -145,7 +145,7 @@ export default {
             vm.results = null;
 
             // get ready the query:
-            var postParams = vm.buildQuery(vm);
+            var postParams = vm.buildQuery();
 
             // get ready the end point.
             var endPoint = this.restBaseUrl + "select";
@@ -199,7 +199,9 @@ export default {
         /**
          * create a facility function to get ready post query.
          */
-        buildQuery(thisVm) {
+        buildQuery() {
+
+            let thisVm = this;
 
             var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
 
