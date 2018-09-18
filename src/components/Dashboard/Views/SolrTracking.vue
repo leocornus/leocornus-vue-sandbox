@@ -139,7 +139,7 @@ export default {
 
             var vm = this;
 
-            vm.resultSummary = "Searching Events ...";
+            vm.resultSummary = "Searching Items ...";
             vm.results = null;
 
             var startRow = (vm.currentPage - 1) * vm.perPage;
@@ -149,12 +149,12 @@ export default {
             var params = Object.assign({
               rows: vm.perPage,
               start: startRow,
-              sort: "eventSummary.messageTime desc"
+              sort: "count desc"
             }, vm.getFacetFields(), vm.getFilterQuery());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
-                query: "eventData.ItemUrl:[* TO *]",
+                query: "table:tracking",
                 // we could mix parameters and JSON request.
                 params: params
             }
@@ -192,7 +192,7 @@ export default {
                 vm.resultSummary =
                     "Showing " + (startRow + 1) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
-                    vm.totalHits + " Events";
+                    vm.totalHits + " Items";
                 if(self.totalHits > 0) {
                     console.log('total hits: ' + vm.totalHits);
                     //console.log(JSON.stringify(self.facets));
@@ -228,9 +228,9 @@ export default {
          */
         customizeListingDetailsCaption(oneDoc) {
 
-            if(this.$localSettings.solr.eventQueue
+            if(this.$localSettings.solr.tracking
                    .hasOwnProperty("customizeListingDetailsCaption")) {
-                return this.$localSettings.solr.eventQueue
+                return this.$localSettings.solr.tracking
                     .customizeListingDetailsCaption(oneDoc);
             } else {
                 return oneDoc['id'];
@@ -245,15 +245,15 @@ export default {
             // check the local settings for customization.
             // {
             //   solr: {
-            //     eventQueue: {
+            //     tracking: {
             //       customizeGetFacetFields: function() {
             //       }
             //     }
             //   }
             // }
-            if(this.$localSettings.solr.eventQueue
+            if(this.$localSettings.solr.tracking
                    .hasOwnProperty("customizeGetFacetFields")) {
-                return this.$localSettings.solr.eventQueue
+                return this.$localSettings.solr.tracking
                            .customizeGetFacetFields();
             } else {
                 return {};
@@ -328,7 +328,7 @@ export default {
      */
     created() {
 
-      this.collections = this.$localSettings.solr.eventQueues;
+      this.collections = this.$localSettings.solr.trackings;
       this.restBaseUrl = this.collections[0].url;
       this.collectionLabel = this.collections[0].name;
       // set the tracking base url.
