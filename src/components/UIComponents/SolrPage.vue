@@ -348,6 +348,7 @@ export default {
     created() {
 
       // the page settings.
+      //console.log(this.pageName);
       this.page = this.$localSettings.solr[this.pageName];
 
       // get the collections.
