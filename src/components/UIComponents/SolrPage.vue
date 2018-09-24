@@ -214,12 +214,12 @@ export default {
             var params = Object.assign({
               rows: thisVm.perPage,
               start: startRow,
-              sort: "count desc"
+              sort: "id desc"
             }, thisVm.getFacetFields(), thisVm.getFilterQuery());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
-                query: "table:tracking",
+                query: "*:*",
                 // we could mix parameters and JSON request.
                 params: params
             }

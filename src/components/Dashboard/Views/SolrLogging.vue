@@ -14,7 +14,7 @@ export default {
 
     data() {
       return {
-        name: "tracking"
+        name: "logging"
       }
     }
 }
