@@ -26,7 +26,7 @@
       <!-- th scope="row">{{formatIndex(index)}}</th -->
       <th scope="row">{{index}}</th>
       <td><span v-html='field["fieldName"]'></span></td>
-      <td><span v-html='field["fieldValue"]'></span></td>
+      <td style="white-space:pre-wrap"><span v-html='field["fieldValue"]'></span></td>
     </tr>
   </tbody>
 </table>
