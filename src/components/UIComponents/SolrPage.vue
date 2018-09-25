@@ -3,7 +3,7 @@
   <div id="search-app">
 
     <b-input-group class="mb-2">
-      <b-dropdown right text="Choose Tracking">
+      <b-dropdown right v-bind:text="pageSource">
         <b-dropdown-item v-for="(collection, index) in collections" :key="index"
                          v-on:click="switchCollection(collection.name, index)"
         >{{collection.name}}</b-dropdown-item>
@@ -114,6 +114,15 @@ export default {
     },
 
     computed: {
+
+      /**
+       * the text attribute for dropdown
+       */
+      pageSource: function() {
+
+          return "Choose " + this.pageName;
+      },
+
       // produce the csv format.
       resultsInCSV: function() {
           return "TODO: result list in CSV format!";
