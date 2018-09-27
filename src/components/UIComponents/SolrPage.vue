@@ -26,6 +26,18 @@
       <div class="row">
         <div class="col-3">
           <h3 class="m-0">Facets</h3>
+<b-card v-if="filters" no-body class="border-info mb-2">
+  <b-card-header class="bg-info text-black" id="filters">
+    Filters
+  </b-card-header>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center"
+        v-for="(filter, index) in filters" :key="index">
+      {{filter.replace(":", ": ")}}
+      <span class="badge badge-primary badge-pill">X</span>
+    </li>
+  </ul>
+</b-card>
           <!-- statistics :stats="stats"></statistics -->
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
           </facet-buckets>
@@ -54,6 +66,8 @@ import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 import bDropdown from 'bootstrap-vue/es/components/dropdown/dropdown'
 import bDropdownItem from 'bootstrap-vue/es/components/dropdown/dropdown-item'
 import bPagination from 'bootstrap-vue/es/components/pagination/pagination'
+import bCard from 'bootstrap-vue/es/components/card/card'
+import bCardHeader from 'bootstrap-vue/es/components/card/card-header'
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
@@ -70,6 +84,8 @@ export default {
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
       'b-form-input': bFormInput,
+      'b-card': bCard,
+      'b-card-header': bCardHeader,
       'b-button': bButton,
       'b-pagination' : bPagination
     },
@@ -91,7 +107,7 @@ export default {
         facetFields: "",
 
         // set the default filter query to empty.
-        filterQuery: "",
+        filterQuery: "c4c_type:project,log_level:INFO",
 
         // set the default sort
         sort: "",
@@ -121,6 +137,18 @@ export default {
       pageSource: function() {
 
           return "Choose " + this.pageName;
+      },
+
+      /**
+       * return the filter querys.
+       */
+      filters: function() {
+
+          if(this.filterQuery === "") {
+              return null;
+          } else {
+              return this.filterQuery.split(",")
+          }
       },
 
       // produce the csv format.
@@ -216,6 +244,7 @@ export default {
 
             let thisVm = this;
 
+            // calculate the start row.
             var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
 
             // the parameters for query.
