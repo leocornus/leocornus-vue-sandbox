@@ -34,7 +34,9 @@
     <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center"
         v-for="(filter, index) in filters" :key="index">
       {{filter.replace(":", ": ")}}
+      <a href="#" v-on:click="removeFilter(filter)">
       <span class="badge badge-primary badge-pill">X</span>
+      </a>
     </li>
   </ul>
 </b-card>
@@ -395,6 +397,15 @@ export default {
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
+            this.loadItems();
+        },
+
+        /**
+         * handle remove filter.
+         */
+        removeFilter(filter) {
+
+            this.filterQuery = this.filterQuery.replace(filter, "").replace(",,", "");
             this.loadItems();
         }
     },
