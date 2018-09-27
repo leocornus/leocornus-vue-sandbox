@@ -39,7 +39,8 @@
   </ul>
 </b-card>
           <!-- statistics :stats="stats"></statistics -->
-          <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
+          <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index"
+              v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
         </div>
         <div class="col-9 accordion">
@@ -376,6 +377,14 @@ export default {
             });
 
             return retFacets;
+        },
+
+        /**
+         * handle the bucket select event.
+         */
+        handleBucketSelect(bucketValue) {
+
+            this.filterQuery = bucketValue;
         }
     },
 
