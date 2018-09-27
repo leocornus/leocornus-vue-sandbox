@@ -108,7 +108,8 @@ export default {
         facetFields: "",
 
         // set the default filter query to empty.
-        filterQuery: "c4c_type:project,log_level:INFO",
+        //filterQuery: "c4c_type:project,log_level:INFO",
+        filterQuery: "",
 
         // set the default sort
         sort: "",
@@ -382,9 +383,11 @@ export default {
         /**
          * handle the bucket select event.
          */
-        handleBucketSelect(bucketValue) {
+        handleBucketSelect(fieldName, bucketValue) {
 
-            this.filterQuery = bucketValue;
+            var fq = fieldName + ":" + bucketValue;
+            this.filterQuery = this.filterQuery === "" ? 
+                fq : this.filterQuery + "," + fq;
         }
     },
 

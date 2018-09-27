@@ -20,7 +20,7 @@
     <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center"
         v-for="(bucket, index) in facetBuckets" 
         :bucket="bucket" :key="index">
-      <a href="#" v-on:click="$emit('bucket-select', bucket.value)">
+      <a href="#" v-on:click="$emit('bucket-select', facetLabel, bucket.value)">
       {{bucket.value}}
       </a>
       <span class="badge badge-primary badge-pill">{{bucket.count}}</span>
