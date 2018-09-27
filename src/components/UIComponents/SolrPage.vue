@@ -324,9 +324,15 @@ export default {
          */
         getFilterQuery() {
 
-            // return empty for now.
-            // TODO: will have this based on user's actions on front-end.
-            return {};
+            if(this.filterQuery === "") {
+                return {};
+            } else {
+                return {
+                  // filter query list.
+                  //fq: ["c4c_type:project"],
+                  fq: this.filterQuery.split(",")
+                }
+            }
         },
 
         /**
@@ -388,6 +394,8 @@ export default {
             var fq = fieldName + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
+            // load items to refresh the list.
+            this.loadItems();
         }
     },
 
