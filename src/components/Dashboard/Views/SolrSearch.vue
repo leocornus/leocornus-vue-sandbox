@@ -65,8 +65,23 @@
       <h3>{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
+<b-card v-if="filters" no-body class="border-info mb-2">
+  <b-card-header class="bg-info text-black" id="filters">
+    Filters
+  </b-card-header>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center"
+        v-for="(filter, index) in filters" :key="index">
+      {{filter.replace(":", ": ")}}
+      <a href="#" v-on:click="removeFilter(filter)">
+      <span class="badge badge-primary badge-pill">X</span>
+      </a>
+    </li>
+  </ul>
+</b-card>
           <!-- statistics :stats="stats"></statistics -->
-          <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index">
+          <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index"
+              v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
         </div>
         <div class="col-9 accordion">
@@ -129,6 +144,19 @@ export default {
     },
 
     computed: {
+
+      /**
+       * return the filter querys.
+       */
+      filters: function() {
+
+          if(this.filterQuery === "") {
+              return null;
+          } else {
+              return this.filterQuery.split(",")
+          }
+      },
+
       // produce the csv format.
       resultsInCSV: function() {
           return "TODO: result list in CSV format!";
@@ -349,6 +377,28 @@ export default {
             });
 
             return retFacets;
+        },
+
+        /**
+         * handle the bucket select event.
+         */
+        handleBucketSelect(fieldName, bucketValue) {
+
+            var fq = fieldName + ":" + bucketValue;
+            this.filterQuery = this.filterQuery === "" ? 
+                fq : this.filterQuery + "," + fq;
+            // load items to refresh the list.
+            this.simpleSearch();
+        },
+
+        /**
+         * handle remove filter.
+         */
+        removeFilter(filter) {
+
+            var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            this.filterQuery = fqs.join();
+            this.simpleSearch();
         }
     },
 
