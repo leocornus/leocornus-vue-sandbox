@@ -331,7 +331,6 @@ export default {
             } else {
                 return {
                   // filter query list.
-                  //fq: ["c4c_type:project"],
                   fq: this.filterQuery.split(",")
                 }
             }
@@ -405,7 +404,8 @@ export default {
          */
         removeFilter(filter) {
 
-            this.filterQuery = this.filterQuery.replace(filter, "").replace(",,", "");
+            var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            this.filterQuery = fqs.join();
             this.loadItems();
         }
     },
