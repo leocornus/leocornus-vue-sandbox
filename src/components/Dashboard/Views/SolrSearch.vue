@@ -3,8 +3,13 @@
   <div id="search-app">
 
     <b-input-group class="mb-2">
+      <b-dropdown right text="Pick Collection">
+        <b-dropdown-item v-for="(collection, index) in collections" :key="index"
+                         v-on:click="switchCollection(collection.name, index)"
+        >{{collection.name}}</b-dropdown-item>
+      </b-dropdown>
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
+        <span id="restBaseUrl-addon" class="input-group-text">{{collectionLabel}}: </span>
       </b-input-group-append>
       <b-form-input type="text" class="form-control" id="restBaseUrl"
              aria-describedby="restBaseUrl-addon"
@@ -121,7 +126,12 @@ export default {
 
     data() {
       return {
+        pageName: 'search',
         restBaseUrl: 'http://search.example.com',
+        // available collections, we will load it at the created hook.
+        collections: [],
+        collectionLabel: "Collection: ",
+
         query: '*:*',
         // default facet field is empty.
         facetFields: "",
@@ -274,6 +284,23 @@ export default {
         },
 
         /**
+         * hook on the click event on queue selection dropdown.
+         * we could use the inline JavaScript statement to pass the queue name.
+         * here is a example:
+         * <b-dropdown-item v-for="(collection, index) in collections"
+         *        v-on:click="switchCollection(collection.name, index)">
+         */
+        switchCollection(collectionName, index) {
+
+            //console.log("["+ index + "] " + collectionName);
+
+            this.collectionLabel = this.collections[index].name;
+            this.restBaseUrl = this.collections[index].url;
+            this.currentPage = 1;
+            this.simpleSearch();
+        },
+
+        /**
          * this will return the facet fields query parameters.
          */
         getFacetFields() {
@@ -385,7 +412,7 @@ export default {
         handleBucketSelect(fieldName, bucketValue) {
 
             var fq = fieldName + ":" + bucketValue;
-            this.filterQuery = this.filterQuery === "" ? 
+            this.filterQuery = this.filterQuery === "" ?
                 fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
             this.simpleSearch();
@@ -408,7 +435,16 @@ export default {
      */
     created() {
 
-      this.restBaseUrl = this.$localSettings.solrRestBaseUrl;
+      // the page settings.
+      //console.log(this.pageName);
+      this.page = this.$localSettings.solr[this.pageName];
+
+      // get the collections.
+      this.collections = this.page.collections;
+      // set the the default collection, the first colleciton in the list.
+      this.restBaseUrl = this.collections[0].url;
+      this.collectionLabel = this.collections[0].name;
+
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
     }
