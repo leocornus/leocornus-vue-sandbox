@@ -257,16 +257,39 @@ export default {
               rows: thisVm.perPage,
               start: startRow,
               sort: "id desc"
-            }, thisVm.getFacetFields(), thisVm.getFilterQuery());
+            }, thisVm.getFacetFields(), 
+               thisVm.getFilterQuery());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
-                query: "*:*",
+                query: thisVm.getQueryString(),
                 // we could mix parameters and JSON request.
                 params: params
             }
 
             return postParams;
+        },
+
+        /**
+         * get query string
+         */
+        getQueryString() {
+
+            // check the local settings for customization.
+            // {
+            //   solr: {
+            //     tracking: {
+            //       customizeGetQueryString: function() {
+            //       }
+            //     }
+            //   }
+            // }
+            if(this.page.hasOwnProperty("customizeGetQueryString")) {
+                return this.page.customizeGetQueryString();
+            } else {
+                // by default, search everything
+                return "*:*";
+            }
         },
 
         /**
