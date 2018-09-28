@@ -94,6 +94,8 @@
           </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
           </listing-details>
+          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+                        v-model="currentPage" align="center"></b-pagination>
         </div>
       </div>
     </p>
@@ -149,6 +151,11 @@ export default {
         facets: null,
         stats: null,
         results: null,
+
+        // pagination properties.
+        currentPage: 1,
+        perPage: 15,
+
         resultSummary: "Click search to start.."
       }
     },
@@ -177,6 +184,15 @@ export default {
       // we will using he $listeners property to override
       // check this page for details:
       // https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
+    },
+
+    watch: {
+      // watch current page.
+      currentPage: function(newValue) {
+          // reload page.
+          //console.log("Watching currentPage: " + newValue);
+          this.simpleSearch();
+      }
     },
 
     methods: {
@@ -226,11 +242,14 @@ export default {
                 "facet.field": "customer_id"
             };
 
+            // calculate the start row.
+            var startRow = (self.currentPage - 1) * self.perPage;
+
             // the parameters for query.
             // we will use Object assign to merge them all together.
             var params = Object.assign({
-              rows: 25,
-              start: 0,
+              rows: self.perPage,
+              start: startRow,
               sort: self.sort
             }, self.getFacetFields(), self.getFieldList(), 
             self.getFilterQuery());
@@ -270,6 +289,10 @@ export default {
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 self.resultSummary = "Found " + self.totalHits + " docs in total!"
+                self.resultSummary =
+                    "Showing " + (startRow + 1) + " - " +
+                    Math.min(startRow + self.perPage, self.totalHits) + " of " +
+                    self.totalHits + " Items";
                 if(self.totalHits > 0) {
                     console.log('total hits: ' + self.totalHits);
                     //console.log(JSON.stringify(self.facets));
