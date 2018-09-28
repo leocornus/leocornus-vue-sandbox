@@ -470,6 +470,9 @@ export default {
 
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
+
+      // execute search.
+      this.simpleSearch();
     }
 }
 </script>
