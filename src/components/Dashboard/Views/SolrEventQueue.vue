@@ -1,5 +1,5 @@
 <template>
-  <solr-page :pageName="name">
+  <solr-page :pageName="name" :refreshInterval=10000>
   </solr-page>
 </template>
 
@@ -19,4 +19,3 @@ export default {
     }
 }
 </script>
-
