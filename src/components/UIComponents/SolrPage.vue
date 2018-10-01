@@ -95,7 +95,7 @@ export default {
 
     name: "solr-page",
 
-    props: ["pageName"],
+    props: ["pageName", "refreshInterval"],
 
     data() {
       return {
@@ -454,10 +454,12 @@ export default {
 
       this.loadItems();
 
-      // reload items every 10 seconds, 10,000 ms.
-      setInterval(function () {
-          this.loadItems();
-      }.bind(this), 10000);
+      if(this.refreshInterval) {
+          // reload items every 10 seconds, 10,000 ms.
+          setInterval(function () {
+              this.loadItems();
+          }.bind(this), this.refreshInterval);
+      }
     }
 }
 </script>
