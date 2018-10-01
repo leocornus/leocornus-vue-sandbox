@@ -453,6 +453,11 @@ export default {
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
 
       this.loadItems();
+
+      // reload items every 10 seconds, 10,000 ms.
+      setInterval(function () {
+          this.loadItems();
+      }.bind(this), 10000);
     }
 }
 </script>
