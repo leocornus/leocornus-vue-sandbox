@@ -256,7 +256,7 @@ export default {
             var params = Object.assign({
               rows: thisVm.perPage,
               start: startRow,
-              sort: "id desc"
+              sort: thisVm.getQuerySort()
             }, thisVm.getFacetFields(), 
                thisVm.getFilterQuery());
 
@@ -289,6 +289,19 @@ export default {
             } else {
                 // by default, search everything
                 return "*:*";
+            }
+        },
+
+        /**
+         * get sort for query.
+         */
+        getQuerySort() {
+
+            if(this.page.hasOwnProperty("customizeGetQuerySort")) {
+                return this.page.customizeGetQuerySort();
+            } else {
+                // by default, search everything
+                return "id desc";
             }
         },
 
