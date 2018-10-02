@@ -16,8 +16,13 @@
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com"/>
       <b-input-group-append>
-         <b-button variant="outline-primary"
+        <b-button variant="outline-primary" v-if="!autoRefresh"
             v-on:click="loadItems">Refresh</b-button>
+        <div class="input-group-text input-group-text-primary">
+        <b-form-checkbox v-model="autoRefresh" @change="toggleAutoRefresh">
+          Auto Refresh
+        </b-form-checkbox>
+        </div>
       </b-input-group-append>
     </b-input-group>
 
@@ -71,6 +76,7 @@ import bDropdownItem from 'bootstrap-vue/es/components/dropdown/dropdown-item'
 import bPagination from 'bootstrap-vue/es/components/pagination/pagination'
 import bCard from 'bootstrap-vue/es/components/card/card'
 import bCardHeader from 'bootstrap-vue/es/components/card/card-header'
+import bFormCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkbox';
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
@@ -90,6 +96,7 @@ export default {
       'b-card': bCard,
       'b-card-header': bCardHeader,
       'b-button': bButton,
+      'b-form-checkbox': bFormCheckbox,
       'b-pagination' : bPagination
     },
 
@@ -129,7 +136,9 @@ export default {
         perPage: 15,
 
         // 
-        resultSummary: "Click search to start.."
+        resultSummary: "Click search to start..",
+        // auto refresh button.
+        autoRefresh: false
       }
     },
 
@@ -443,6 +452,12 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             this.filterQuery = fqs.join();
             this.loadItems();
+        },
+
+        /**
+         * toggle auto refresh.
+         */
+        toggleAutoRefresh() {
         }
     },
 
@@ -452,27 +467,27 @@ export default {
      */
     created() {
 
-      // the page settings.
-      //console.log(this.pageName);
-      this.page = this.$localSettings.solr[this.pageName];
+        // the page settings.
+        //console.log(this.pageName);
+        this.page = this.$localSettings.solr[this.pageName];
 
-      // get the collections.
-      this.collections = this.page.collections;
-      // set the the default collection, the first colleciton in the list.
-      this.restBaseUrl = this.collections[0].url;
-      this.collectionLabel = this.collections[0].name;
+        // get the collections.
+        this.collections = this.page.collections;
+        // set the the default collection, the first colleciton in the list.
+        this.restBaseUrl = this.collections[0].url;
+        this.collectionLabel = this.collections[0].name;
 
-      // set the tracking base url.
-      solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
+        // set the tracking base url.
+        solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
 
-      this.loadItems();
+        this.loadItems();
 
-      if(this.refreshInterval) {
-          // reload items every 10 seconds, 10,000 ms.
-          setInterval(function () {
-              this.loadItems();
-          }.bind(this), this.refreshInterval);
-      }
+        if(this.refreshInterval && this.refreshInterval > 0) {
+            // reload items every 10 seconds, 10,000 ms.
+            setInterval(function () {
+                this.loadItems();
+            }.bind(this), this.refreshInterval);
+        }
     }
 }
 </script>
