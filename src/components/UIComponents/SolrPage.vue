@@ -18,11 +18,18 @@
       <b-input-group-append>
         <b-button variant="outline-primary" v-if="!autoRefresh"
             v-on:click="loadItems">Refresh</b-button>
-        <div class="input-group-text input-group-text-primary">
+        <div class="input-group-text text-primary">
         <b-form-checkbox v-model="autoRefresh" @change="toggleAutoRefresh">
           Auto Refresh
         </b-form-checkbox>
         </div>
+        <b-form-select v-if="autoRefresh" class="form-control" v-model="refreshInterval">
+          <option>1000</option>
+          <option>5000</option>
+          <option>10000</option>
+          <option>20000</option>
+          <option>30000</option>
+        </b-form-select>
       </b-input-group-append>
     </b-input-group>
 
