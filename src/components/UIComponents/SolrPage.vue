@@ -23,12 +23,8 @@
           Auto Refresh
         </b-form-checkbox>
         </div>
-        <b-form-select v-if="autoRefresh" class="form-control" v-model="refreshInterval">
-          <option>1000</option>
-          <option>5000</option>
-          <option>10000</option>
-          <option>20000</option>
-          <option>30000</option>
+        <b-form-select v-if="autoRefresh" class="form-control" 
+            v-model="refreshInterval" :options="refreshOptions">
         </b-form-select>
       </b-input-group-append>
     </b-input-group>
@@ -144,8 +140,18 @@ export default {
 
         // 
         resultSummary: "Click search to start..",
+
         // auto refresh button.
-        autoRefresh: false
+        autoRefresh: false,
+        refreshInterval: -1,
+        refreshOptions: [
+          { value: 1000, text: '1s' },
+          { value: 5000, text: '5s' },
+          { value: 10000, text: '10s' },
+          { value: 20000, text: '20s' },
+          { value: 30000, text: '30s' },
+          { value: 60000, text: '1m' }
+        ]
       }
     },
 
