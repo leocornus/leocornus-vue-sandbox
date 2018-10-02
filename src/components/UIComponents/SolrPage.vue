@@ -2,7 +2,7 @@
 <div class="content container">
   <div id="search-app">
 
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" size="sm">
       <b-dropdown right v-bind:text="pageSource">
         <b-dropdown-item v-for="(collection, index) in collections" :key="index"
                          v-on:click="switchCollection(collection.name, index)"
