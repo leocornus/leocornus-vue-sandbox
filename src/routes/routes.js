@@ -24,6 +24,7 @@ import SolrEventQueue from '../components/Dashboard/Views/SolrEventQueue.vue'
 import SolrTracking from '../components/Dashboard/Views/SolrTracking.vue'
 import SolrLogging from '../components/Dashboard/Views/SolrLogging.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
+import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
 
 const routes = [
   {
@@ -90,6 +91,11 @@ const routes = [
         path: 'attivioinspector',
         name: 'Attivio Inspector',
         component: AttivioInspector
+      },
+      {
+        path: 'revasearch',
+        name: 'Reva Search',
+        component: RevaSearch
       },
       {
         path: 'user',

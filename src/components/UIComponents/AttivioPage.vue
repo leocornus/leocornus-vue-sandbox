@@ -221,7 +221,7 @@ export default {
             var postParams = vm.buildQuery();
 
             // get ready the end point.
-            var endPoint = this.restBaseUrl + "select";
+            var endPoint = this.restBaseUrl + "searchApi/search";
 
             // track the post parameters.
             // the Object assign will merge / copy source object to target
