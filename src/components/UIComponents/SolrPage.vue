@@ -19,12 +19,12 @@
         <b-button variant="outline-primary" v-if="!autoRefresh"
             v-on:click="loadItems">Refresh</b-button>
         <div class="input-group-text text-primary">
-        <b-form-checkbox v-model="autoRefresh" @change="toggleAutoRefresh">
-          Auto Refresh
-        </b-form-checkbox>
+          <b-form-checkbox v-model="autoRefresh" @change="toggleAutoRefresh">
+            Auto Refresh
+          </b-form-checkbox>
         </div>
         <b-form-select v-if="autoRefresh" class="form-control" 
-            v-model="refreshInterval" :options="refreshOptions">
+            v-model="refreshInterval" :options="refreshIntervalOptions">
         </b-form-select>
       </b-input-group-append>
     </b-input-group>
@@ -105,7 +105,7 @@ export default {
 
     name: "solr-page",
 
-    props: ["pageName", "refreshInterval"],
+    props: ["pageName"],
 
     data() {
       return {
@@ -143,8 +143,13 @@ export default {
 
         // auto refresh button.
         autoRefresh: false,
-        refreshInterval: -1,
-        refreshOptions: [
+        // this will store the interval id for auto refresh
+        refreshId: 0,
+        // default interval is 5s
+        refreshInterval: 5000,
+        // the interval options for refresh.
+        // TODO: make it customizable
+        refreshIntervalOptions: [
           { value: 1000, text: '1s' },
           { value: 5000, text: '5s' },
           { value: 10000, text: '10s' },
@@ -469,8 +474,24 @@ export default {
 
         /**
          * toggle auto refresh.
+         * This is binded to change event.
+         * The checked will tell the new state
          */
-        toggleAutoRefresh() {
+        toggleAutoRefresh(checked) {
+
+            var thisVm = this;
+
+            //console.log("checked = " + checked);
+            if(checked) {
+                // set the refresh inverval and keep the interval ID as
+                // refreshId.
+                // we will remove it by call the window.clearInterval.
+                thisVm.refreshId = setInterval(function () {
+                    thisVm.loadItems();
+                }.bind(thisVm), thisVm.refreshInterval);
+            } else {
+                clearInterval(thisVm.refreshId);
+            }
         }
     },
 
@@ -495,12 +516,12 @@ export default {
 
         this.loadItems();
 
-        if(this.refreshInterval && this.refreshInterval > 0) {
-            // reload items every 10 seconds, 10,000 ms.
-            setInterval(function () {
-                this.loadItems();
-            }.bind(this), this.refreshInterval);
-        }
+        //if(this.refreshInterval && this.autoRefresh > 0) {
+        //    // reload items every 10 seconds, 10,000 ms.
+        //    setInterval(function () {
+        //        this.loadItems();
+        //    }.bind(this), this.autoRefresh);
+        //}
     }
 }
 </script>
