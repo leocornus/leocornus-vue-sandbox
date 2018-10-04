@@ -24,6 +24,7 @@
           </b-form-checkbox>
         </div>
         <b-form-select v-if="autoRefresh" class="form-control" 
+            @change="resetRefreshInterval"
             v-model="refreshInterval" :options="refreshIntervalOptions">
         </b-form-select>
       </b-input-group-append>
@@ -492,6 +493,25 @@ export default {
             } else {
                 clearInterval(thisVm.refreshId);
             }
+        },
+
+        /**
+         * reset the refresh interval when the refresh interval changed.
+         * there are multiple steps needed to do this:
+         * - clear the current interval id if it is exist.
+         * - set interval using the new value.
+         * - store the new interval ID.
+         */
+        resetRefreshInterval(newInterval) {
+
+            var thisVm = this;
+
+            //console.log("new Interval:" + newInterval);
+            clearInterval(thisVm.refreshId);
+
+            thisVm.refreshId = setInterval(function () {
+                thisVm.loadItems();
+            }.bind(thisVm), newInterval);
         }
     },
 
