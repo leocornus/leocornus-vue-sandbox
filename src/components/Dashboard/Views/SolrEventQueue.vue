@@ -1,5 +1,5 @@
 <template>
-  <solr-page :pageName="name" :refreshInterval=10000>
+  <solr-page :pageName="name">
   </solr-page>
 </template>
 
