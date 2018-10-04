@@ -535,13 +535,16 @@ export default {
         solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
 
         this.loadItems();
+    },
 
-        //if(this.refreshInterval && this.autoRefresh > 0) {
-        //    // reload items every 10 seconds, 10,000 ms.
-        //    setInterval(function () {
-        //        this.loadItems();
-        //    }.bind(this), this.autoRefresh);
-        //}
+    /**
+     * we will clear something when we leave this page.
+     * Here are list of things we will clean up:
+     * - refresh interval ID.
+     */
+    destroyed() {
+
+        clearInterval(this.refreshId);
     }
 }
 </script>
