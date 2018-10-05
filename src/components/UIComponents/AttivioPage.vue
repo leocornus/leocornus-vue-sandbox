@@ -58,7 +58,8 @@
           <h3 class="m-0">{{resultSummary}}</h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
+          <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" 
+                           :index="index" idFieldName=".id">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
@@ -237,21 +238,30 @@ export default {
             .then(function(response) {
 
                 console.log(response.data);
-                vm.totalHits = response.data.response.numFound;
+                vm.totalHits = response.data.totalHits;
 
-                vm.results = response.data.response.docs;
+                // tweak the structure.
+                vm.results = vm.formatDocuments(response.data.documents);
                 //console.log(vm.results);
 
                 // check if we have facets in response.
+                // Attivio has the following format for facets buckets.
+                //  [
+                //    { label:"field name",
+                //      buckets: [
+                //        {value: "field value one",
+                //         count: 120},
+                //        {value: "field value two",
+                //         count: 20},
+                //      ]
+                //    }
+                //  ]
                 // Object hasOwnProperty is like hasKey but more complex.
-                if(response.data.hasOwnProperty('facet_counts')) {
-                //self.facets = response.data.facets;
-                    vm.facets = vm.getReadyFacets(response.data.facet_counts.facet_fields);
-                }
+                self.facets = response.data.facets;
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
-                var startRow = postParams.params.start;
+                var startRow = postParams.offset;
                 vm.resultSummary =
                     "Showing " + (startRow + 1) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
@@ -271,6 +281,7 @@ export default {
 
         /**
          * create a facility function to get ready post query.
+         * for Attivio search.
          */
         buildQuery() {
 
@@ -280,19 +291,15 @@ export default {
             var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
 
             // the parameters for query.
-            // we will use Object assign to merge them all together.
-            var params = Object.assign({
-              rows: thisVm.perPage,
-              start: startRow,
-              sort: thisVm.getQuerySort()
-            }, thisVm.getFacetFields(), 
-               thisVm.getFilterQuery());
-
             // this will show how to use query parameters in a JSON request.
             var postParams = {
+                workflow: "search",
                 query: thisVm.getQueryString(),
-                // we could mix parameters and JSON request.
-                params: params
+                searchProfile: "checkcity",
+                queryLanguage: "simple",
+                rows: thisVm.perPage,
+                offset: startRow,
+                facets: thisVm.getFacetFields()
             }
 
             return postParams;
@@ -334,6 +341,22 @@ export default {
         },
 
         /**
+         * tweak the data structure for the returning documents.
+         * convert the attivio return documents to propery format to
+         * fit into the ListingDetails component.
+         */
+        formatDocuments(docs) {
+
+            var newDocs = [];
+            docs.forEach(function(doc) {
+                // need add the id field. using Objec.assign
+                newDocs.push(doc.fields);
+            });
+
+            return newDocs;
+        },
+
+        /**
          * hook on the click event on queue selection dropdown.
          * we could use the inline JavaScript statement to pass the queue name.
          * here is a example:
@@ -359,19 +382,20 @@ export default {
                 return this.page.customizeListingDetailsCaption(oneDoc);
             } else {
                 // by default, using the doc id as the caption.
-                return oneDoc['id'];
+                return oneDoc['.id'][0];
             }
         },
 
         /**
          * this will return the facet fields query parameters.
+         * Attivio's faceting is different from Solr.
          */
         getFacetFields() {
 
             // check the local settings for customization.
             // {
-            //   solr: {
-            //     tracking: {
+            //   attivio: {
+            //     reva: {
             //       customizeGetFacetFields: function() {
             //       }
             //     }
@@ -381,7 +405,7 @@ export default {
                 return this.page.customizeGetFacetFields();
             } else {
                 // by default, this is no facet.
-                return {};
+                return [];
             }
         },
 
