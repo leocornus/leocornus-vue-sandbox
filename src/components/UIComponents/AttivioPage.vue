@@ -180,7 +180,7 @@ export default {
           if(this.filterQuery === "") {
               return null;
           } else {
-              return this.filterQuery.split(",")
+              return this.filterQuery.split(" AND ")
           }
       },
 
@@ -322,8 +322,14 @@ export default {
             if(this.page.hasOwnProperty("customizeGetQueryString")) {
                 return this.page.customizeGetQueryString();
             } else {
-                // by default, search everything
-                return "*:*";
+
+                if(this.filterQuery === "") {
+                    // by default, search everything
+                    return "*:*";
+                } else {
+                    // apply the filer.
+                    return 'FILTER(*:*, this.filterQuery)';
+                }
             }
         },
 
@@ -482,7 +488,7 @@ export default {
 
             var fq = fieldName + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
-                fq : this.filterQuery + "," + fq;
+                fq : this.filterQuery + " AND " + fq;
             // load items to refresh the list.
             this.loadItems();
         },
