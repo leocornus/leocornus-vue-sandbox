@@ -257,7 +257,7 @@ export default {
                 //    }
                 //  ]
                 // Object hasOwnProperty is like hasKey but more complex.
-                self.facets = response.data.facets;
+                vm.facets = response.data.facets;
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
@@ -266,7 +266,7 @@ export default {
                     "Showing " + (startRow + 1) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
                     vm.totalHits + " Items";
-                if(self.totalHits > 0) {
+                if(vm.totalHits > 0) {
                     console.log('total hits: ' + vm.totalHits);
                     //console.log(JSON.stringify(self.facets));
                     //console.log(JSON.stringify(response.data.documents[0]));
