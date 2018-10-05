@@ -65,24 +65,37 @@ export default {
     name: "listing-details",
 
     // the doc will have all details and a index field.
-    props: ["doc", "index"],
+    props: {
+        "doc": Object,
+        "index": Number,
+        // set the name for id field.
+        "idFieldName": {
+            type: String,
+            default: "id"
+        }
+    },
 
     computed: {
 
         // for all th IDs, we need replace the following special chars with
         // empty string:
         // @ . /
+        docID() {
+            let theId = this.doc[this.idFieldName];
+            theId = (typeof theId === "object") ? theId[0] : theId;
+            return theId.replace(/[@\.\/]/g, '');
+        },
 
         listingID() {
-            return this.doc['id'].replace(/[@\.\/]/g, '');
+            return this.DocID;
         },
 
         collapseID() {
-            return "collapse" + this.doc['id'].replace(/[@\.\/]/g, '');
+            return "collapse" + this.docID;
         },
 
         targetCollapseID() {
-            return "'collapse" + this.doc['id'].replace(/[@\.\/]/g, '') + "'";
+            return "'collapse" + this.docID;
         },
 
         /**
@@ -92,7 +105,7 @@ export default {
         caption() {
 
             // by default, we will using id as the caption.
-            var caption = this.doc['id'];
+            var caption = this.docID;
 
             // check the parent component:
             if(this.$parent.hasOwnProperty("customizeListingDetailsCaption")) {
