@@ -294,11 +294,13 @@ export default {
 
             // the parameters for query.
             // this will show how to use query parameters in a JSON request.
+            console.log(thisVm.getQueryString());
             var postParams = {
                 workflow: "search",
                 query: thisVm.getQueryString(),
                 searchProfile: "checkcity",
-                queryLanguage: "simple",
+                //queryLanguage: "simple",
+                queryLanguage: "advanced",
                 rows: thisVm.perPage,
                 offset: startRow,
                 facets: thisVm.getFacetFields()
@@ -330,7 +332,7 @@ export default {
                     return "*:*";
                 } else {
                     // apply the filer.
-                    return 'FILTER(*:*, this.filterQuery)';
+                    return 'FILTER(*:*,' + this.filterQuery + ')';
                 }
             }
         },
@@ -423,7 +425,7 @@ export default {
         getFilterQuery() {
 
             if(this.filterQuery === "") {
-                return {};
+                return "";
             } else {
                 return {
                   // filter query list.
@@ -488,7 +490,7 @@ export default {
          */
         handleBucketSelect(fieldName, bucketValue) {
 
-            var fq = fieldName + ":" + bucketValue;
+            var fq = fieldName.toLowerCase() + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + " AND " + fq;
             // load items to refresh the list.
