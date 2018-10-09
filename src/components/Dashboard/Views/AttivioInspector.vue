@@ -15,11 +15,11 @@
       <div class="input-group-prepend">
         <span id="action-addon" class="input-group-text">Action: </span>
       </div>
-      <b-form-select class="form-control" size="lg"
+      <b-form-select class="form-control"
           v-model="actionName" :options="actionOptions">
       </b-form-select>
       <span class="input-group-btn">
-        <button class="btn btn-outline-primary btn-lg" type="submit" 
+        <button class="btn btn-outline-primary" type="submit" 
                 v-on:click="executeAction">Execute</button>
       </span>
     </div>
@@ -76,10 +76,10 @@ export default {
     data() {
         return {
             baseUrl: 'https://base.restapi.com',
-            actionName: 'Name of Action',
+            actionName: 'search',
             actionOptions: [
-                "search",
-                "simplecgi"
+                {value:"search", text:"Simple Search"},
+                {value:"simplecgi", text:"Simple CGI Search"}
             ],
             // the JSONEditors object.
             payloadEditor: null,
