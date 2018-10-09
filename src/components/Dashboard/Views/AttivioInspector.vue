@@ -6,12 +6,10 @@
       <div class="input-group-prepend">
         <span id="restBaseUrl-addon" class="input-group-text">REST API Base URL: </span>
       </div>
-      <input type="text" class="form-control" id="restBaseUrl"
-             aria-describedby="restBaseUrl-addon"
-             v-model="baseUrl"
-             placeholder="RESTful API base URL https://www.rest.com">
-    </div>
-    <div class="input-group mb-2">
+      <b-form-select class="form-control"
+          aria-describedby="restBaseUrl-addon"
+          v-model="baseUrl" :options="baseUrlOptions">
+      </b-form-select>
       <div class="input-group-prepend">
         <span id="action-addon" class="input-group-text">Action: </span>
       </div>
@@ -231,7 +229,11 @@ export default {
      */
     created() {
 
-        this.baseUrl = this.$localSettings.attivioRestBaseUrl;
+        this.baseUrlOptions = [
+            {value: this.$localSettings.attivioRestBaseUrl,
+            text: "Reva Search"}
+        ];
+        this.baseUrl = this.baseUrlOptions[0].value;
         // set the tracking base url.
         solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
     },
