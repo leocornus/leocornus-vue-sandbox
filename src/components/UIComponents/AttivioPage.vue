@@ -182,7 +182,7 @@ export default {
           if(this.filterQuery === "") {
               return null;
           } else {
-              return this.filterQuery.split(" AND ")
+              return this.filterQuery.split(",");
           }
       },
 
@@ -332,7 +332,7 @@ export default {
                     return "*:*";
                 } else {
                     // apply the filer.
-                    return 'FILTER(*:*,' + this.filterQuery + ')';
+                    return 'FILTER(*:*,AND(' + this.filterQuery + '))';
                 }
             }
         },
@@ -492,7 +492,7 @@ export default {
 
             var fq = fieldName.toLowerCase() + ":" + bucketValue;
             this.filterQuery = this.filterQuery === "" ? 
-                fq : this.filterQuery + " AND " + fq;
+                fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
             this.loadItems();
         },
@@ -503,6 +503,7 @@ export default {
         removeFilter(filter) {
 
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
+            // join will use , as the default separator
             this.filterQuery = fqs.join();
             this.loadItems();
         },
