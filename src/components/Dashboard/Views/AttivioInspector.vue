@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import bFormSelect from 'bootstrap-vue/es/components/form-select/form-select';
 
 // import 3rd libs.
 import JSONEditor from 'jsoneditor/dist/jsoneditor.min.js'
@@ -68,6 +69,9 @@ import axios from 'axios'
 
 export default {
     // JavaScript goes here.
+    components: {
+      'b-form-select': bFormSelect
+    },
 
     data() {
         return {

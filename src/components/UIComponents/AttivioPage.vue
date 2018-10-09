@@ -82,6 +82,7 @@ import bPagination from 'bootstrap-vue/es/components/pagination/pagination'
 import bCard from 'bootstrap-vue/es/components/card/card'
 import bCardHeader from 'bootstrap-vue/es/components/card/card-header'
 import bFormCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkbox';
+import bFormSelect from 'bootstrap-vue/es/components/form-select/form-select';
 
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
@@ -98,10 +99,11 @@ export default {
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
       'b-form-input': bFormInput,
+      'b-form-checkbox': bFormCheckbox,
+      'b-form-select': bFormSelect,
       'b-card': bCard,
       'b-card-header': bCardHeader,
       'b-button': bButton,
-      'b-form-checkbox': bFormCheckbox,
       'b-pagination' : bPagination
     },
 
