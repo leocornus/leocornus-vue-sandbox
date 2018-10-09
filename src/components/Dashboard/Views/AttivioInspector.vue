@@ -15,10 +15,9 @@
       <div class="input-group-prepend">
         <span id="action-addon" class="input-group-text">Action: </span>
       </div>
-      <input type="text" class="form-control form-control-lg" id="action" 
-             v-model="actionName"
-             aria-describedby="action-addon"
-             placeholder="search all">
+      <b-form-select class="form-control" size="lg"
+          v-model="actionName" :options="actionOptions">
+      </b-form-select>
       <span class="input-group-btn">
         <button class="btn btn-outline-primary btn-lg" type="submit" 
                 v-on:click="executeAction">Execute</button>
@@ -74,6 +73,10 @@ export default {
         return {
             baseUrl: 'https://base.restapi.com',
             actionName: 'Name of Action',
+            actionOptions: [
+                "search",
+                "simplecgi"
+            ],
             // the JSONEditors object.
             payloadEditor: null,
             outputEditor: null,
@@ -237,13 +240,14 @@ export default {
         const resEditor = this.$refs.outputEditor
         const options = {
             // default mode.
-            mode: 'view',
+            mode: 'code',
             // allowed modes.
             //modes: ['code', 'form', 'text', 'tree', 'view']
             modes: ['code', 'tree', 'view']
         }
 
         this.payloadEditor = new JSONEditor(reqEditor, options)
+        //this.payloadEditor.setKeyboardHandler("ace/keyboard/vim")
         // set default to query everything.
         this.payloadEditor.set({query:"*:*"})
 
