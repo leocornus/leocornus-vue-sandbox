@@ -229,10 +229,13 @@ export default {
      */
     created() {
 
-        this.baseUrlOptions = [
-            {value: this.$localSettings.attivioRestBaseUrl,
-            text: "Reva Search"}
-        ];
+        this.baseUrlOptions =
+          this.$localSettings.attivio.inspector.collections.map(obj =>{
+            var rObj = {};
+            rObj['value'] = obj.url;
+            rObj['text'] = obj.name;
+            return rObj;
+        });
         this.baseUrl = this.baseUrlOptions[0].value;
         // set the tracking base url.
         solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
