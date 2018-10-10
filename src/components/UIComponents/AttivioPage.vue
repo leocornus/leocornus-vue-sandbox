@@ -49,7 +49,7 @@
     </li>
   </ul>
 </b-card>
-          <!-- statistics :stats="stats"></statistics -->
+          <stats-card :stats="stats" v-if="stats"></stats-card>
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index"
               v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
@@ -87,6 +87,7 @@ import bFormSelect from 'bootstrap-vue/es/components/form-select/form-select';
 import axios from 'axios'
 import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
+import StatisticsCard from '@/components/UIComponents/StatisticsCard.vue'
 
 import solr from '@/libs/solr'
 
@@ -94,6 +95,7 @@ export default {
     components: {
       'listing-details': ListingDetails,
       'facet-buckets': FacetBuckets,
+      'stats-card': StatisticsCard,
       'b-dropdown': bDropdown,
       'b-dropdown-item': bDropdownItem,
       'b-input-group': bInputGroup,
@@ -260,7 +262,8 @@ export default {
                 //  ]
                 // Object hasOwnProperty is like hasKey but more complex.
                 vm.facets = response.data.facets;
-                //self.stats = self.facets[self.facets.length - 1].statistics;
+                // TODO: need smart way to find statistics facet
+                vm.stats = vm.facets[vm.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
                 var startRow = postParams.offset;
