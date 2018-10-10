@@ -64,13 +64,16 @@ export default {
 
         // ids for collapse.
         facetID() {
+            // replace the white space with -.
             return this.facet.label.replace(/ /g, '-');
         },
+
+        // we could use the computed property as a normal property
         facetCollapseID() {
-            return "collapse" + this.facet.label.replace(/ /g, '-');
+            return "collapse" + this.facetID;
         },
         facetTargetCollapseID() {
-            return "#collapse" + this.facet.label.replace(/ /g, '-');
+            return "#collapse" + this.facetID;
         },
 
         // facet buckets.
