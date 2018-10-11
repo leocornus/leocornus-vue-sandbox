@@ -263,7 +263,8 @@ export default {
                 // Object hasOwnProperty is like hasKey but more complex.
                 vm.facets = response.data.facets;
                 // TODO: need smart way to find statistics facet
-                vm.stats = vm.facets[vm.facets.length - 1].statistics;
+                //vm.stats = vm.facets[vm.facets.length - 1].statistics;
+                vm.stats = vm.getReadyStats();
                 //console.log("statistics: " + self.stats);
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
                 var startRow = postParams.offset;
@@ -486,6 +487,44 @@ export default {
             });
 
             return retFacets;
+        },
+
+        /**
+         * process the response to get the statistics data.
+         * which will include statistics field name and data.
+         */
+        getReadyStats() {
+
+            /**
+             * Attivio wraps statistics data inside the facets resposne.
+             * for example:
+"facets": [
+  {
+    "name": "value_i",
+    "field": "value_i",
+    "label": "value_i",
+    "statistics": {
+      "count": 304482,
+      "sum": 170599094355,
+      "min": 0,
+      "max": 129900300,
+      "mean": 560292.872337281,
+      "midpoint": 64950150,
+      "stdev": 801532.8750940931,
+      "var": 642454949856.6031
+    },
+    "buckets": [
+      {}
+    ]
+  }
+]
+            *
+            * We will use array.filter to return the facets with statistics
+            * property
+            */ 
+            var statsFacets = 
+                this.facets.filter(facet => facet.hasOwnProperty("statistics"));
+            return statsFacets[0].statistics;
         },
 
         /**
