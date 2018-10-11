@@ -166,7 +166,7 @@ export default {
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload);
+            solr.track(trackPayload, "", ["search"]);
 
             axios.post(endPoint, payload)
             .then(function(response) {
@@ -206,7 +206,7 @@ export default {
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload);
+            solr.track(trackPayload,"",["simplecgi"]);
 
             axios.get(endPoint, payload)
             .then(function(response) {
