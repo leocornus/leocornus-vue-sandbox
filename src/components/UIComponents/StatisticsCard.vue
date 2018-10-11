@@ -3,7 +3,7 @@
   <b-card-header class="bg-primary text-white">
     <a v-b-toggle="statsCollapseID"
        href="#" class="card-link text-white">
-      Statistics
+      Stats - {{statsLabel}}
     </a>
   </b-card-header>
   <b-collapse :id="statsCollapseID">
@@ -48,10 +48,24 @@ export default {
     computed: {
 
         /**
+         * stats card label.
+         */
+        statsLabel() {
+            return this.stats.label;
+        },
+
+        /**
+         * stats id
+         */
+        statsID() {
+            return this.statsLabel.replace(/ /g, '-');
+        },
+
+        /**
          * compute the collapse id.
          */
         statsCollapseID() {
-            return "stats";
+            return "collapse" + this.statsID;
         },
 
         /**

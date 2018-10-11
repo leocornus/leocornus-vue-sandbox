@@ -49,7 +49,9 @@
     </li>
   </ul>
 </b-card>
-          <stats-card :stats="stats" v-if="stats"></stats-card>
+          <stats-card v-for="stat, index) in stats" :stats="stat" :key="index" 
+              v-if="stats">
+          </stats-card>
           <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index"
               v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
@@ -524,7 +526,12 @@ export default {
             */ 
             var statsFacets = 
                 this.facets.filter(facet => facet.hasOwnProperty("statistics"));
-            return statsFacets[0].statistics;
+            let statss = statsFacets.map(obj => {
+                var stats = obj.statistics;
+                stats["label"] = obj.field;
+                return stats;
+            });
+            return statss;
         },
 
         /**
