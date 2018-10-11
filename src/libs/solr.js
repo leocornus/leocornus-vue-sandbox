@@ -37,11 +37,13 @@ var solr = {
 
     /**
      * track something.
+     * introduce new parameters comment and tags.
+     * set the default value to empty string and empty array
      */
-    track: function(payload) {
+    track: function(payload, comment="", tags=[]) {
 
         // preparing the track payload.
-        var tPayload = this.trackPayload(payload);
+        var tPayload = this.trackPayload(payload, comment, tags);
 
         // TODO: query the count first. if we could not find anything,
         // count will be 0
@@ -92,7 +94,7 @@ var solr = {
     /**
      * preparing the tracking payload
      */
-    trackPayload: function(input) {
+    trackPayload: function(input, comment, tags) {
 
         // store the input as string, using stringify function.
         var rawContent = JSON.stringify(input);
@@ -108,6 +110,8 @@ var solr = {
           // using the MD5 hash as the id
           id : md5Hash,
           table : "tracking",
+          comment : comment,
+          tags: tags,
           content : rawContent,
           rest_domain: input.end_point.substring(0,firstSlash),
           rest_path: input.end_point.substring(firstSlash),
