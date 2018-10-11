@@ -21,6 +21,22 @@
                 v-on:click="executeAction">Execute</button>
       </span>
     </div>
+    <b-input-group class="mb-2" size="sm">
+      <b-input-group-append>
+        <span id="comment-addon" class="input-group-text">Comment</span>
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="comment"
+             aria-describedby="comment-addon"
+             v-model="comment"
+             placeholder="comment for this query"/>
+      <b-input-group-append>
+        <span id="tags-addon" class="input-group-text">Tags</span>
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="tags"
+             aria-describedby="tags-addon"
+             v-model="tags"
+             placeholder="Tags, separate with ,"/>
+    </b-input-group>
     <div class="row mb-2">
 <div class="col">
   <div class="card">
@@ -79,9 +95,12 @@ export default {
                 {value:"search", text:"Simple Search"},
                 {value:"simplecgi", text:"Simple CGI Search"}
             ],
+            comment: "",
+            tags: "",
             // the JSONEditors object.
             payloadEditor: null,
             outputEditor: null,
+
             /**
              * logging messages.
              */
@@ -166,7 +185,9 @@ export default {
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload, "", ["search"]);
+            let trackTags = vm.tags.split(",");
+            trackTags.push("search");
+            solr.track(trackPayload, vm.comment, trackTags);
 
             axios.post(endPoint, payload)
             .then(function(response) {
@@ -206,7 +227,9 @@ export default {
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload,"",["simplecgi"]);
+            let trackTags = vm.tags.split(",");
+            trackTags.push("simplecgi");
+            solr.track(trackPayload, vm.comment,trackTags);
 
             axios.get(endPoint, payload)
             .then(function(response) {
