@@ -274,7 +274,7 @@ export default {
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
                 var startRow = postParams.offset;
                 vm.resultSummary =
-                    "Showing " + (startRow + 1) + " - " +
+                    "Showing " + (vm.totalHits == 0 ? 0 : (startRow + 1)) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
                     vm.totalHits + " Items";
                 if(vm.totalHits > 0) {
