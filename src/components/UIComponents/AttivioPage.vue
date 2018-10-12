@@ -248,7 +248,9 @@ export default {
                 vm.totalHits = response.data.totalHits;
 
                 // tweak the structure.
-                vm.results = vm.formatDocuments(response.data.documents);
+                if(response.data.hasOwnProperty("documents")) {
+                    vm.results = vm.formatDocuments(response.data.documents);
+                }
                 //console.log(vm.results);
 
                 // check if we have facets in response.
