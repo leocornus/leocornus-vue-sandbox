@@ -65,7 +65,7 @@ export default {
          * compute the collapse id.
          */
         statsCollapseID() {
-            return "collapse" + this.statsID;
+            return "stats-" + this.statsID;
         },
 
         /**
@@ -76,15 +76,15 @@ export default {
          */
         theStats() {
 
-            var self = this;
-            if(self.stats) {
+            var stats = this.stats.statistics;
+            if(stats) {
                 // using d3-format to format numbers.
                 var format = d3.format(",.2f");
                 var items = [];
-                Object.keys(self.stats).forEach(function(theKey) {
+                Object.keys(stats).forEach(function(theKey) {
                     var item = {
                       "key": theKey,
-                      "value": format(self.stats[theKey])
+                      "value": format(stats[theKey])
                     }
                     items.push(item);
                 });

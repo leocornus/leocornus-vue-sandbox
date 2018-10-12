@@ -526,11 +526,17 @@ export default {
             */ 
             var statsFacets = 
                 this.facets.filter(facet => facet.hasOwnProperty("statistics"));
+
+            /**
+             * mapping to only pick the field name and the actuall statistics.
+             */
             let statss = statsFacets.map(obj => {
-                var stats = obj.statistics;
-                stats["label"] = obj.field;
-                return stats;
+                return {
+                    "label": obj.field,
+                    "statistics": obj.statistics
+                };
             });
+
             return statss;
         },
 
