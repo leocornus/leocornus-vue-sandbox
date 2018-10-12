@@ -36,7 +36,7 @@
   </b-card-header>
   <ul class="list-group list-group-flush">
     <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center"
-        v-for="(filter, index) in filters" :key="index">
+        v-for="(filter, index) in filters" :key="'filter-' + index">
       {{filter.replace(":", ": ")}}
       <a href="#" v-on:click="removeFilter(filter)">
       <span class="badge badge-primary badge-pill">X</span>
@@ -44,10 +44,12 @@
     </li>
   </ul>
 </b-card>
-          <stats-card v-for="stat, index) in stats" :stats="stat" :key="index" 
+          <stats-card v-for="stat, index) in stats" :stats="stat" 
+              :key="'stats-' + index" 
               v-if="stats">
           </stats-card>
-          <facet-buckets v-for="(facet, index) in facets" :facet="facet" :key="index"
+          <facet-buckets v-for="(facet, index) in facets" :facet="facet" 
+              :key="'facet-' + index"
               v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
         </div>
@@ -55,7 +57,7 @@
           <h3 class="m-0">{{resultSummary}}</h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" 
+          <listing-details v-for="(doc, index) in results" :doc="doc" :key="doc.id" 
                            :index="index" idFieldName=".id">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
@@ -106,7 +108,7 @@ export default {
       'b-pagination' : bPagination
     },
 
-    name: "solr-page",
+    name: "attivio-page",
 
     props: ["pageName"],
 
