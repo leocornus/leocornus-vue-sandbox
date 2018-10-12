@@ -2,19 +2,14 @@
 <div class="content container">
   <div id="search-app">
 
-    <b-input-group class="mb-2" size="sm">
-      <b-dropdown right v-bind:text="pageSource">
-        <b-dropdown-item v-for="(collection, index) in collections" :key="index"
-                         v-on:click="switchCollection(collection.name, index)"
-        >{{collection.name}}</b-dropdown-item>
-      </b-dropdown>
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">{{collectionLabel}}</span>
-      </b-input-group-append>
-      <b-form-input type="text" class="form-control" id="restBaseUrl"
-             aria-describedby="restBaseUrl-addon"
-             v-model="restBaseUrl"
-             placeholder="RESTful API base URL https://www.rest.com"/>
+    <b-input-group class="mb-2">
+      <div class="input-group-prepend">
+        <span id="restBaseUrl-addon" class="input-group-text">Base URL: </span>
+      </div>
+      <b-form-select class="form-control"
+          aria-describedby="restBaseUrl-addon"
+          v-model="restBaseUrl" :options="baseUrlOptions">
+      </b-form-select>
       <b-input-group-append>
         <b-button variant="outline-primary" v-if="!autoRefresh"
             v-on:click="loadItems">Refresh</b-button>
@@ -118,10 +113,6 @@ export default {
     data() {
       return {
         restBaseUrl: 'http://search.example.com',
-        // available collections.
-        collections: [],
-        // label for the current event queue
-        eventLabel: "",
 
         query: '*:*',
         // default facet field is empty.
@@ -373,23 +364,6 @@ export default {
         },
 
         /**
-         * hook on the click event on queue selection dropdown.
-         * we could use the inline JavaScript statement to pass the queue name.
-         * here is a example:
-         * <b-dropdown-item v-for="(collection, index) in collections"
-         *        v-on:click="switchCollection(collection.name, index)">
-         */
-        switchCollection(collectionName, index) {
-
-            //console.log("["+ index + "] " + collectionName);
-
-            this.collectionLabel = this.collections[index].name;
-            this.restBaseUrl = this.collections[index].url;
-            this.currentPage = 1;
-            this.loadItems();
-        },
-
-        /**
          * The opportunity to customize the caption for each listing.
          */
         customizeListingDetailsCaption(oneDoc) {
@@ -615,11 +589,16 @@ export default {
         //console.log(this.pageName);
         this.page = this.$localSettings.attivio[this.pageName];
 
-        // get the collections.
-        this.collections = this.page.collections;
+        this.baseUrlOptions =
+          this.page.collections.map(obj =>{
+            var rObj = {};
+            rObj['value'] = obj.url;
+            rObj['text'] = obj.name;
+            return rObj;
+        });
+
         // set the the default collection, the first colleciton in the list.
-        this.restBaseUrl = this.collections[0].url;
-        this.collectionLabel = this.collections[0].name;
+        this.restBaseUrl = this.baseUrlOptions[0].value;
 
         // set the tracking base url.
         solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
