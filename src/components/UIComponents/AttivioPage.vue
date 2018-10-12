@@ -10,6 +10,14 @@
           aria-describedby="restBaseUrl-addon"
           v-model="restBaseUrl" :options="baseUrlOptions">
       </b-form-select>
+      <div class="input-group-prepend">
+        <span id="query-addon" class="input-group-text">Query: </span>
+      </div>
+      <b-form-input type="text" id="inputQuery"
+             v-model="query"
+             aria-describedby="query-addon"
+             v-on:keyup.enter.native="loadItems"
+             placeholder="Search b-form-group for..."/>
       <b-input-group-append>
         <b-button variant="outline-primary" v-if="!autoRefresh"
             v-on:click="loadItems">Refresh</b-button>
@@ -325,13 +333,18 @@ export default {
             if(this.page.hasOwnProperty("customizeGetQueryString")) {
                 return this.page.customizeGetQueryString();
             } else {
+                if(this.query === "") {
+                    // reset it to select all
+                    this.query = "*:*";
+                }
 
                 if(this.filterQuery === "") {
                     // by default, search everything
-                    return "*:*";
+                    return this.query;
                 } else {
                     // apply the filer.
-                    return 'FILTER(*:*,AND(' + this.filterQuery + '))';
+                    return 'FILTER(' + this.query +
+                           ',AND(' + this.filterQuery + '))';
                 }
             }
         },
