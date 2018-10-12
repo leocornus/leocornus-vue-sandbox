@@ -9,10 +9,20 @@
 export default {
     data() {
         return {
-            authenticated: false,
-            mockAccount: {
-               username:"seanchen", 
-               password:"supervue1"
+            authenticated: false
+        }
+    },
+
+    computed: {
+        mockAccount: function() {
+
+            if(this.$localSettings.hasOwnProperty('mockAccount')) {
+                return this.$localSettings.mockAccount;
+            } else {
+                return {
+                   username:"seanchen", 
+                   password:"supervue1"
+                };
             }
         }
     },
