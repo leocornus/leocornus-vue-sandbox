@@ -25,6 +25,8 @@ import SolrTracking from '../components/Dashboard/Views/SolrTracking.vue'
 import SolrLogging from '../components/Dashboard/Views/SolrLogging.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
+// Game
+import GameBoard from '../components/Dashboard/Views/GameBoard.vue'
 
 const routes = [
   {
@@ -46,6 +48,11 @@ const routes = [
         path: 'overview',
         name: 'Overview',
         component: Overview
+      },
+      {
+        path: 'gameboard',
+        name: 'Game Board',
+        component: GameBoard
       },
       {
         path: 'realestate',
