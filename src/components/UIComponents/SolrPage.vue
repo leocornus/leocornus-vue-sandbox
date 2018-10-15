@@ -486,6 +486,19 @@ export default {
             thisVm.refreshId = setInterval(function () {
                 thisVm.loadItems();
             }.bind(thisVm), newInterval);
+        },
+
+        /**
+         * customize field.
+         */
+        customizeField(field) {
+
+            if(this.page.hasOwnProperty("customizeListingDetailsField")) {
+                return this.page.customizeListingDetailsField(field);
+            } else {
+                // by default, just return the field.
+                return field;
+            }
         }
     },
 

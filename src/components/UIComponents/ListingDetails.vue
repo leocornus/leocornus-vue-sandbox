@@ -152,11 +152,11 @@ export default {
             });
 
             // using array map to customize field values:
-            if(vm.$localSettings.hasOwnProperty("customizeField")) {
+            if(vm.$parent.hasOwnProperty("customizeField")) {
                 //console.log(vm.$localSettings.customizeField);
                 // the customizeField will follow the specification of
                 // Array.map callback function.
-                return docFields.map(vm.$localSettings.customizeField);
+                return docFields.map(vm.$parent.customizeField);
             } else {
                 return docFields;
             }
