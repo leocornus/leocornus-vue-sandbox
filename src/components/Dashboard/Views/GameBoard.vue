@@ -36,10 +36,10 @@
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Points: </span>
       </b-input-group-append>
-      <b-button variant="outline-primary">0</b-button>
-      <b-button variant="outline-success">1</b-button>
-      <b-button variant="outline-success">2</b-button>
-      <b-button variant="outline-warning">3</b-button>
+      <b-button variant="outline-success" v-for="point in [0,1,2,3]"
+                v-on:click="setPoint(point)" :key="'point-' + point">
+        {{point}}
+      </b-button>
     </b-input-group>
     <b-input-group class="mb-2">
       <b-input-group-append>
@@ -67,6 +67,8 @@ export default {
         return {
             name: "gameboard",
 
+            // TODO: we will collect teams's information from
+            // modal.
             teams: [
                 {name: "home team"},
                 {name: "guest team"}
@@ -118,6 +120,23 @@ export default {
         setAction(actionName) {
 
             this.tracking.action = actionName;
+        },
+
+        /**
+         * set point.
+         */
+        setPoint(point) {
+
+            if(this.tracking.action === "Free Shoot") {
+
+                if(this.tracking.point.length > 0) {
+                    this.tracking.point = this.tracking.point + ".." + point;
+                } else {
+                    this.tracking.point = point + "";
+                }
+            } else {
+                this.tracking.point = point + "";
+            }
         }
     }
 }
