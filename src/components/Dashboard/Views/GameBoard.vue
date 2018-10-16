@@ -3,10 +3,12 @@
   <div id="game-app">
     <b-input-group class="mb-2">
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Team: </span>
+        <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
       </b-input-group-append>
-      <b-button variant="outline-primary">Team A</b-button>
-      <b-button variant="outline-warning">Team B</b-button>
+      <b-button variant="outline-primary" v-for="(team, index) in teams"
+                v-on:click="setTeam(team.name)">
+        {{team.name}}
+      </b-button>
     </b-input-group>
     <b-input-group class="mb-2">
       <b-input-group-append>
@@ -47,7 +49,7 @@
       </b-input-group-append>
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text strong text-warning">
-          Team B, 9, Free Shoot, 1, 1 
+          {{trackingMessage}}
         </span>
       </b-input-group-append>
       <b-button variant="outline-primary">Submit</b-button>
@@ -64,9 +66,43 @@ export default {
     },
 
     data() {
-      return {
-        name: "gameboard"
-      }
+        return {
+            name: "gameboard",
+
+            teams: [
+                {name: "home team"},
+                {name: "guest team"}
+            ],
+
+            // value for tracking message.
+            tracking: {
+                team: '',
+                player: '',
+                action: '',
+                point: ''
+            }
+        }
+    },
+
+    computed: {
+
+        /**
+         * tracking message
+         */
+        trackingMessage() {
+
+             return Object.values(this.tracking).join(", ");
+        }
+    },
+
+    methods: {
+        /**
+         * set team.
+         */
+        setTeam(teamName) {
+
+            this.tracking.team = teamName;
+        }
     }
 }
 </script>
