@@ -6,7 +6,7 @@
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
       </b-input-group-append>
       <b-button variant="outline-primary" v-for="(team, index) in teams"
-                v-on:click="setTeam(team.name)">
+                v-on:click="setTeam(team.name)" :key="'team-' + index">
         {{team.name}}
       </b-button>
     </b-input-group>
@@ -27,12 +27,10 @@
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
       </b-input-group-append>
-      <b-button variant="outline-primary">Shoot</b-button>
-      <b-button variant="outline-primary">Free Shoot</b-button>
-      <b-button variant="outline-success">Defense Rebound</b-button>
-      <b-button variant="outline-success">Offense Rebound</b-button>
-      <b-button variant="outline-success">Assistance</b-button>
-      <b-button variant="outline-danger">Foe</b-button>
+      <b-button variant="outline-primary" v-for="(action, index) in actions"
+                v-on:click="setAction(action.name)" :key="'action-' + index">
+        {{action.name}}
+      </b-button>
     </b-input-group>
     <b-input-group class="mb-2">
       <b-input-group-append>
@@ -74,6 +72,15 @@ export default {
                 {name: "guest team"}
             ],
 
+            actions: [
+                {name: "Shoot"},
+                {name: "Free Shoot"},
+                {name: "Defense Rebound"},
+                {name: "Offense Rebound"},
+                {name: "Assistance"},
+                {name: "Foe"}
+            ],
+
             // value for tracking message.
             tracking: {
                 team: '',
@@ -96,12 +103,21 @@ export default {
     },
 
     methods: {
+
         /**
          * set team.
          */
         setTeam(teamName) {
 
             this.tracking.team = teamName;
+        },
+
+        /**
+         * set action.
+         */
+        setAction(actionName) {
+
+            this.tracking.action = actionName;
         }
     }
 }
