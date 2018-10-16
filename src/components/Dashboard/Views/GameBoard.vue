@@ -14,14 +14,10 @@
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Players: </span>
       </b-input-group-append>
-      <b-button variant="outline-primary">7</b-button>
-      <b-button variant="outline-warning">8</b-button>
-      <b-button variant="outline-warning">23</b-button>
-      <b-button variant="outline-warning">82</b-button>
-      <b-button variant="outline-warning">19</b-button>
-      <b-button variant="outline-warning">34</b-button>
-      <b-button variant="outline-warning">9</b-button>
-      <b-button variant="outline-warning">24</b-button>
+      <b-button variant="outline-warning" v-for="(player, index) in players"
+                v-on:click="setPlayer(player.number)" :key="'player-' + index">
+        {{player.number}}
+      </b-button>
     </b-input-group>
     <b-input-group class="mb-2">
       <b-input-group-append>
@@ -74,6 +70,19 @@ export default {
                 {name: "guest team"}
             ],
 
+            // players.
+            players: [
+                {name: "name one", number: 7},
+                {name: "name two", number: 12},
+                {name: "name three", number: 23},
+                {name: "name fore", number: 24},
+                {name: "name five", number: 3},
+                {name: "name six", number: 82},
+                {name: "name seven", number: 15},
+                {name: "name eight", number: 9}
+            ],
+
+            // palyer or team actions
             actions: [
                 {name: "Shoot"},
                 {name: "Free Shoot"},
@@ -82,6 +91,8 @@ export default {
                 {name: "Assistance"},
                 {name: "Foe"}
             ],
+
+            // points will be just 0, 1, 2, 3
 
             // value for tracking message.
             tracking: {
@@ -120,6 +131,14 @@ export default {
         setAction(actionName) {
 
             this.tracking.action = actionName;
+        },
+
+        /**
+         * set action.
+         */
+        setPlayer(playerNumber) {
+
+            this.tracking.player = playerNumber;
         },
 
         /**
