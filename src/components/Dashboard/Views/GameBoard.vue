@@ -13,7 +13,7 @@
         {{team.name}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" v-if="tracking.team.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Players: </span>
       </b-input-group-append>
@@ -173,7 +173,6 @@ export default {
         setGame() {
 
             //console.log(this.modalHomeTeam);
-            // TODO: we will need save the game informtion.
 
             // update team information.
             this.teams[0].name = this.modalHomeTeam;
@@ -184,6 +183,13 @@ export default {
             this.teams[1].players = this.modalGuestPlayers.split(",").map(player => {
                 return {number: player};
             });
+
+            this.tracking.team = "";
+
+            // TODO: we will need save the game informtion.
+            // TODO: store the game id on the page.
+            // the game id will be used to update game information and load
+            // load the game afterward.
         },
 
         /**
