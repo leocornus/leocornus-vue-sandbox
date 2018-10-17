@@ -9,7 +9,7 @@
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
       </b-input-group-append>
       <b-button variant="outline-primary" v-for="(team, index) in teams"
-                v-on:click="setTeam(team.name)" :key="'team-' + index">
+                v-on:click="setTeam(team.name, index)" :key="'team-' + index">
         {{team.name}}
       </b-button>
     </b-input-group>
@@ -53,13 +53,23 @@
     </b-input-group>
   </div>
 
-  <b-modal id="game-settings" title="Game Settings">
+  <b-modal id="game-settings" title="Game Settings"
+           @ok="setGame">
     <p class="h4">Home Team</p>
     <b-input-group prepend="Team Name:">
-      <b-form-input type="text" aria-label="Text input with radio button" />
+      <b-form-input type="text" aria-label="Set name of home team" v-model="modalHomeTeam"/>
     </b-input-group>
     <b-input-group prepend="Players: ">
-      <b-form-input type="text" aria-label="Text input with radio button" />
+      <b-form-input type="text" aria-label="Set players for home team"
+                    v-model="modalHomePlayers"/>
+    </b-input-group>
+    <p class="h4">Guest Team</p>
+    <b-input-group prepend="Team Name:">
+      <b-form-input type="text" aria-label="Set name of guest team" v-model="modalGuestTeam"/>
+    </b-input-group>
+    <b-input-group prepend="Players: ">
+      <b-form-input type="text" aria-label="Set players for guest team"
+                    v-model="modalGuestPlayers"/>
     </b-input-group>
   </b-modal>
 </div>
@@ -76,6 +86,11 @@ export default {
         return {
             name: "gameboard",
 
+            modalHomeTeam: "home",
+            modalHomePlayers: "1,2,3,4,5",
+            modalGuestTeam: "guest",
+            modalGuestPlayers: "1,2,3,4,5",
+
             // TODO: we will collect teams's information from
             // modal.
             teams: [
@@ -91,7 +106,7 @@ export default {
                      {name: "name eight", number: 9}
                  ]
                 },
-                {name: "guest team"},
+                {name: "guest team",
                  players: [
                      {name: "name one", number: 7},
                      {name: "name two", number: 12},
@@ -102,6 +117,7 @@ export default {
                      {name: "name seven", number: 15},
                      {name: "name eight", number: 9}
                  ]
+                }
              ],
 
             // players.
@@ -152,11 +168,31 @@ export default {
     methods: {
 
         /**
+         * set Game.
+         */
+        setGame() {
+
+            //console.log(this.modalHomeTeam);
+            // TODO: we will need save the game informtion.
+
+            // update team information.
+            this.teams[0].name = this.modalHomeTeam;
+            this.teams[0].players = this.modalHomePlayers.split(",").map(player => {
+                return {number: player};
+            });
+            this.teams[1].name = this.modalGuestTeam;
+            this.teams[1].players = this.modalGuestPlayers.split(",").map(player => {
+                return {number: player};
+            });
+        },
+
+        /**
          * set team.
          */
-        setTeam(teamName) {
+        setTeam(teamName, index) {
 
             this.tracking.team = teamName;
+            this.players = this.teams[index].players;
         },
 
         /**
