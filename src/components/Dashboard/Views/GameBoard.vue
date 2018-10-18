@@ -154,6 +154,7 @@ export default {
          */
         trackingMessage() {
 
+             // TODO: using array.filter to remove enmpty values.
              return Object.values(this.tracking).join(", ");
         },
 
