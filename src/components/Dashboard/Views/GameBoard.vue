@@ -124,6 +124,9 @@ export default {
 
             // palyer or team actions
             actions: [
+                // team action.
+                {name: "Timeout"},
+                // player actions
                 {name: "Shoot"},
                 {name: "Free Throw"},
                 {name: "Defense Rebound"},
