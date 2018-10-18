@@ -32,7 +32,7 @@
       </b-button>
     </b-input-group>
     <b-input-group class="mb-2"
-                   v-if="['Shoot','Free Shoot'].includes(this.tracking.action)">
+                   v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Points: </span>
       </b-input-group-append>
@@ -136,7 +136,7 @@ export default {
             // palyer or team actions
             actions: [
                 {name: "Shoot"},
-                {name: "Free Shoot"},
+                {name: "Free Throw"},
                 {name: "Defense Rebound"},
                 {name: "Offense Rebound"},
                 {name: "Assistance"},
@@ -169,7 +169,7 @@ export default {
          * show or hide points gorup.
          */
         showPoints() {
-            return ['Shoot','Free Shoot'].includes(this.tracking.action);
+            return ['Shoot','Free Throw'].includes(this.tracking.action);
         }
     },
 
@@ -230,7 +230,7 @@ export default {
          */
         setPoint(point) {
 
-            if(this.tracking.action === "Free Shoot") {
+            if(this.tracking.action === "Free Throw") {
 
                 if(this.tracking.point.length > 0) {
                     this.tracking.point = this.tracking.point + ".." + point;
