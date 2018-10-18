@@ -22,7 +22,7 @@
         {{player.number}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" v-if="tracking.team.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
       </b-input-group-append>
@@ -31,7 +31,8 @@
         {{action.name}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2"
+                   v-if="['Shoot','Free Shoot'].includes(this.tracking.action)">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Points: </span>
       </b-input-group-append>
