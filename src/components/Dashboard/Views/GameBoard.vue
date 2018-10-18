@@ -22,7 +22,7 @@
         {{player.number}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2" v-if="tracking.team.length > 0">
+    <b-input-group class="mb-2" v-if="tracking.player > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
       </b-input-group-append>
@@ -41,12 +41,12 @@
         {{point}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" size="lg">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Tracking: </span>
       </b-input-group-append>
       <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text strong text-warning">
+        <span id="restBaseUrl-addon" class="input-group-text text-danger">
           {{trackingMessage}}
         </span>
       </b-input-group-append>
@@ -163,6 +163,13 @@ export default {
         trackingMessage() {
 
              return Object.values(this.tracking).join(", ");
+        },
+
+        /**
+         * show or hide points gorup.
+         */
+        showPoints() {
+            return ['Shoot','Free Shoot'].includes(this.tracking.action);
         }
     },
 
