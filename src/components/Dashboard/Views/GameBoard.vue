@@ -4,7 +4,7 @@
     <b-input-group class="mb-2">
       <b-button variait="primary" v-b-modal.game-settings>Game Settings</b-button>
     </b-input-group>
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" v-if="teams.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
       </b-input-group-append>
@@ -92,46 +92,35 @@ export default {
             modalGuestTeam: "guest",
             modalGuestPlayers: "1,2,3,4,5",
 
-            // TODO: we will collect teams's information from
-            // modal.
-            teams: [
-                {name: "home team",
-                 players: [
-                     {name: "name one", number: 7},
-                     {name: "name two", number: 12},
-                     {name: "name three", number: 23},
-                     {name: "name fore", number: 24},
-                     {name: "name five", number: 3},
-                     {name: "name six", number: 82},
-                     {name: "name seven", number: 15},
-                     {name: "name eight", number: 9}
-                 ]
-                },
-                {name: "guest team",
-                 players: [
-                     {name: "name one", number: 7},
-                     {name: "name two", number: 12},
-                     {name: "name three", number: 23},
-                     {name: "name fore", number: 24},
-                     {name: "name five", number: 3},
-                     {name: "name six", number: 82},
-                     {name: "name seven", number: 15},
-                     {name: "name eight", number: 9}
-                 ]
-                }
-             ],
+            /**
+             * we will collect teams's information from modal.
+             * here is a sample of the teams data structure.
+             *   teams: [
+             *       {name: "home team",
+             *        players: [
+             *            {name: "name one", number: 7},
+             *            {name: "name two", number: 12},
+             *        ]
+             *       },
+             *       {name: "guest team",
+             *        players: [
+             *            {name: "name seven", number: 15},
+             *            {name: "name eight", number: 9}
+             *        ]
+             *       }
+             *   ],
+             */
+            teams: [],
 
-            // players.
-            players: [
-                {name: "name one", number: 7},
-                {name: "name two", number: 12},
-                {name: "name three", number: 23},
-                {name: "name fore", number: 24},
-                {name: "name five", number: 3},
-                {name: "name six", number: 82},
-                {name: "name seven", number: 15},
-                {name: "name eight", number: 9}
-            ],
+            /**
+             * players will be set from selected team.
+             * the data structure will like following.
+             *   players: [
+             *       {name: "name three", number: 23},
+             *       {name: "name fore", number: 24},
+             *   ],
+             */
+            players: [],
 
             // palyer or team actions
             actions: [
@@ -181,6 +170,10 @@ export default {
         setGame() {
 
             //console.log(this.modalHomeTeam);
+            if(this.teams.length <= 0) {
+                // initialize the team.
+                this.teams = [{}, {}];
+            }
 
             // update team information.
             this.teams[0].name = this.modalHomeTeam;
