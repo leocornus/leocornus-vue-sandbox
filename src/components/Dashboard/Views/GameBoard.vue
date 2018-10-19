@@ -50,7 +50,7 @@
           {{trackingMessage}}
         </span>
       </b-input-group-append>
-      <b-button variant="outline-primary">Submit</b-button>
+      <b-button variant="outline-primary" v-on:click="send">Submit</b-button>
     </b-input-group>
   </div>
 
@@ -237,6 +237,21 @@ export default {
             } else {
                 this.tracking.point = point + "";
             }
+        },
+
+        /**
+         * send the tracking message and reset board.
+         */
+        send() {
+
+            var vm = this;
+
+            // TODO: send tracking message to servver.
+
+            // reset board.
+            Object.keys(vm.tracking).forEach(function(item) {
+                vm.tracking[item] = "";
+            });
         }
     }
 }
