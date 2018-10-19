@@ -136,9 +136,8 @@ export default {
             ],
 
             // points for shoot or free throw action.
-            points: [],
-
             // points will be just 0, 1, 2, 3
+            points: [],
 
             // value for tracking message.
             tracking: {
@@ -207,6 +206,8 @@ export default {
 
             this.tracking.team = teamName;
             this.players = this.teams[index].players;
+            // there is only one team action for now.
+            this.actions = [{name:"Timeout"}]
         },
 
         /**
@@ -234,6 +235,16 @@ export default {
         setPlayer(playerNumber) {
 
             this.tracking.player = playerNumber;
+            // set palyer actions
+            this.actions = [
+                // player actions
+                {name: "Shoot"},
+                {name: "Free Throw"},
+                {name: "Defense Rebound"},
+                {name: "Offense Rebound"},
+                {name: "Assistance"},
+                {name: "Foe"}
+            ];
         },
 
         /**
