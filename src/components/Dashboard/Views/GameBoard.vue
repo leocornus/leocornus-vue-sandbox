@@ -36,7 +36,7 @@
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Points: </span>
       </b-input-group-append>
-      <b-button variant="outline-success" v-for="point in [0,1,2,3]"
+      <b-button variant="outline-success" v-for="point in points"
                 v-on:click="setPoint(point)" :key="'point-' + point">
         {{point}}
       </b-button>
@@ -135,6 +135,9 @@ export default {
                 {name: "Foe"}
             ],
 
+            // points for shoot or free throw action.
+            points: [],
+
             // points will be just 0, 1, 2, 3
 
             // value for tracking message.
@@ -154,8 +157,8 @@ export default {
          */
         trackingMessage() {
 
-             // TODO: using array.filter to remove enmpty values.
-             return Object.values(this.tracking).join(", ");
+             let messages = Object.values(this.tracking);
+             return messages.filter(msg => msg.length > 0).join(", ");
         },
 
         /**
@@ -212,6 +215,17 @@ export default {
         setAction(actionName) {
 
             this.tracking.action = actionName;
+            switch(actionName) {
+            case 'Shoot':
+                this.points = [0,2,3];
+                break;
+            case 'Free Throw':
+                this.points = [0,1];
+                break;
+            default:
+                this.points = [];
+                break;
+            }
         },
 
         /**
