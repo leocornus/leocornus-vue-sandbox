@@ -22,7 +22,7 @@
         {{player.number}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2" v-if="tracking.player > 0">
+    <b-input-group class="mb-2" v-if="actions.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
       </b-input-group-append>
@@ -41,7 +41,7 @@
         {{point}}
       </b-button>
     </b-input-group>
-    <b-input-group class="mb-2" size="lg">
+    <b-input-group class="mb-2" size="lg" v-if="tracking.team.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Tracking: </span>
       </b-input-group-append>
@@ -122,18 +122,21 @@ export default {
              */
             players: [],
 
-            // palyer or team actions
-            actions: [
-                // team action.
-                {name: "Timeout"},
-                // player actions
-                {name: "Shoot"},
-                {name: "Free Throw"},
-                {name: "Defense Rebound"},
-                {name: "Offense Rebound"},
-                {name: "Assistance"},
-                {name: "Foe"}
-            ],
+            /**
+             * palyer or team actions
+             * actions: [
+             *     // team action.
+             *     {name: "Timeout"},
+             *     // player actions
+             *     {name: "Shoot"},
+             *     {name: "Free Throw"},
+             *     {name: "Defense Rebound"},
+             *     {name: "Offense Rebound"},
+             *     {name: "Assistance"},
+             *     {name: "Foe"}
+             * ]
+             */
+            actions: [],
 
             // points for shoot or free throw action.
             // points will be just 0, 1, 2, 3
@@ -274,6 +277,8 @@ export default {
             // TODO: send tracking message to servver.
 
             // reset board.
+            vm.actions = [];
+            // seset the tracking message.
             Object.keys(vm.tracking).forEach(function(item) {
                 vm.tracking[item] = "";
             });
