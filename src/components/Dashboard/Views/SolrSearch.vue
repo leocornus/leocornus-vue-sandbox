@@ -104,6 +104,8 @@
 </template>
 
 <script>
+// TODO: need merge this into SolrPage ocmponent
+
 // components from bootstrap-vue.
 import bButton from 'bootstrap-vue/es/components/button/button'
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
@@ -449,6 +451,19 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             this.filterQuery = fqs.join();
             this.simpleSearch();
+        },
+
+        /**
+         * customize field.
+         */
+        customizeField(field) {
+
+            if(this.page.hasOwnProperty("customizeListingDetailsField")) {
+                return this.page.customizeListingDetailsField(field);
+            } else {
+                // by default, just return the field.
+                return field;
+            }
         }
     },
 
