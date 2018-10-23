@@ -80,6 +80,7 @@
 <script>
 
 import axios from 'axios'
+import md5 from 'md5'
 
 export default {
 
@@ -215,11 +216,47 @@ export default {
             //  * data structure for game information.
             //  * what is the unique identity for a game?
             //  * construct the game_id as 20181023-15-pratice-home-vs-guest
+            this.solrPost(this.restBaseUrl, this.buildGameInfo());
             // TODO: store the game id on the page.
             //  * query to find the game id.
             //  * if we construct the game_id, we don't need query again!
             // the game id will be used to update game information and load
             // load the game afterward.
+        },
+
+        /**
+         * get the ready the payload for game information.
+         */
+        buildGameInfo() {
+
+            var vm = this;
+
+            // the ISO string will be like this: 2018-10-23T14:35:09.879Z
+            var isoDate = (new Date()).toISOString();
+            // we only using the year-month-dayThour.
+            isoDate = isoDate.substring(0, isoDate.indexOf(":"));
+
+            var gameLeague = "pratice";
+            var ageGroup = "u13";
+            var genderGroup = "girls";
+            var homeTeam = vm.teams[0].name;
+            var guestTeam = vm.teams[1].name;
+
+            // construct the game_id
+            var gameId = md5([isoDate, gameLeague, ageGroup, genderGroup,
+                              homeTeam, guestTeam]);
+
+            return {
+                table: "gameinfo",
+                gender_group: genderGroup, // boys, men, women
+                age_group: ageGroup,
+                game_league: gameLeague,
+                home_team: vm.teams[0].name,
+                home_players: vm.teams[0].players,
+                guest_team: vm.teams[1].name,
+                guest_players: vm.teams[1].players,
+                game_id: gameId
+            };
         },
 
         /**
