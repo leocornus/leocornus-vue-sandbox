@@ -3,6 +3,7 @@
   <div id="game-app">
     <b-input-group class="mb-2">
       <b-button variait="primary" v-b-modal.game-settings>Game Settings</b-button>
+      <b-button>Load Game</b-button>
     </b-input-group>
     <b-input-group class="mb-2" v-if="teams.length > 0">
       <b-input-group-append>
@@ -178,20 +179,32 @@ export default {
          */
         setGame() {
 
+            var vm = this;
+
             //console.log(this.modalHomeTeam);
-            if(this.teams.length <= 0) {
+            if(vm.teams.length <= 0) {
                 // initialize the team.
-                this.teams = [{}, {}];
+                vm.teams = [];
+            } else {
+                // pop out existing teams.
+                // Array pop and push will be detected by Vue.
+                // https://vuejs.org/v2/guide/list.html#Array-Change-Detection
+                vm.teams.pop();
+                vm.teams.pop();
             }
 
             // update team information.
-            this.teams[0].name = this.modalHomeTeam;
-            this.teams[0].players = this.modalHomePlayers.split(",").map(player => {
-                return {number: player};
+            vm.teams.push({
+                name: vm.modalHomeTeam,
+                players: vm.modalHomePlayers.split(",").map(player => {
+                    return {number: player};
+                })
             });
-            this.teams[1].name = this.modalGuestTeam;
-            this.teams[1].players = this.modalGuestPlayers.split(",").map(player => {
-                return {number: player};
+            vm.teams.push({
+                name: vm.modalGuestTeam,
+                players: vm.modalGuestPlayers.split(",").map(player => {
+                    return {number: player};
+                })
             });
 
             this.tracking.team = "";
