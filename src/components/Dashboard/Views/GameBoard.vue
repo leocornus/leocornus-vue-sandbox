@@ -330,6 +330,37 @@ export default {
         },
 
         /**
+         * get the ready the payload for game action.
+         */
+        buildGameAction() {
+
+            var vm = this;
+
+            var thePoint = vm.tracking.point;
+            var score = 0;
+            // calculate the score.
+            if(thePoint.length < 1) {
+                score = 0;
+            } else if(thePoint.length == 1) {
+                score = parseInt(thePoint);
+            } else {
+                // length > 1.
+                const scores = thePoint.split("..").map(n => parseInt(n));
+                const reducer = (accumulator, currentValue) => accumulator + currentValue;
+                score = scores.reduce(reducer);
+            }
+            console.log("score=" + score);
+
+            return Object.assign(vm.tracking,
+            {
+                score: score,
+                game_id: vm.gameId,
+                table: "gameaction"
+            });
+
+        },
+
+        /**
          * send the tracking message and reset board.
          */
         send() {
@@ -339,24 +370,29 @@ export default {
             // TODO: send tracking message to server.
             //  * what is the data structure?
             //  * calculate the score before send the message.
+            vm.solrPost(vm.restBaseUrl, vm.buildGameAction(),
+                        function() {
 
-            // reset board.
-            vm.actions = [];
-            // seset the tracking message.
-            Object.keys(vm.tracking).forEach(function(item) {
-                vm.tracking[item] = "";
+                            // reset board.
+                            vm.actions = [];
+                            // seset the tracking message.
+                            Object.keys(vm.tracking).forEach(function(item) {
+                                vm.tracking[item] = "";
+                            });
             });
         },
 
         /**
          * utility method to post payload to Solr server.
          */
-        solrPost(baseUrl, payload) {
+        solrPost(baseUrl, payload, callback) {
 
             // get read the endpoint for update.
             var endPoint = baseUrl + "update/json/docs?commit=true";
             axios.post(endPoint, payload).then(function(response) {
                 // success...
+                console.log(response);
+                callback();
             })
             .catch(function(error) {
                 // error ...
@@ -376,6 +412,9 @@ export default {
 
         // set the the default collection, the first colleciton in the list.
         this.restBaseUrl = this.page.restBaseUrl;
+
+        // reset gameId.
+        this.gameId = null;
     }
 }
 </script>
