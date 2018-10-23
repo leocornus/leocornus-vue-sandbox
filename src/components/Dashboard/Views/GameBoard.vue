@@ -79,6 +79,8 @@
 
 <script>
 
+import axios from 'axios'
+
 export default {
 
     components: {
@@ -210,7 +212,12 @@ export default {
             this.tracking.team = "";
 
             // TODO: we will need save the game informtion.
+            //  * data structure for game information.
+            //  * what is the unique identity for a game?
+            //  * construct the game_id as 20181023-15-pratice-home-vs-guest
             // TODO: store the game id on the page.
+            //  * query to find the game id.
+            //  * if we construct the game_id, we don't need query again!
             // the game id will be used to update game information and load
             // load the game afterward.
         },
@@ -287,7 +294,9 @@ export default {
 
             var vm = this;
 
-            // TODO: send tracking message to servver.
+            // TODO: send tracking message to server.
+            //  * what is the data structure?
+            //  * calculate the score before send the message.
 
             // reset board.
             vm.actions = [];
@@ -295,7 +304,36 @@ export default {
             Object.keys(vm.tracking).forEach(function(item) {
                 vm.tracking[item] = "";
             });
+        },
+
+        /**
+         * utility method to post payload to Solr server.
+         */
+        solrPost(baseUrl, payload) {
+
+            // get read the endpoint for update.
+            var endPoint = baseUrl + "update/json/docs?commit=true";
+            axios.post(endPoint, payload).then(function(response) {
+                // success...
+            })
+            .catch(function(error) {
+                // error ...
+            });
         }
+    },
+
+    /**
+     * created will be called after Vue mode is created.
+     * Vue mode is avaiable now!
+     */
+    created() {
+
+        // the page settings.
+        //console.log(this.pageName);
+        this.page = this.$localSettings.solr['gameboard'];
+
+        // set the the default collection, the first colleciton in the list.
+        this.restBaseUrl = this.page.restBaseUrl;
     }
 }
 </script>
