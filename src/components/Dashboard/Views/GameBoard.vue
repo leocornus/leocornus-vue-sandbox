@@ -89,6 +89,9 @@ export default {
 
     data() {
         return {
+            // track the game Id.
+            gameId : null,
+
             name: "gameboard",
 
             modalHomeTeam: "home",
@@ -243,10 +246,13 @@ export default {
             var guestTeam = vm.teams[1].name;
 
             // construct the game_id
-            var gameId = md5([isoDate, gameLeague, ageGroup, genderGroup,
-                              homeTeam, guestTeam]);
+            if(vm.gameId === null) {
+                vm.gameId = md5([isoDate, gameLeague, ageGroup, genderGroup,
+                                 homeTeam, guestTeam]);
+            }
 
             return {
+                id: vm.gameId,
                 table: "gameinfo",
                 gender_group: genderGroup, // boys, men, women
                 age_group: ageGroup,
@@ -255,7 +261,6 @@ export default {
                 home_players: vm.teams[0].players,
                 guest_team: vm.teams[1].name,
                 guest_players: vm.teams[1].players,
-                game_id: gameId
             };
         },
 
