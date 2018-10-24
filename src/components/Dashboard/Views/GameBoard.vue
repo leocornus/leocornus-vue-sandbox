@@ -239,6 +239,7 @@ export default {
             // we only using the year-month-dayThour.
             isoDate = isoDate.substring(0, isoDate.indexOf(":"));
 
+            // TODO: set game modal should have all these information
             var gameLeague = "pratice";
             var ageGroup = "u13";
             var genderGroup = "girls";
@@ -247,8 +248,10 @@ export default {
 
             // construct the game_id
             if(vm.gameId === null) {
-                vm.gameId = md5([isoDate, gameLeague, ageGroup, genderGroup,
-                                 homeTeam, guestTeam]);
+                // md5 only take strings.
+                // we could use all string or using JSON.stringfy
+                vm.gameId = md5(isoDate + gameLeague + ageGroup + genderGroup +
+                                 homeTeam + guestTeam);
             }
 
             return {
