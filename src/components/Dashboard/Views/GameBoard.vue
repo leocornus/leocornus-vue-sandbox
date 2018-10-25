@@ -339,7 +339,10 @@ export default {
 
             var vm = this;
 
-            var thePoint = vm.tracking.point;
+            // clone the tracking information.
+            let action = Object.assign({}, vm.tracking);
+
+            var thePoint = action.point;
             var score = 0;
             // calculate the score.
             if(thePoint.length < 1) {
@@ -354,7 +357,7 @@ export default {
             }
             console.log("score=" + score);
 
-            return Object.assign(vm.tracking,
+            return Object.assign(action,
             {
                 score: score,
                 game_id: vm.gameId,
@@ -373,15 +376,13 @@ export default {
             // TODO: send tracking message to server.
             //  * what is the data structure?
             //  * calculate the score before send the message.
-            vm.solrPost(vm.restBaseUrl, vm.buildGameAction(),
-                        function() {
+            vm.solrPost(vm.restBaseUrl, vm.buildGameAction());
 
-                            // reset board.
-                            vm.actions = [];
-                            // seset the tracking message.
-                            Object.keys(vm.tracking).forEach(function(item) {
-                                vm.tracking[item] = "";
-                            });
+            // reset board.
+            vm.actions = [];
+            // seset the tracking message.
+            Object.keys(vm.tracking).forEach(function(item) {
+                vm.tracking[item] = "";
             });
         },
 
