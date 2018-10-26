@@ -55,6 +55,10 @@
     </b-input-group>
   </div>
 
+  <div>
+    <b-table striped :items="teamActions"></b-table>
+  </div>
+
   <b-modal id="game-settings" title="Game Settings"
            @ok="setGame">
     <p class="h4">Home Team</p>
@@ -175,6 +179,17 @@ export default {
          */
         showPoints() {
             return ['Shoot','Free Throw'].includes(this.tracking.action);
+        },
+
+        /**
+         * team break down by actions
+         */
+        teamActions() {
+            return [
+              {Action:"Foe", "Team One":2, "Team Two":3},
+              {Action:"Shoot", "Team One":9, "Team Two":15},
+              {Action:"Free Throw", "Team One":3, "Team Two":2}
+            ];
         }
     },
 
@@ -392,7 +407,8 @@ export default {
         solrPost(baseUrl, payload, callback) {
 
             // get read the endpoint for update.
-            var endPoint = baseUrl + "update/json/docs?commit=true";
+            //var endPoint = baseUrl + "update/json/docs?commit=true";
+            var endPoint = baseUrl + "update/json/docs?softCommit=true";
             axios.post(endPoint, payload).then(function(response) {
                 // success...
                 console.log(response);
