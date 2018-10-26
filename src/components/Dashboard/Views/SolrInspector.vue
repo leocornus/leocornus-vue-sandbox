@@ -196,7 +196,7 @@ export default {
 
         this.payloadEditor = new JSONEditor(reqEditor, options)
         // set default to query everything.
-        this.payloadEditor.set({query:"*.*"})
+        this.payloadEditor.set({query:"*:*"})
 
         this.outputEditor = new JSONEditor(resEditor, options)
         this.outputEditor.set({})
