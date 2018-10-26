@@ -56,6 +56,10 @@
   </div>
 
   <div>
+    <b-button variant="outline-primary"
+              v-on:click="loadReports">
+      Reload
+    </b-button>
     <b-table striped :items="teamActions"></b-table>
   </div>
 
@@ -159,7 +163,16 @@ export default {
                 player: '',
                 action: '',
                 point: ''
-            }
+            },
+
+            /**
+             * team break down by actions
+             */
+            teamActions: [
+                {Action:"Foe", "Team One":2, "Team Two":3},
+                {Action:"Shoot", "Team One":9, "Team Two":15},
+                {Action:"Free Throw", "Team One":3, "Team Two":2}
+            ]
         }
     },
 
@@ -179,17 +192,6 @@ export default {
          */
         showPoints() {
             return ['Shoot','Free Throw'].includes(this.tracking.action);
-        },
-
-        /**
-         * team break down by actions
-         */
-        teamActions() {
-            return [
-              {Action:"Foe", "Team One":2, "Team Two":3},
-              {Action:"Shoot", "Team One":9, "Team Two":15},
-              {Action:"Free Throw", "Team One":3, "Team Two":2}
-            ];
         }
     },
 
@@ -416,6 +418,73 @@ export default {
             })
             .catch(function(error) {
                 // error ...
+            });
+        },
+
+        /**
+         * load reports.
+         */
+        loadReports() {
+
+            this.solrPivotSearch(this.restBaseUrl, {});
+        },
+
+        /**
+         * utility method to get team by actions.
+         */
+        solrPivotSearch(baseUrl, payload) {
+
+            let vm = this;
+
+            // using the simple select handler.
+            var endPoint = baseUrl + "select";
+            // get ready the search payload
+            payload = {
+              "query": "*:*",
+              "params": {
+                "rows": 0,
+                "start": 0,
+                "sort": "_timestamp_ desc",
+                "facet": "on",
+                "facet.pivot": [
+                  "team,action",
+                  "action,team",
+                  "team,player,action"
+                ],
+                "fq": [
+                  "table:gameaction",
+                  "game_id:" + vm.gameId
+                  //"game_id:430a92ae677ecb17469452aadfceaba8"
+                ]
+              }
+            };
+
+            axios.post(endPoint, payload).then(function(response) {
+
+                let pivot = response.data.facet_counts.facet_pivot;
+                console.log(pivot);
+
+                var actions = [];
+                // TODO: update the team actions.
+                pivot['action,team'].forEach(function(actionPivot) {
+                    // get team name.
+                    var actionName = actionPivot['value'];
+                    // iterate action pivots.
+                    var teams = [];
+                    actionPivot.pivot.forEach(function(team) {
+                        var oneItem = {};
+                        oneItem[team.value] = team.count;
+                        teams.push(oneItem);
+                    });
+
+                    actions.push(
+                      Object.assign({Action: actionName}, teams[0], teams[1])
+                    );
+                });
+
+                vm.teamActions = actions;
+            })
+            .catch(function(error) {
             });
         }
     },
