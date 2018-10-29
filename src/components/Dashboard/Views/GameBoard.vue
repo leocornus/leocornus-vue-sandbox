@@ -10,7 +10,7 @@
       />
       <b-button>Load Game</b-button>
     </b-input-group>
-      <transition-group name="fade" tag="ul" class="results">
+      <transition-group name="slide" tag="ul" class="results">
         <li v-for="item in filtered" :key="item.id">
           <span>
             <strong>{{ item.title  }}</strong> - <small>{{ item.id  }}</small><br>
@@ -543,10 +543,10 @@ export default {
 <style>
     .search-input {
         width: 100%;
-        padding: 1.5em 1em;
+        /**padding: 1.5em 1em;*/
         font-size: 1em;
         outline: 0;
-        border: 5px solid #41B883;
+        /**border: 5px solid #41B883;*/
     }
     .results {
         margin: 0;
@@ -563,10 +563,10 @@ export default {
         border-bottom: 1px solid #394E62;
         transition: ease-in-out 0.5s;
     }
-    .fade-enter-active, .fade-leave-active {
+    .slide-enter-active, .slide-leave-active {
         transition: opacity 0.3s;
     }
-    .fade-enter, .fade-leave-to {
+    .slide-enter, .slide-leave-to {
         opacity: 0;
     }
 </style>
