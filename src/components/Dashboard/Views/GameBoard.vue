@@ -3,8 +3,21 @@
   <div id="game-app">
     <b-input-group class="mb-2">
       <b-button variait="primary" v-b-modal.game-settings>Game Settings</b-button>
+      <b-form-input type="text" placeholder="Select a existing game..."
+          class="search-input"
+          v-on:focus.native="selectGame('focus')"
+          v-on:blur.native="selectGame('blur')"
+      />
       <b-button>Load Game</b-button>
     </b-input-group>
+      <transition-group name="fade" tag="ul" class="results">
+        <li v-for="item in filtered" :key="item.id">
+          <span>
+            <strong>{{ item.title  }}</strong> - <small>{{ item.id  }}</small><br>
+            <small>{{ item.body  }}</small>
+          </span>
+        </li>
+      </transition-group>
     <b-input-group class="mb-2" v-if="teams.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
@@ -99,6 +112,8 @@ export default {
         return {
             // track the game Id.
             gameId : null,
+
+            filtered: [],
 
             name: "gameboard",
 
@@ -242,6 +257,24 @@ export default {
             //  * if we construct the game_id, we don't need query again!
             // the game id will be used to update game information and load
             // load the game afterward.
+        },
+
+        /**
+         * show recent games.
+         */
+        selectGame(action) {
+
+            switch(action) {
+            case "focus":
+                this.filtered = [
+                    {id:'abc', title:"Game One", body:"The first game"},
+                    {id:'cde', title:"Game two", body:"The 2nd game"}
+                ];
+                break;
+            default:
+                this.filtered = [];
+                break;
+            }
         },
 
         /**
@@ -410,7 +443,7 @@ export default {
 
             // get read the endpoint for update.
             //var endPoint = baseUrl + "update/json/docs?commit=true";
-            var endPoint = baseUrl + "update/json/docs?softCommit=true";
+            var endPoint = baseUrl + "update/json/docs?softCommit=true&maxTime=1000";
             axios.post(endPoint, payload).then(function(response) {
                 // success...
                 console.log(response);
@@ -452,7 +485,7 @@ export default {
                   "team,player,action"
                 ],
                 "fq": [
-                  "table:gameaction",
+                  //"table:gameaction",
                   "game_id:" + vm.gameId
                   //"game_id:430a92ae677ecb17469452aadfceaba8"
                 ]
@@ -507,3 +540,33 @@ export default {
     }
 }
 </script>
+<style>
+    .search-input {
+        width: 100%;
+        padding: 1.5em 1em;
+        font-size: 1em;
+        outline: 0;
+        border: 5px solid #41B883;
+    }
+    .results {
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        position: relative;
+    }
+    .results li {
+        background: rgba(53, 73, 94, 0.3);
+        margin: 0;
+        padding: 1em;
+        list-style: none;
+        width: 100%;
+        border-bottom: 1px solid #394E62;
+        transition: ease-in-out 0.5s;
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity 0.3s;
+    }
+    .fade-enter, .fade-leave-to {
+        opacity: 0;
+    }
+</style>
