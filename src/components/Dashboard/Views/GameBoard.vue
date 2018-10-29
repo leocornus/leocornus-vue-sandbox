@@ -264,12 +264,36 @@ export default {
          */
         selectGame(action) {
 
+            let vm = this;
+
             switch(action) {
             case "focus":
-                this.filtered = [
-                    {id:'abc', title:"Game One", body:"The first game"},
-                    {id:'cde', title:"Game two", body:"The 2nd game"}
-                ];
+                var query = {
+                    query: "*:*",
+                    params: {
+                      sort: "_timestamp_ desc",
+                      rows: 8,
+                      start: 0,
+                      fq: ["table:gameinfo"]
+                    }
+                };
+                vm.solrQuery(vm.restBaseUrl, query, function(games) {
+                  vm.filtered = games.map(game => {
+                      return {
+                        id: game.id,
+                        title: game.home_team + " VS. " + game.guest_team,
+                        body: game._timestamp_ + " | " + game.game_league + " | " +
+                              game.gender_group + " | " + game.age_group
+                      };
+                  });
+                });
+                /**
+                 * data structure will like the following:
+                 * [
+                 *     {id:'abc', title:"Game One", body:"The first game"},
+                 *     {id:'cde', title:"Game two", body:"The 2nd game"}
+                 * ];
+                 */
                 break;
             default:
                 this.filtered = [];
@@ -518,6 +542,25 @@ export default {
                 vm.teamActions = actions;
             })
             .catch(function(error) {
+            });
+        },
+
+        /**
+         * generl search function.
+         */
+        solrQuery(baseUrl, query, callback) {
+
+            let vm = this;
+
+            var endPoint = baseUrl + "select";
+            axios.post(endPoint, query).
+            then(function(response) {
+                // return an array of docs
+                callback(response.data.response.docs);
+            })
+            .catch(function(error) {
+                // TODO: error handling.
+                callback([]);
             });
         }
     },
