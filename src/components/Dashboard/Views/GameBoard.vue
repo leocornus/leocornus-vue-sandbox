@@ -502,6 +502,9 @@ export default {
             Object.keys(vm.tracking).forEach(function(item) {
                 vm.tracking[item] = "";
             });
+
+            // reload stats.
+            vm.loadReports();
         },
 
         /**
@@ -527,6 +530,8 @@ export default {
          */
         loadReports() {
 
+            // clean the page!
+            this.teamActions = [];
             this.solrPivotSearch(this.restBaseUrl, {});
         },
 
@@ -630,6 +635,8 @@ export default {
      */
     created() {
 
+        let vm = this;
+
         // the page settings.
         //console.log(this.pageName);
         this.page = this.$localSettings.solr['gameboard'];
@@ -639,6 +646,20 @@ export default {
 
         // reset gameId.
         this.gameId = null;
+
+        // set refresh interval and keep the interval ID as refreshId.
+        vm.refreshId = setInterval(function() {
+            if(vm.gameId != null) {
+                vm.loadReports();
+            }
+        }.bind(vm), 3000);
+    },
+
+    /**
+     * destroy the refresh id.
+     */
+    destroyed() {
+        clearInterval(this.refreshId);
     }
 }
 </script>
