@@ -69,10 +69,15 @@
   </div>
 
   <div>
-    <b-button variant="outline-primary"
-              v-on:click="loadReports">
-      Reload
-    </b-button>
+    <b-input-group>
+      <b-input-group-append>
+        <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
+      </b-input-group-append>
+      <b-button variant="outline-primary"
+                v-on:click="loadReports">
+        Reload
+      </b-button>
+    </b-input-group>
     <b-table striped :items="teamActions"></b-table>
   </div>
 
@@ -415,7 +420,7 @@ export default {
          */
         setPlayer(playerNumber) {
 
-            this.tracking.player = playerNumber;
+            this.tracking.player = playerNumber + "";
             // set palyer actions
             this.actions = [
                 // player actions
@@ -505,8 +510,8 @@ export default {
         solrPost(baseUrl, payload, callback) {
 
             // get read the endpoint for update.
-            //var endPoint = baseUrl + "update/json/docs?commit=true";
-            var endPoint = baseUrl + "update/json/docs?softCommit=true&maxTime=1000";
+            var endPoint = baseUrl + "update/json/docs?commit=true";
+            //var endPoint = baseUrl + "update/json/docs?softCommit=true&maxTime=1000";
             axios.post(endPoint, payload).then(function(response) {
                 // success...
                 console.log(response);
