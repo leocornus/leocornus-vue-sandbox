@@ -12,10 +12,10 @@
     </b-input-group>
       <transition-group name="slide" tag="ul" class="results">
         <li v-for="item in filtered" :key="item.id">
-          <span>
+          <span><a href="#" v-on:click="loadGame(item.id)">
             <strong>{{ item.title  }}</strong> - <small>{{ item.id  }}</small><br>
             <small>{{ item.body  }}</small>
-          </span>
+          </a></span>
         </li>
       </transition-group>
     <b-input-group class="mb-2" v-if="teams.length > 0">
@@ -299,6 +299,45 @@ export default {
                 this.filtered = [];
                 break;
             }
+        },
+
+        /**
+         * load game informtion for an existing game.
+         */
+        loadGame(gameId) {
+
+            let vm = this;
+            vm.gameId = gameId;
+
+            var query = {query: "id:" + gameId};
+            // search the game infomation
+            vm.solrQuery(vm.restBaseUrl, query, function(docs) {
+                var theGame = docs[0];
+                if(vm.teams.length <= 0) {
+                    vm.teams = [];
+                } else {
+                    vm.teams.pop();
+                    vm.teams.pop();
+                }
+                vm.teams.push({
+                    name: theGame.home_team,
+                    players: theGame["home_players.number"].map(player => {
+                        return {number: player};
+                    })
+                });
+                vm.teams.push({
+                    name: theGame.guest_team,
+                    players: theGame["guest_players.number"].map(player => {
+                        return {number: player};
+                    })
+                });
+
+                // reset tracking message.
+                vm.tracking.team = "";
+
+                // reload reports.
+                vm.loadReports();
+            });
         },
 
         /**
