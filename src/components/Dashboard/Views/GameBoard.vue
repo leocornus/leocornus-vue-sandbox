@@ -494,7 +494,12 @@ export default {
             // TODO: send tracking message to server.
             //  * what is the data structure?
             //  * calculate the score before send the message.
-            vm.solrPost(vm.restBaseUrl, vm.buildGameAction());
+            vm.solrPost(vm.restBaseUrl, vm.buildGameAction(),
+                function() {
+                    // reload stats.
+                    vm.loadReports();
+                }
+            );
 
             // reset board.
             vm.actions = [];
@@ -503,8 +508,6 @@ export default {
                 vm.tracking[item] = "";
             });
 
-            // reload stats.
-            vm.loadReports();
         },
 
         /**
@@ -648,18 +651,18 @@ export default {
         this.gameId = null;
 
         // set refresh interval and keep the interval ID as refreshId.
-        vm.refreshId = setInterval(function() {
-            if(vm.gameId != null) {
-                vm.loadReports();
-            }
-        }.bind(vm), 3000);
+        //vm.refreshId = setInterval(function() {
+        //    if(vm.gameId != null) {
+        //        vm.loadReports();
+        //    }
+        //}.bind(vm), 3000);
     },
 
     /**
      * destroy the refresh id.
      */
     destroyed() {
-        clearInterval(this.refreshId);
+        //clearInterval(this.refreshId);
     }
 }
 </script>
