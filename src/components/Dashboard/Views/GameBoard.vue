@@ -678,7 +678,9 @@ export default {
         margin: 0;
         padding: 0;
         text-align: left;
+        //position: absolute;
         position: relative;
+        transform-origin: top;
     }
     .results li {
         background: rgba(53, 73, 94, 0.3);
