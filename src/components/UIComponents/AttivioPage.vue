@@ -606,6 +606,32 @@ export default {
                 // by default, just return the field.
                 return field;
             }
+        },
+
+        /**
+         * generate the neighborhood and agent report.
+         */
+        neighborhoodAgents() {
+
+            // get ready the end point. using the simple search api.
+            var endPoint = this.restBaseUrl + "searchApi/search";
+
+            var allNeighborsQuery = {
+                // TODO: all more cities.
+                "query": "OR(city:toronto,city:markham)",
+                "queryLanguage":"advanced",
+                "workflow": "search",
+                "facets":["neighbourhoodname(maxBuckets=-1)"]
+            };
+
+            axios.post(endPoint, allNeighborsQuery)
+            .then(function(response) {
+                // get facet bucket.
+                var buckets = response.data.facets[0].buckets;
+                // iterate each buckets.
+            })
+            .catch(function(error) {
+            });
         }
     },
 
