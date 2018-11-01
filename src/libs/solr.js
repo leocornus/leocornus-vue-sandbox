@@ -58,6 +58,8 @@ var solr = {
         .then(function(response) {
             // the default value is 0, no such tracking yet!
             var count = 0;
+            // we will try to keep the history comment!
+            var existingComment = "";
             var docs = response.data.response.docs;
             console.log(docs);
             // no docs, set count to 0
@@ -68,10 +70,22 @@ var solr = {
                     //  has NO count value, use 0
                     count = docs[0].count[0];
                 }
+                // work on the comment.
+                if(docs[0].hasOwnProperty('comment')) {
+                    existingComment = docs[0].comment;
+                }
             }
 
-            // update payload.
+            // update payload
+            // -- increase count.
             tPayload["count"] = count + 1;
+            // -- append comment,
+            if (existingComment === comment) {
+                // do nothing here!
+            } else {
+                // append the new comment.
+                tPayload["comment"] = (existingComment + " " + comment).trim();
+            }
             //console.log(tPayload);
 
             axios.post(endPoint, tPayload).then(function(response) {
