@@ -10,20 +10,33 @@
              aria-describedby="restBaseUrl-addon"
              v-model="baseUrl"
              placeholder="RESTful API base URL https://www.rest.com">
-    </div>
-    <div class="input-group mb-2">
       <div class="input-group-prepend">
         <span id="action-addon" class="input-group-text">Action: </span>
       </div>
-      <input type="text" class="form-control form-control-lg" id="action" 
-             v-model="actionName"
-             aria-describedby="action-addon"
-             placeholder="search all">
+      <b-form-select class="form-control"
+          v-model="actionName" :options="actionOptions">
+      </b-form-select>
       <span class="input-group-btn">
-        <button class="btn btn-outline-primary btn-lg" type="submit" 
+        <button class="btn btn-outline-primary" type="submit"
                 v-on:click="executeAction">Execute</button>
       </span>
     </div>
+    <b-input-group class="mb-2" size="sm">
+      <b-input-group-append>
+        <span id="comment-addon" class="input-group-text">Comment</span>
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="comment"
+             aria-describedby="comment-addon"
+             v-model="comment"
+             placeholder="comment for this query"/>
+      <b-input-group-append>
+        <span id="tags-addon" class="input-group-text">Tags</span>
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="tags"
+             aria-describedby="tags-addon"
+             v-model="tags"
+             placeholder="Tags, separate with ,"/>
+    </b-input-group>
     <div class="row mb-2">
 <div class="col">
   <div class="card">
@@ -73,7 +86,13 @@ export default {
     data() {
         return {
             baseUrl: 'https://base.restapi.com',
-            actionName: 'Name of Action',
+            actionName: 'select',
+            actionOptions: [
+                {value:"select", text:"Select API"},
+                {value:"update", text:"Update API"}
+            ],
+            comment: "",
+            tags: "",
             // the JSONEditors object.
             payloadEditor: null,
             outputEditor: null,
@@ -126,7 +145,8 @@ export default {
                              vm.baseUrl + "/update/json/docs?commit=true";
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload);
+            let trackTags = vm.tags.split(",");
+            solr.track(trackPayload, vm.comment, trackTags);
 
             axios.post(endPoint, payload)
             .then(function(response) {
@@ -153,7 +173,9 @@ export default {
             // we will assume the payload are valid JSON.
             var trackPayload = Object.assign({"end_point" : endPoint},
                                              payload);
-            solr.track(trackPayload);
+            let trackTags = vm.tags.split(",");
+            solr.track(trackPayload, vm.comment, trackTags);
+
             axios.post(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
