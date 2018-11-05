@@ -90,7 +90,7 @@
     <div>
       <h3 class="mt-2">Messages:</h3>
       <ul class="list-group" style="height: 350px; overflow-y: auto;">
-        <li class="list-group-item" v-for="(msg, index) in messages.slice().reverse()" 
+        <li class="list-group-item" v-for="(msg, index) in messages" 
                                     :key="index">
           {{messages.length - index}} : {{msg}}
         </li>
@@ -658,7 +658,7 @@ export default {
                                     oneAgent.push(doc.fields['agentphone'][0]):
                                     oneAgent.push("");
                                 // store it.
-                                vm.messages.push(oneAgent);
+                                vm.messages.unshift(oneAgent);
                                 agents[bucket.value].push(oneAgent);
                             });
 
