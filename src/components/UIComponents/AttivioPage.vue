@@ -393,19 +393,6 @@ export default {
         },
 
         /**
-         * The opportunity to customize the caption for each listing.
-         */
-        customizeListingDetailsCaption(oneDoc) {
-
-            if(this.page.hasOwnProperty("customizeListingDetailsCaption")) {
-                return this.page.customizeListingDetailsCaption(oneDoc);
-            } else {
-                // by default, using the doc id as the caption.
-                return oneDoc['.id'][0];
-            }
-        },
-
-        /**
          * this will return the facet fields query parameters.
          * Attivio's faceting is different from Solr.
          */
