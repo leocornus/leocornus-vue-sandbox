@@ -153,11 +153,11 @@ export default {
             });
 
             // using array map to customize field values:
-            if(vm.thePage.hasOwnProperty("customizeField")) {
+            if(vm.thePage.hasOwnProperty("customizeListingDetailsField")) {
                 //console.log(vm.$localSettings.customizeField);
                 // the customizeField will follow the specification of
                 // Array.map callback function.
-                return docFields.map(vm.thePage.customizeField);
+                return docFields.map(vm.thePage.customizeListingDetailsField);
             } else {
                 return docFields;
             }

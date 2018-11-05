@@ -608,19 +608,6 @@ export default {
         },
 
         /**
-         * customize field on the ListingDetials component
-         */
-        customizeField(field) {
-
-            if(this.page.hasOwnProperty("customizeListingDetailsField")) {
-                return this.page.customizeListingDetailsField(field);
-            } else {
-                // by default, just return the field.
-                return field;
-            }
-        },
-
-        /**
          * generate the neighborhood and agent report.
          */
         neighborhoodAgents() {
