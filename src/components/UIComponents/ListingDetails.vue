@@ -72,7 +72,8 @@ export default {
         "idFieldName": {
             type: String,
             default: "id"
-        }
+        },
+        "thePage": Object
     },
 
     computed: {
@@ -108,8 +109,8 @@ export default {
             var caption = this.docID;
 
             // check the parent component:
-            if(this.$parent.hasOwnProperty("customizeListingDetailsCaption")) {
-                caption = this.$parent.customizeListingDetailsCaption(this.doc);
+            if(this.thePage.hasOwnProperty("customizeListingDetailsCaption")) {
+                caption = this.thePage.customizeListingDetailsCaption(this.doc);
             }
 
             return caption;
@@ -152,11 +153,11 @@ export default {
             });
 
             // using array map to customize field values:
-            if(vm.$parent.hasOwnProperty("customizeField")) {
+            if(vm.thePage.hasOwnProperty("customizeField")) {
                 //console.log(vm.$localSettings.customizeField);
                 // the customizeField will follow the specification of
                 // Array.map callback function.
-                return docFields.map(vm.$parent.customizeField);
+                return docFields.map(vm.thePage.customizeField);
             } else {
                 return docFields;
             }
