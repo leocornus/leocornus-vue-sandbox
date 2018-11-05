@@ -87,9 +87,9 @@
       <b-button variant="outline-primary"
           v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
     </b-input-group>
-    <div style="height: 350px; overflow-y: auto;">
+    <div>
       <h3 class="mt-2">Messages:</h3>
-      <ul class="list-group">
+      <ul class="list-group" style="height: 350px; overflow-y: auto;">
         <li class="list-group-item" v-for="(msg, index) in messages" :key="index">
           {{index + 1}} : {{msg}}
         </li>
