@@ -90,8 +90,9 @@
     <div>
       <h3 class="mt-2">Messages:</h3>
       <ul class="list-group" style="height: 350px; overflow-y: auto;">
-        <li class="list-group-item" v-for="(msg, index) in messages" :key="index">
-          {{index + 1}} : {{msg}}
+        <li class="list-group-item" v-for="(msg, index) in messages.slice().reverse()" 
+                                    :key="index">
+          {{messages.length - index}} : {{msg}}
         </li>
       </ul>
     </div>
