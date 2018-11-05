@@ -53,7 +53,9 @@
           <h3 class="m-0">{{resultSummary}}</h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
+          <listing-details v-for="(doc, index) in results" :doc="doc" 
+                                 :key="index" :index="index" 
+                                 :idFieldName="id" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
