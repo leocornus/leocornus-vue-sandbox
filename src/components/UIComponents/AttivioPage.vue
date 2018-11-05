@@ -33,8 +33,6 @@
             @change="resetRefreshInterval"
             v-model="refreshInterval" :options="refreshIntervalOptions">
         </b-form-select>
-        <b-button variant="outline-primary"
-            v-on:click="neighborhoodAgents">Report</b-button>
       </b-input-group-append>
     </b-input-group>
 
@@ -82,6 +80,21 @@
   </b-tab>
   <!-- reports tab -->
   <b-tab title="Reports">
+    <b-input-group class="mb-2">
+      <div class="input-group-prepend">
+        <span id="restBaseUrl-addon" class="input-group-text">Pick Cities: </span>
+      </div>
+      <b-button variant="outline-primary"
+          v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
+    </b-input-group>
+    <div style="height: 350px; overflow-y: auto;">
+      <h3 class="mt-2">Messages:</h3>
+      <ul class="list-group">
+        <li class="list-group-item" v-for="(msg, index) in messages" :key="index">
+          {{index + 1}} : {{msg}}
+        </li>
+      </ul>
+    </div>
   </b-tab>
 </b-tabs>
 </b-card>
@@ -159,8 +172,10 @@ export default {
         currentPage: 1,
         perPage: 15,
 
-        // 
+        // result summary
         resultSummary: "Click search to start..",
+        // gessages.
+        messages: [],
 
         // auto refresh button.
         autoRefresh: false,
@@ -642,6 +657,7 @@ export default {
                                     oneAgent.push(doc.fields['agentphone'][0]):
                                     oneAgent.push("");
                                 // store it.
+                                vm.messages.push(oneAgent);
                                 agents[bucket.value].push(oneAgent);
                             });
 
