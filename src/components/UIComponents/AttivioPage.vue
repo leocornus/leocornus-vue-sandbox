@@ -30,6 +30,8 @@
             @change="resetRefreshInterval"
             v-model="refreshInterval" :options="refreshIntervalOptions">
         </b-form-select>
+        <b-button variant="outline-primary"
+            v-on:click="neighborhoodAgents">Report</b-button>
       </b-input-group-append>
     </b-input-group>
 
@@ -97,6 +99,7 @@ import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 import StatisticsCard from '@/components/UIComponents/StatisticsCard.vue'
 
 import solr from '@/libs/solr'
+import strategy from '@/libs/strategy'
 
 export default {
     components: {
@@ -536,7 +539,7 @@ export default {
          */
         handleBucketSelect(fieldName, bucketValue) {
 
-            var fq = fieldName.toLowerCase() + ":" + bucketValue;
+            var fq = fieldName.toLowerCase() + ":\"" + bucketValue + "\"";
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
@@ -613,25 +616,6 @@ export default {
          */
         neighborhoodAgents() {
 
-            // get ready the end point. using the simple search api.
-            var endPoint = this.restBaseUrl + "searchApi/search";
-
-            var allNeighborsQuery = {
-                // TODO: all more cities.
-                "query": "OR(city:toronto,city:markham)",
-                "queryLanguage":"advanced",
-                "workflow": "search",
-                "facets":["neighbourhoodname(maxBuckets=-1)"]
-            };
-
-            axios.post(endPoint, allNeighborsQuery)
-            .then(function(response) {
-                // get facet bucket.
-                var buckets = response.data.facets[0].buckets;
-                // iterate each buckets.
-            })
-            .catch(function(error) {
-            });
         }
     },
 
