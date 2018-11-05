@@ -1,5 +1,8 @@
 <template>
 <div class="content container">
+<b-card no-body>
+<b-tabs card>
+  <b-tab title="Search" active>
   <div id="search-app">
 
     <b-input-group class="mb-2">
@@ -68,7 +71,7 @@
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="doc.id" 
-                           :index="index" idFieldName=".id">
+                           :index="index" idFieldName=".id" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
@@ -76,6 +79,12 @@
       </div>
     </p>
   </div>
+  </b-tab>
+  <!-- reports tab -->
+  <b-tab title="Reports">
+  </b-tab>
+</b-tabs>
+</b-card>
 </div>
 </template>
 
