@@ -102,8 +102,8 @@
       </ul>
     </div>
 
-    <b-tooltip ref="suggestion" target="nocities">
-      {{cities.split(",").join("</br>")}}
+    <b-tooltip ref="suggestion" target="cities" placement="bottom" trigger="click"
+               html="true" :title="suggestions">
     </b-tooltip>
   </b-tab>
 </b-tabs>
@@ -234,13 +234,19 @@ export default {
       // produce the csv format.
       resultsInCSV: function() {
           return "TODO: result list in CSV format!";
-      }
+      },
 
       // the input event keyup.enter is broken in the 
       // b-form-input component.
       // we will using he $listeners property to override
       // check this page for details:
       // https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
+
+      // suggestions.
+      suggestions: function() {
+
+          return "a long <strong>suggestions</strong>!";
+      }
     },
 
     watch: {
