@@ -15,6 +15,13 @@
              aria-describedby="restBaseUrl-addon"
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com"/>
+      <b-input-group-append>
+        <span id="idField-addon" class="input-group-text">Id Field: </span>
+      </b-input-group-append>
+      <b-form-input type="text" class="form-control" id="idField"
+             aria-describedby="idField-addon"
+             v-model="idField"
+             placeholder=""/>
     </b-input-group>
 
     <b-input-group size="lg" class="mb-2">
@@ -92,7 +99,7 @@
         <div class="col-9 accordion">
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" 
+          <listing-details v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
                            :key="index" :index="index" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
@@ -132,6 +139,7 @@ export default {
     data() {
       return {
         pageName: 'search',
+        idField: 'id',
         restBaseUrl: 'http://search.example.com',
         // available collections, we will load it at the created hook.
         collections: [],
