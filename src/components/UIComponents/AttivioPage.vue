@@ -85,7 +85,7 @@
         <span id="cities-addon" class="input-group-text">Pick Cities: </span>
       </div>
       <b-form-input type="text" id="cities" v-model="cities"
-            placeholder="pick cities..."/>
+            placeholder="pick cities..." v-b-tooltip="suggestionTooltip"/>
       <b-button variant="outline-primary"
           v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
       <div class="input-group-prepend" v-if="dataHref">
@@ -101,10 +101,6 @@
         </li>
       </ul>
     </div>
-
-    <b-tooltip ref="suggestion" target="cities" placement="bottom" trigger="click"
-               html="true" :title="suggestions">
-    </b-tooltip>
   </b-tab>
 </b-tabs>
 </b-card>
@@ -243,9 +239,17 @@ export default {
       // https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
 
       // suggestions.
-      suggestions: function() {
+      suggestionTooltip: function() {
 
-          return "a long <strong>suggestions</strong>!";
+          var titles = ["Cras justo odio", "Cras justo odio"];
+          titles = titles.map(title => "<a href='#' class='list-group-item-secondary'>" + title + "</a>");
+          var theTitle = "<ul class='list-group'>" + titles.join(' ') + "</ul>";
+          return {
+            title: theTitle,
+            html: true,
+            trigger: "click",
+            placement: "bottomright"
+          };
       }
     },
 
@@ -755,3 +759,12 @@ export default {
     }
 }
 </script>
+<style>
+  .tooltip .tooltip-inner {
+    background-color: #d6d8db;
+  }
+
+  .bs-tooltip-bottom .arrow::before {
+    border-bottom-color: #d6d8db;
+  }
+</style>
