@@ -55,7 +55,7 @@
           </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" 
                                  :key="index" :index="index" 
-                                 :idFieldName="id" :thePage="page">
+                                 :idFieldName="page.idFieldName" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
@@ -513,6 +513,10 @@ export default {
         // the page settings.
         //console.log(this.pageName);
         this.page = this.$localSettings.solr[this.pageName];
+        if(! this.page.hasOwnProperty('idFieldName')) {
+            // set the default idFieldName.
+            this.page.idFieldName = "id";
+        }
 
         this.baseUrlOptions =
           this.page.collections.map(obj =>{
