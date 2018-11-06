@@ -82,8 +82,10 @@
   <b-tab title="Reports">
     <b-input-group class="mb-2">
       <div class="input-group-prepend">
-        <span id="restBaseUrl-addon" class="input-group-text">Pick Cities: </span>
+        <span id="cities-addon" class="input-group-text">Pick Cities: </span>
       </div>
+      <b-form-input type="text" id="cities" v-model="cities"
+            placeholder="pick cities..."/>
       <b-button variant="outline-primary"
           v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
     </b-input-group>
@@ -96,6 +98,10 @@
         </li>
       </ul>
     </div>
+
+    <b-tooltip ref="suggestion" target="nocities">
+      {{cities.split(",").join("</br>")}}
+    </b-tooltip>
   </b-tab>
 </b-tabs>
 </b-card>
@@ -175,6 +181,7 @@ export default {
 
         // result summary
         resultSummary: "Click search to start..",
+        cities: "",
         // gessages.
         messages: [],
 
@@ -624,7 +631,7 @@ export default {
             // get ready the end point. using the simple search api.
             var endPoint = vm.restBaseUrl + "searchApi/search";
 
-            var allNeighborsQuery = vm.page.nrReport.selectQuery;
+            var allNeighborsQuery = vm.page.nrReport.selectQuery(vm.cities);
 
             axios.post(endPoint, allNeighborsQuery)
             .then(function(response) {
@@ -658,7 +665,7 @@ export default {
                                     oneAgent.push(doc.fields['agentphone'][0]):
                                     oneAgent.push("");
                                 // store it.
-                                vm.messages.unshift(oneAgent);
+                                vm.updateMessages(oneAgent);
                                 agents[bucket.value].push(oneAgent);
                             });
 
@@ -667,6 +674,7 @@ export default {
                         })
                         .catch(function(err) {
                             console.log("Erro for neighbourhood: " + bucket.value);
+                            console.log(err);
                             report();
                         });
                     },
@@ -679,6 +687,16 @@ export default {
                 // when error happens:
                 console.log(error);
             });
+        },
+
+        updateMessages(oneItem) {
+
+            if(this.messages.length > 1000) {
+                // we only keep 1000 messages.
+                this.messages = [];
+            }
+
+            this.messages.unshift(oneItem);
         }
     },
 
