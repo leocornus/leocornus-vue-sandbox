@@ -666,7 +666,10 @@ export default {
                                     oneAgent.push("");
                                 // store it.
                                 vm.updateMessages(oneAgent);
-                                agents[bucket.value].push(oneAgent);
+                                // only keep unique Agent records.
+                                if(! agents[bucket.value].includes(oneAgent)) {
+                                    agents[bucket.value].push(oneAgent);
+                                }
                             });
 
                             // report done.
