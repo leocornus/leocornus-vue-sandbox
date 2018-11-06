@@ -88,6 +88,9 @@
             placeholder="pick cities..."/>
       <b-button variant="outline-primary"
           v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
+      <div class="input-group-prepend" v-if="dataHref">
+        <a :href="dataHref" download="report.json" class="btn">Download Report</a>
+      </div>
     </b-input-group>
     <div>
       <h3 class="mt-2">Messages:</h3>
@@ -184,6 +187,8 @@ export default {
         cities: "",
         // gessages.
         messages: [],
+        // report data to download.
+        dataHref: "",
 
         // auto refresh button.
         autoRefresh: false,
@@ -682,7 +687,10 @@ export default {
                         });
                     },
                     function() {
-                        console.log(agents);
+                        //console.log(agents);
+                        // show up the download button.
+                        vm.dataHref="data:'text/json;charset=utf-8," +
+                            encodeURIComponent(JSON.stringify(agents, null, 2)) + "'";
                     }
                 );
             })
