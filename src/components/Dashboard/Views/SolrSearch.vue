@@ -92,7 +92,8 @@
         <div class="col-9 accordion">
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :key="index" :index="index">
+          <listing-details v-for="(doc, index) in results" :doc="doc" 
+                           :key="index" :index="index" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
@@ -451,19 +452,6 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             this.filterQuery = fqs.join();
             this.simpleSearch();
-        },
-
-        /**
-         * customize field.
-         */
-        customizeField(field) {
-
-            if(this.page.hasOwnProperty("customizeListingDetailsField")) {
-                return this.page.customizeListingDetailsField(field);
-            } else {
-                // by default, just return the field.
-                return field;
-            }
         }
     },
 
