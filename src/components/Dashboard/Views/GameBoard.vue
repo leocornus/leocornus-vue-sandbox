@@ -2,13 +2,13 @@
 <div class="content container">
   <div id="game-app">
     <b-input-group class="mb-2">
+      <b-button variait="warning">New Game</b-button>
       <b-button variait="primary" v-b-modal.game-settings>Game Settings</b-button>
       <b-form-input type="text" placeholder="Select a existing game..."
           class="search-input"
           v-on:focus.native="selectGame('focus')"
           v-on:blur.native="selectGame('blur')"
       />
-      <b-button>Load Game</b-button>
     </b-input-group>
       <transition-group name="slide" tag="ul" class="results">
         <li v-for="item in filtered" :key="item.id">
