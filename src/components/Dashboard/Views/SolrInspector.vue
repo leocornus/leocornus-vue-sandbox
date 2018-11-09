@@ -176,7 +176,9 @@ export default {
             let trackTags = vm.tags.split(",");
             solr.track(trackPayload, vm.comment, trackTags);
 
-            axios.post(endPoint, payload)
+            // using get, so all parameters will show up on the solr
+            // log file.
+            axios.get(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
                 vm.outputEditor.set(response);
