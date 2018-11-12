@@ -24,14 +24,17 @@
              placeholder=""/>
     </b-input-group>
 
-    <b-input-group size="lg" class="mb-2">
+    <b-input-group class="mb-2">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
              v-on:keyup.enter.native="simpleSearch"
              placeholder="Search b-form-group for..."/>
       <b-input-group-append>
-        <b-button variant="outline-primary" size="lg"
+        <b-button variant="outline-primary"
                 v-on:click="simpleSearch">Search!</b-button>
+        <b-button>
+          <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
+        </b-button>
       </b-input-group-append>
     </b-input-group>
 
