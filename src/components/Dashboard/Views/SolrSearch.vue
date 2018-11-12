@@ -133,6 +133,7 @@
 
   <b-tab title="Fields">
     All fields are list here: output of admin/luke/!
+    <b-table striped hover :items="luke"></b-table>
     <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
   </b-tab>
 </b-tabs>
@@ -495,7 +496,24 @@ export default {
             var endPoint = vm.restBaseUrl + "admin/luke";
             axios.get(endPoint, null)
             .then(function(response) {
-                vm.luke = response;
+                var fields = response.data.fields;
+                vm.luke = [];
+                Object.keys(fields).forEach(function(fieldName) {
+                    var aRow = fields[fieldName];
+                    // add the name property.
+                    aRow.name = fieldName;
+                    // add the index property if it is missing.
+                    if(!aRow.hasOwnProperty('index')) {
+                        aRow.index = '';
+                    }
+                    // add the docs propery if it is missing.
+                    if(!aRow.hasOwnProperty('docs')) {
+                        aRow.docs = 0;
+                    }
+
+                    // add to result.
+                    vm.luke.push(aRow);
+                });
             })
             .catch(function(error) {
                 vm.luke = error;
