@@ -42,6 +42,15 @@
                v-model="idField"
                placeholder=""/>
       </b-input-group>
+      <b-input-group class="mb-2">
+        <b-input-group-prepend>
+          <span id="sort-addon" class="input-group-text">Sort: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="sort"
+               aria-describedby="sort-addon"
+               v-model="sort"
+               placeholder="set sort here: id desc,type asc"/>
+      </b-input-group>
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
@@ -50,13 +59,6 @@
                aria-describedby="filterQuery-addon"
                v-model="filterQuery"
                placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
-        <div class="input-group-prepend">
-          <span id="sort-addon" class="input-group-text">Sort: </span>
-        </div>
-        <input type="text" class="form-control" id="sort"
-               aria-describedby="sort-addon"
-               v-model="sort"
-               placeholder="set sort here: id desc,type asc">
       </div>
 
       <div class="input-group mb-2">
@@ -71,7 +73,7 @@
 
       <div class="input-group mb-2">
         <div class="input-group-prepend">
-          <span id="facetFields-addon" class="input-group-text">Pick facets, separate by ,: </span>
+          <span id="facetFields-addon" class="input-group-text">Facets: </span>
         </div>
         <input type="text" class="form-control" id="facetFields"
                aria-describedby="facetFields-addon"
