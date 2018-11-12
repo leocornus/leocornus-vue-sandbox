@@ -35,7 +35,7 @@
     </b-input-group>
 
     <b-modal id="query-params" title="Query Parameters" ok-only>
-      TODO: we will show query parameters here!
+      <pre>{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
     </b-modal>
 
     <b-modal id="search-settings" title="Search Settings"
