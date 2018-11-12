@@ -15,13 +15,6 @@
              aria-describedby="restBaseUrl-addon"
              v-model="restBaseUrl"
              placeholder="RESTful API base URL https://www.rest.com"/>
-      <b-input-group-append>
-        <span id="idField-addon" class="input-group-text">Id Field: </span>
-      </b-input-group-append>
-      <b-form-input type="text" class="form-control" id="idField"
-             aria-describedby="idField-addon"
-             v-model="idField"
-             placeholder=""/>
     </b-input-group>
 
     <b-input-group class="mb-2">
@@ -40,6 +33,15 @@
 
     <b-modal id="search-settings" title="Search Settings"
              @ok="simpleSearch">
+      <b-input-group class="mb-2">
+        <b-input-group-append>
+          <span id="idField-addon" class="input-group-text">Id Field: </span>
+        </b-input-group-append>
+        <b-form-input type="text" class="form-control" id="idField"
+               aria-describedby="idField-addon"
+               v-model="idField"
+               placeholder=""/>
+      </b-input-group>
       <div class="input-group mb-2">
         <div class="input-group-prepend">
           <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
