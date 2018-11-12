@@ -1,7 +1,5 @@
 <template>
 <div class="content container">
-  <div id="search-app">
-
     <b-input-group class="mb-2">
       <b-dropdown right text="Pick Collection">
         <b-dropdown-item v-for="(collection, index) in collections" :key="index"
@@ -17,6 +15,10 @@
              placeholder="RESTful API base URL https://www.rest.com"/>
     </b-input-group>
 
+<b-card no-body>
+<b-tabs card>
+  <b-tab title="Search" active>
+  <div id="search-app">
     <b-input-group class="mb-2">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
@@ -125,6 +127,9 @@
       </div>
     </p>
   </div>
+  </b-tab>
+</b-tabs>
+</b-card>
 </div>
 </template>
 
