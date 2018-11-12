@@ -1,20 +1,22 @@
 <template>
 <div class="content container">
-    <b-input-group class="mb-2">
-      <b-dropdown right text="Pick Collection">
-        <b-dropdown-item v-for="(collection, index) in collections" :key="index"
-                         v-on:click="switchCollection(collection.name, index)"
-        >{{collection.name}}</b-dropdown-item>
-      </b-dropdown>
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">{{collectionLabel}}: </span>
-      </b-input-group-append>
-      <b-form-input type="text" class="form-control" id="restBaseUrl"
-             aria-describedby="restBaseUrl-addon"
-             v-model="restBaseUrl"
-             placeholder="RESTful API base URL https://www.rest.com"/>
-    </b-input-group>
+<!-- pickup collections -->
+<b-input-group class="mb-2">
+  <b-dropdown right text="Pick Collection">
+    <b-dropdown-item v-for="(collection, index) in collections" :key="index"
+                     v-on:click="switchCollection(collection.name, index)"
+    >{{collection.name}}</b-dropdown-item>
+  </b-dropdown>
+  <b-input-group-append>
+    <span id="restBaseUrl-addon" class="input-group-text">{{collectionLabel}}: </span>
+  </b-input-group-append>
+  <b-form-input type="text" class="form-control" id="restBaseUrl"
+         aria-describedby="restBaseUrl-addon"
+         v-model="restBaseUrl"
+         placeholder="RESTful API base URL https://www.rest.com"/>
+</b-input-group>
 
+<!-- tabs -->
 <b-card no-body>
 <b-tabs card>
   <b-tab title="Search" active>
@@ -128,6 +130,11 @@
     </p>
   </div>
   </b-tab>
+
+  <b-tab title="Fields">
+    All fields are list here: output of admin/luke/!
+    <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
+  </b-tab>
 </b-tabs>
 </b-card>
 </div>
@@ -189,7 +196,10 @@ export default {
         currentPage: 1,
         perPage: 15,
 
-        resultSummary: "Click search to start.."
+        resultSummary: "Click search to start..",
+
+        // luke,
+        luke: null
       }
     },
 
@@ -315,6 +325,7 @@ export default {
             this.restBaseUrl = this.collections[index].url;
             this.currentPage = 1;
             this.simpleSearch();
+            this.adminLuke();
         },
 
         /**
@@ -472,6 +483,23 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             this.filterQuery = fqs.join();
             this.simpleSearch();
+        },
+
+        /**
+         * generate a list of fields.
+         */
+        adminLuke() {
+
+            var vm = this;
+
+            var endPoint = vm.restBaseUrl + "admin/luke";
+            axios.get(endPoint, null)
+            .then(function(response) {
+                vm.luke = response;
+            })
+            .catch(function(error) {
+                vm.luke = error;
+            });
         }
     },
 
@@ -496,6 +524,7 @@ export default {
 
       // execute search.
       this.simpleSearch();
+      this.adminLuke();
     }
 }
 </script>
