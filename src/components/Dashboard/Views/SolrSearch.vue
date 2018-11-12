@@ -32,48 +32,51 @@
       <b-input-group-append>
         <b-button variant="outline-primary"
                 v-on:click="simpleSearch">Search!</b-button>
-        <b-button>
+        <b-button v-b-modal.search-settings>
           <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
         </b-button>
       </b-input-group-append>
     </b-input-group>
 
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
+    <b-modal id="search-settings" title="Search Settings"
+             @ok="simpleSearch">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
+        </div>
+        <input type="text" class="form-control" id="filterQuery"
+               aria-describedby="filterQuery-addon"
+               v-model="filterQuery"
+               placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
+        <div class="input-group-prepend">
+          <span id="sort-addon" class="input-group-text">Sort: </span>
+        </div>
+        <input type="text" class="form-control" id="sort"
+               aria-describedby="sort-addon"
+               v-model="sort"
+               placeholder="set sort here: id desc,type asc">
       </div>
-      <input type="text" class="form-control" id="filterQuery"
-             aria-describedby="filterQuery-addon"
-             v-model="filterQuery"
-             placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
-      <div class="input-group-prepend">
-        <span id="sort-addon" class="input-group-text">Sort: </span>
-      </div>
-      <input type="text" class="form-control" id="sort"
-             aria-describedby="sort-addon"
-             v-model="sort"
-             placeholder="set sort here: id desc,type asc">
-    </div>
 
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span id="fieldList-addon" class="input-group-text">Field List: </span>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span id="fieldList-addon" class="input-group-text">Field List: </span>
+        </div>
+        <input type="text" class="form-control" id="fieldList"
+               aria-describedby="fieldList-addon"
+               v-model="fieldList"
+               placeholder="set a list of fields to return: id,project_id,customer_id">
       </div>
-      <input type="text" class="form-control" id="fieldList"
-             aria-describedby="fieldList-addon"
-             v-model="fieldList"
-             placeholder="set a list of fields to return: id,project_id,customer_id">
-    </div>
 
-    <div class="input-group mb-2">
-      <div class="input-group-prepend">
-        <span id="facetFields-addon" class="input-group-text">Pick facets, separate by ,: </span>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span id="facetFields-addon" class="input-group-text">Pick facets, separate by ,: </span>
+        </div>
+        <input type="text" class="form-control" id="facetFields"
+               aria-describedby="facetFields-addon"
+               v-model="facetFields"
+               placeholder="for example: project_id,customer_name">
       </div>
-      <input type="text" class="form-control" id="facetFields"
-             aria-describedby="facetFields-addon"
-             v-model="facetFields"
-             placeholder="for example: project_id,customer_name">
-    </div>
+    </b-modal>
 
     <!-- result list -->
     <p>
