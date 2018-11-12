@@ -35,7 +35,7 @@
     </b-input-group>
 
     <b-modal id="query-params" title="Query Parameters" ok-only>
-      <pre>{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
+      <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
     </b-modal>
 
     <b-modal id="search-settings" title="Search Settings"
