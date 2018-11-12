@@ -28,6 +28,9 @@
         <b-button v-b-modal.search-settings>
           <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
         </b-button>
+        <b-button variant="success" v-b-modal.query-params>
+          Query Params
+        </b-button>
       </b-input-group-append>
     </b-input-group>
 
@@ -80,6 +83,10 @@
                v-model="facetFields"
                placeholder="for example: project_id,customer_name">
       </div>
+    </b-modal>
+
+    <b-modal id="query-params" title="Query Parameters" ok-only>
+      TODO: we will show query parameters here!
     </b-modal>
 
     <!-- result list -->
