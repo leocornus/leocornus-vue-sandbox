@@ -515,7 +515,11 @@ export default {
                     rows.push(aRow);
                 });
                 vm.luke = {"items": rows,
-                           "fields": ["name", "type", "docs", "schema", "index"]};
+                           "fields": [
+                             {key:"name", sortable:true},
+                             {key:"type", sortable:true},
+                             {key:"docs", sortable:true},
+                             "schema", "index"]};
             })
             .catch(function(error) {
                 vm.luke = error;
