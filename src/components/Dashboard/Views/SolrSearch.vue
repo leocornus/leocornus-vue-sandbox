@@ -133,7 +133,7 @@
 
   <b-tab title="Fields">
     All fields are list here: output of admin/luke/!
-    <b-table striped hover :items="luke"></b-table>
+    <b-table striped hover :items="luke.items" :fields="luke.fields"></b-table>
     <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
   </b-tab>
 </b-tabs>
@@ -200,7 +200,7 @@ export default {
         resultSummary: "Click search to start..",
 
         // luke,
-        luke: null
+        luke: {"items":[], "fields":[]}
       }
     },
 
@@ -497,23 +497,25 @@ export default {
             axios.get(endPoint, null)
             .then(function(response) {
                 var fields = response.data.fields;
-                vm.luke = [];
+                var rows = [];
                 Object.keys(fields).forEach(function(fieldName) {
                     var aRow = fields[fieldName];
                     // add the name property.
                     aRow.name = fieldName;
-                    // add the index property if it is missing.
-                    if(!aRow.hasOwnProperty('index')) {
-                        aRow.index = '';
-                    }
-                    // add the docs propery if it is missing.
-                    if(!aRow.hasOwnProperty('docs')) {
-                        aRow.docs = 0;
-                    }
+                    //// add the index property if it is missing.
+                    //if(!aRow.hasOwnProperty('index')) {
+                    //    aRow.index = '';
+                    //}
+                    //// add the docs propery if it is missing.
+                    //if(!aRow.hasOwnProperty('docs')) {
+                    //    aRow.docs = 0;
+                    //}
 
                     // add to result.
-                    vm.luke.push(aRow);
+                    rows.push(aRow);
                 });
+                vm.luke = {"items": rows,
+                           "fields": ["name", "type", "docs", "schema", "index"]};
             })
             .catch(function(error) {
                 vm.luke = error;
