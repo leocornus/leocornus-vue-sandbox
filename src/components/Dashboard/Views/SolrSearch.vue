@@ -25,14 +25,18 @@
       <b-input-group-append>
         <b-button variant="outline-primary"
                 v-on:click="simpleSearch">Search!</b-button>
-        <b-button v-b-modal.search-settings>
-          <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
-        </b-button>
         <b-button variant="success" v-b-modal.query-params>
           Query Params
         </b-button>
+        <b-button v-b-modal.search-settings>
+          <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
+        </b-button>
       </b-input-group-append>
     </b-input-group>
+
+    <b-modal id="query-params" title="Query Parameters" ok-only>
+      TODO: we will show query parameters here!
+    </b-modal>
 
     <b-modal id="search-settings" title="Search Settings"
              @ok="simpleSearch">
@@ -83,10 +87,6 @@
                v-model="facetFields"
                placeholder="for example: project_id,customer_name">
       </div>
-    </b-modal>
-
-    <b-modal id="query-params" title="Query Parameters" ok-only>
-      TODO: we will show query parameters here!
     </b-modal>
 
     <!-- result list -->
@@ -232,7 +232,7 @@ export default {
             var self = this;
             //console.log('I am in...');
             solr.config.baseUrl = self.restBaseUrl;
-            solr.ping();
+            //solr.ping();
 
             self.resultSummary = "Searching ...";
             // set the results to null for hiding the whole section.
@@ -246,48 +246,8 @@ export default {
               this.query="*:*";
             }
 
-            // make sure we have at less one statistics.
-            //if(self.facetFields.includes('statistics')) {
-            //} else {
-            //    // add the statistics on listvalue_i
-            //    self.facetFields = self.facetFields + 
-            //      ",listvalue_i(statistics=true)";
-            //}
-
-            // post payload, it will be the query parameters here:
-            // This is the JSON request payload.
-            var postPayload = {
-                //workflow: "customsearch",
-                query: this.query,
-                limit: 250,
-                offset: 0,
-                //fields: [".id","title","table","avgScore"],
-                //sort: ["title:ASC"],
-                // facets: ["table", "city", "agentname"],
-                //facets: self.facetFields.split(',')
-                facet: "on",
-                "facet.field": "project_id",
-                "facet.field": "customer_id"
-            };
-
-            // calculate the start row.
-            var startRow = (self.currentPage - 1) * self.perPage;
-
-            // the parameters for query.
-            // we will use Object assign to merge them all together.
-            var params = Object.assign({
-              rows: self.perPage,
-              start: startRow,
-              sort: self.sort
-            }, self.getFacetFields(), self.getFieldList(), 
-            self.getFilterQuery());
-
             // this will show how to use query parameters in a JSON request.
-            var postParams = {
-                query: this.query,
-                // we could mix parameters and JSON request.
-                params: params
-            }
+            var postParams = self.buildQuery();
 
             var endPoint = this.restBaseUrl + "select";
             // track the post parameters.
@@ -316,7 +276,8 @@ export default {
                 }
                 //self.stats = self.facets[self.facets.length - 1].statistics;
                 //console.log("statistics: " + self.stats);
-                self.resultSummary = "Found " + self.totalHits + " docs in total!"
+                //self.resultSummary = "Found " + self.totalHits + " docs in total!"
+                var startRow = postParams.params.start;
                 self.resultSummary =
                     "Showing " + (startRow + 1) + " - " +
                     Math.min(startRow + self.perPage, self.totalHits) + " of " +
@@ -349,6 +310,35 @@ export default {
             this.restBaseUrl = this.collections[index].url;
             this.currentPage = 1;
             this.simpleSearch();
+        },
+
+        /**
+         * create a facility function to get ready post query.
+         */
+        buildQuery() {
+
+            let thisVm = this;
+
+            // calculate the start row.
+            var startRow = (thisVm.currentPage - 1) * thisVm.perPage;
+
+            // the parameters for query.
+            // we will use Object assign to merge them all together.
+            var params = Object.assign({
+              rows: thisVm.perPage,
+              start: startRow,
+              sort: thisVm.sort
+            }, thisVm.getFacetFields(), thisVm.getFieldList(),
+               thisVm.getFilterQuery());
+
+            // this will show how to use query parameters in a JSON request.
+            var postParams = {
+                query: thisVm.query,
+                // we could mix parameters and JSON request.
+                params: params
+            }
+
+            return postParams;
         },
 
         /**
