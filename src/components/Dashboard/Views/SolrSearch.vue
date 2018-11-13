@@ -133,6 +133,8 @@
 
   <b-tab title="Fields">
     All fields are list here: output of admin/luke/!
+    <b-button variant="outline-primary"
+            v-on:click="adminLuke">Reload</b-button>
     <b-table striped hover :items="luke.items" :fields="luke.fields"></b-table>
     <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
   </b-tab>
@@ -492,6 +494,8 @@ export default {
         adminLuke() {
 
             var vm = this;
+            // reset the fields list object.
+            vm.luke = {"items": [], "fields": []};
 
             var endPoint = vm.restBaseUrl + "admin/luke";
             axios.get(endPoint, null)
