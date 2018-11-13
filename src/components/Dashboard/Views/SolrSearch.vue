@@ -138,6 +138,14 @@
     <b-table striped hover :items="luke.items" :fields="luke.fields"></b-table>
     <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
   </b-tab>
+
+  <b-tab title="Schema">
+    All fields are list here: output of schema API.
+    <b-button variant="outline-primary"
+            v-on:click="adminSchema">Reload</b-button>
+    <b-table striped hover :items="schema.items" :fields="schema.fields"></b-table>
+    <pre style="height: 220px">{{JSON.stringify(schema,null,2)}}</pre>
+  </b-tab>
 </b-tabs>
 </b-card>
 </div>
@@ -201,8 +209,11 @@ export default {
 
         resultSummary: "Click search to start..",
 
-        // luke,
-        luke: {"items":[], "fields":[]}
+        // luke in the structure of b-table.
+        luke: {"items":[], "fields":[]},
+
+        // solr schema.
+        schema: {"items":[], "fields":[]}
       }
     },
 
@@ -527,6 +538,29 @@ export default {
             })
             .catch(function(error) {
                 vm.luke = error;
+            });
+        },
+
+        /**
+         * generate a list of fields.
+         */
+        adminSchema() {
+
+            var vm = this;
+            // reset the fields list object.
+            vm.schema = {"items": [], "fields": []};
+
+            var endPoint = vm.restBaseUrl + "schema";
+            axios.get(endPoint, null)
+            .then(function(response) {
+                var rows = response.data.schema.fields;
+                vm.schema= {"items": rows,
+                           "fields": [
+                             {key:"name", sortable:true},"type","indexed","stored",
+                             "required", "multiValued","docValues"]};
+            })
+            .catch(function(error) {
+                vm.schema= error;
             });
         }
     },
