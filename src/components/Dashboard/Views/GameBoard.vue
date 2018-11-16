@@ -2,8 +2,10 @@
 <div class="content container">
   <div id="game-app">
     <b-input-group class="mb-2">
-      <b-button variait="warning">New Game</b-button>
-      <b-button variait="primary" v-b-modal.game-settings>Game Settings</b-button>
+      <b-button variait="warning"
+                v-on:click="showGameSettings('new')">New Game</b-button>
+      <b-button variait="primary"
+                v-on:click="showGameSettings('update')">Game Settings</b-button>
       <b-form-input type="text" placeholder="Select a existing game..."
           class="search-input"
           v-on:focus.native="selectGame('focus')"
@@ -81,7 +83,7 @@
     <b-table striped :items="teamActions"></b-table>
   </div>
 
-  <b-modal id="game-settings" title="Game Settings"
+  <b-modal ref="gameSettings" title="Game Settings"
            @ok="setGame">
     <p class="h4">Home Team</p>
     <b-input-group prepend="Team Name:">
@@ -216,6 +218,23 @@ export default {
     },
 
     methods: {
+
+
+        /**
+         * show gameSetting modal.
+         */
+        showGameSettings(action) {
+
+            // action could be new or udpate.
+            if(action === "new") {
+                // do nothing for now.
+            }
+            if(action === "update") {
+
+                // TODO: set up based on hte gameId.
+                this.$refs.gameSettings.show();
+            }
+        },
 
         /**
          * set Game.
