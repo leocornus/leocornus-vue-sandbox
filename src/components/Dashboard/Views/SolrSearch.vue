@@ -340,6 +340,7 @@ export default {
             this.currentPage = 1;
             this.simpleSearch();
             this.adminLuke();
+            this.adminSchema();
         },
 
         /**
@@ -587,6 +588,7 @@ export default {
       // execute search.
       this.simpleSearch();
       this.adminLuke();
+      this.adminSchema();
     }
 }
 </script>
