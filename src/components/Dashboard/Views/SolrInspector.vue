@@ -88,7 +88,8 @@ export default {
             baseUrl: 'https://base.restapi.com',
             actionName: 'select',
             actionOptions: [
-                {value:"select", text:"Select API"},
+                {value:"select", text:"Select Get API"},
+                {value:"selectPost", text:"Select Post API"},
                 {value:"update", text:"Update API"}
             ],
             comment: "",
@@ -123,6 +124,10 @@ export default {
                 case "select":
                     // simple search
                     vm.simpleSelect(payload);
+                    break;
+                case "selectPost":
+                    // simple search
+                    vm.simpleSelectPost(payload);
                     break;
                 case "update":
                     // simple update.
@@ -179,6 +184,39 @@ export default {
             // using get, so all parameters will show up on the solr
             // log file.
             axios.get(endPoint, payload)
+            .then(function(response) {
+                vm.messages.push("Got Response:");
+                vm.outputEditor.set(response);
+                //vm.messages.push(JSON.stringify(response, null, 2));
+                //vm.payload = JSON.stringify(response, null, 2);
+            })
+            .catch(function(error) {
+                vm.messages.push("ERROR!");
+                vm.outputEditor.set(error);
+                vm.messages.push(error);
+            });
+        },
+
+        /**
+         * simple select for quick check.
+         */
+        simpleSelectPost: function(payload) {
+
+            var vm = this;
+
+            // make sure we have valid end point.
+            var endPoint = vm.baseUrl.endsWith("/") ?
+                           vm.baseUrl + "select" : vm.baseUrl + "/select";
+
+            // we will assume the payload are valid JSON.
+            var trackPayload = Object.assign({"end_point" : endPoint},
+                                             payload);
+            let trackTags = vm.tags.split(",");
+            solr.track(trackPayload, vm.comment, trackTags);
+
+            // using get, so all parameters will show up on the solr
+            // log file.
+            axios.post(endPoint, payload)
             .then(function(response) {
                 vm.messages.push("Got Response:");
                 vm.outputEditor.set(response);
