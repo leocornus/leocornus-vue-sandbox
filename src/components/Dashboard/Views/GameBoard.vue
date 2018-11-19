@@ -476,9 +476,10 @@ export default {
                 // player actions
                 {name: "Shoot"},
                 {name: "Free Throw"},
-                {name: "Defense Rebound"},
-                {name: "Offense Rebound"},
-                {name: "Assistance"},
+                {name: "Rebound"},
+                //{name: "Defense Rebound"},
+                //{name: "Offense Rebound"},
+                //{name: "Assistance"},
                 {name: "Foe"}
             ];
         },
@@ -544,12 +545,7 @@ export default {
             // TODO: send tracking message to server.
             //  * what is the data structure?
             //  * calculate the score before send the message.
-            vm.solrPost(vm.restBaseUrl, vm.buildGameAction(),
-                function() {
-                    // reload stats.
-                    vm.loadReports();
-                }
-            );
+            vm.solrPost(vm.restBaseUrl, vm.buildGameAction());
 
             // reset board.
             vm.actions = [];
@@ -557,7 +553,6 @@ export default {
             Object.keys(vm.tracking).forEach(function(item) {
                 vm.tracking[item] = "";
             });
-
         },
 
         /**
@@ -565,14 +560,18 @@ export default {
          */
         solrPost(baseUrl, payload, callback) {
 
+            var vm = this;
+
             // get read the endpoint for update.
             var endPoint = baseUrl + "update/json/docs?commit=true";
             //var endPoint = baseUrl + "update/json/docs?softCommit=true&maxTime=1000";
             axios.post(endPoint, payload).then(function(response) {
+
                 // success...
                 console.log(response);
                 // assume, we will reload the reports after each post.
                 vm.loadReports();
+                // call the callback function.
                 callback();
             })
             .catch(function(error) {
