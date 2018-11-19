@@ -3,7 +3,7 @@
   <div id="game-app">
     <b-input-group class="mb-2">
       <b-button variait="warning"
-                v-on:click="showGameSettings('new')">New Game</b-button>
+                v-on:click="showGameSettings('new')">Create New Game</b-button>
       <b-form-input type="text" placeholder="Select a existing game..."
           class="search-input"
           v-on:focus.native="selectGame('focus')"
@@ -100,6 +100,7 @@
       <b-form-input type="text" aria-label="Set players for home team"
                     v-model="modalHomePlayers"/>
     </b-input-group>
+
     <p class="h4">Guest Team</p>
     <b-input-group prepend="Team Name:">
       <b-form-input type="text" aria-label="Set name of guest team" v-model="modalGuestTeam"/>
@@ -237,10 +238,19 @@ export default {
 
             // action could be new or udpate.
             if(action === "new") {
+                vm.modalAction = "new";
+
                 // reset the gameId! we will create a new game.
-                // do nothing for now.
+                vm.modalHomeTeam = '';
+                vm.modalHomePlayers = "";
+                vm.modalGuestTeam = "";
+                vm.modalGuestPlayers = "";
+
+                vm.$refs.gameSettings.show();
             }
             if(action === "update") {
+
+                vm.modalAction = "update";
 
                 // set game information based on gameId.
                 vm.modalHomeTeam = vm.teams[0].name;
@@ -251,7 +261,6 @@ export default {
                 vm.modalGuestPlayers =
                     (vm.teams[1].players.map(player => player.number)).join(",");
 
-                // TODO: set up based on the gameId.
                 vm.$refs.gameSettings.show();
             }
         },
@@ -393,11 +402,6 @@ export default {
 
             var vm = this;
 
-            // the ISO string will be like this: 2018-10-23T14:35:09.879Z
-            var isoDate = (new Date()).toISOString();
-            // we only using the year-month-dayThour.
-            isoDate = isoDate.substring(0, isoDate.indexOf(":"));
-
             // TODO: set game modal should have all these information
             var gameLeague = "pratice";
             var ageGroup = "u13";
@@ -405,8 +409,13 @@ export default {
             var homeTeam = vm.teams[0].name;
             var guestTeam = vm.teams[1].name;
 
-            // construct the game_id
-            if(vm.gameId === null) {
+            // construct the game_id for new game only.
+            // the existing game should already have the game id.
+            if(vm.modalAction === "new") {
+                // the ISO string will be like this: 2018-10-23T14:35:09.879Z
+                var isoDate = (new Date()).toISOString();
+                // we only using the year-month-dayThour:minutes.
+                isoDate = isoDate.substring(0, isoDate.lastIndexOf(":"));
                 // md5 only take strings.
                 // we could use all string or using JSON.stringfy
                 vm.gameId = md5(isoDate + gameLeague + ageGroup + genderGroup +
@@ -562,6 +571,8 @@ export default {
             axios.post(endPoint, payload).then(function(response) {
                 // success...
                 console.log(response);
+                // assume, we will reload the reports after each post.
+                vm.loadReports();
                 callback();
             })
             .catch(function(error) {
