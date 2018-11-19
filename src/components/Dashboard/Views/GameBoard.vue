@@ -4,14 +4,13 @@
     <b-input-group class="mb-2">
       <b-button variait="warning"
                 v-on:click="showGameSettings('new')">New Game</b-button>
-      <b-button variait="primary"
-                v-on:click="showGameSettings('update')">Game Settings</b-button>
       <b-form-input type="text" placeholder="Select a existing game..."
           class="search-input"
           v-on:focus.native="selectGame('focus')"
           v-on:blur.native="selectGame('blur')"
       />
     </b-input-group>
+
       <transition-group name="slide" tag="ul" class="results">
         <li v-for="item in filtered" :key="item.id">
           <span><a href="#" v-on:click="loadGame(item.id)">
@@ -20,6 +19,14 @@
           </a></span>
         </li>
       </transition-group>
+
+    <!-- game summary and timer (TODO) -->
+    <div v-if="!(gameId === null)" class="text-center">
+      <span class="h3">{{teams[0].name}} Vs. {{teams[1].name}}</span>
+      <b-button variait="primary" v-if="!(gameId === null)"
+                v-on:click="showGameSettings('update')">Game Settings</b-button>
+    </div>
+
     <b-input-group class="mb-2" v-if="teams.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
@@ -70,7 +77,7 @@
     </b-input-group>
   </div>
 
-  <div>
+  <div v-if="!(gameId === null)">
     <b-input-group>
       <b-input-group-append>
         <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
@@ -231,7 +238,7 @@ export default {
             }
             if(action === "update") {
 
-                // TODO: set up based on hte gameId.
+                // TODO: set up based on the gameId.
                 this.$refs.gameSettings.show();
             }
         },
