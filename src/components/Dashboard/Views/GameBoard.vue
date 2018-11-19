@@ -624,7 +624,8 @@ export default {
               }
             };
 
-            var fields = ["Action", vm.teams[0].name, vm.teams[1].name];
+            var fields = ["Action", vm.teams[0].name, 
+                          {"key":vm.teams[1].name, "variant":"info"}];
 
             // we have to use post for pivot faceting
             axios.post(endPoint, payload).then(function(response) {
