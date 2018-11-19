@@ -201,6 +201,7 @@ export default {
              * teamActions: [
              *     {Action:"Foe", "Team One":2, "Team Two":3},
              *     {Action:"Shoot", "Team One":9, "Team Two":15},
+             *     {Action:"Score", "Team One":9, "Team Two":15},
              *     {Action:"Free Throw", "Team One":3, "Team Two":2}
              * ]
              */
@@ -611,7 +612,7 @@ export default {
                 "sort": "_timestamp_ desc",
                 "facet": "on",
                 "facet.pivot": [
-                  "team,action",
+                  "team,score",
                   "action,team",
                   "team,player,action"
                 ],
@@ -634,7 +635,7 @@ export default {
                 var actions = [];
                 // TODO: update the team actions.
                 pivot['action,team'].forEach(function(actionPivot) {
-                    // get team name.
+                    // get action name.
                     var actionName = actionPivot['value'];
                     // iterate action pivots.
                     var teams = [];
@@ -663,6 +664,17 @@ export default {
                     // names must be equal
                     return 0;
                 });
+
+                // calculate the score.
+                var scoreAction = {"Action": "Score"};
+                pivot['team,score'].forEach(function(scorePivot) {
+                    var teamName = scorePivot['value'];
+                    scoreAction[teamName] = 0;
+                    scorePivot.pivot.forEach(function(score) {
+                        scoreAction[teamName] += score.value * score.count;
+                    });
+                });
+                actions.unshift(scoreAction);
 
                 vm.teamActions = {"items": actions, "fields": fields};
             })
