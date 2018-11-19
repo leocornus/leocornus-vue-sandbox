@@ -87,7 +87,7 @@
         Reload
       </b-button>
     </b-input-group>
-    <b-table striped :items="teamActions"></b-table>
+    <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
   </div>
 
   <b-modal ref="gameSettings" title="Game Settings"
@@ -198,12 +198,13 @@ export default {
 
             /**
              * team break down by actions
+             * teamActions: [
+             *     {Action:"Foe", "Team One":2, "Team Two":3},
+             *     {Action:"Shoot", "Team One":9, "Team Two":15},
+             *     {Action:"Free Throw", "Team One":3, "Team Two":2}
+             * ]
              */
-            teamActions: [
-                {Action:"Foe", "Team One":2, "Team Two":3},
-                {Action:"Shoot", "Team One":9, "Team Two":15},
-                {Action:"Free Throw", "Team One":3, "Team Two":2}
-            ]
+            teamActions: {"items":[], "fields":[]}
         }
     },
 
@@ -586,7 +587,10 @@ export default {
 
             // clean the page!
             this.teamActions = [];
-            this.solrPivotSearch(this.restBaseUrl, {});
+            // execute pivot search only if we have game created or loaded.
+            if(!(this.gameId === null)) {
+                this.solrPivotSearch(this.restBaseUrl, {});
+            }
         },
 
         /**
@@ -619,6 +623,9 @@ export default {
               }
             };
 
+            var fields = ["Action", vm.teams[0].name, vm.teams[1].name];
+
+            // we have to use post for pivot faceting
             axios.post(endPoint, payload).then(function(response) {
 
                 let pivot = response.data.facet_counts.facet_pivot;
@@ -657,7 +664,7 @@ export default {
                     return 0;
                 });
 
-                vm.teamActions = actions;
+                vm.teamActions = {"items": actions, "fields": fields};
             })
             .catch(function(error) {
             });
