@@ -131,6 +131,7 @@ export default {
 
             name: "gameboard",
 
+            // this default values shows the data structure.
             modalHomeTeam: "home",
             modalHomePlayers: "1,2,3,4,5",
             modalGuestTeam: "guest",
@@ -232,14 +233,26 @@ export default {
          */
         showGameSettings(action) {
 
+            var vm = this;
+
             // action could be new or udpate.
             if(action === "new") {
+                // reset the gameId! we will create a new game.
                 // do nothing for now.
             }
             if(action === "update") {
 
+                // set game information based on gameId.
+                vm.modalHomeTeam = vm.teams[0].name;
+                // only pick the number to show and edit.
+                vm.modalHomePlayers =
+                    (vm.teams[0].players.map(player => player.number)).join(",");
+                vm.modalGuestTeam = vm.teams[1].name;
+                vm.modalGuestPlayers =
+                    (vm.teams[1].players.map(player => player.number)).join(",");
+
                 // TODO: set up based on the gameId.
-                this.$refs.gameSettings.show();
+                vm.$refs.gameSettings.show();
             }
         },
 
@@ -350,16 +363,18 @@ export default {
                     vm.teams.pop();
                     vm.teams.pop();
                 }
+                // Home team.
                 vm.teams.push({
                     name: theGame.home_team,
                     players: theGame["home_players.number"].map(player => {
-                        return {number: player};
+                        return {"number": player};
                     })
                 });
+                // Guest team.
                 vm.teams.push({
                     name: theGame.guest_team,
                     players: theGame["guest_players.number"].map(player => {
-                        return {number: player};
+                        return {"number": player};
                     })
                 });
 
