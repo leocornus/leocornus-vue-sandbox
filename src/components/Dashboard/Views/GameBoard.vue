@@ -337,7 +337,7 @@ export default {
                       return {
                         id: game.id,
                         title: game.home_team + " VS. " + game.guest_team,
-                        body: game._timestamp_ + " | " + game.game_league + " | " +
+                        body: game.created + " | " + game.game_league + " | " +
                               game.gender_group + " | " + game.age_group
                       };
                   });
@@ -367,7 +367,12 @@ export default {
             var query = {query: "id:" + gameId};
             // search the game infomation
             vm.solrQuery(vm.restBaseUrl, query, function(docs) {
+
                 var theGame = docs[0];
+
+                // keep the created time.
+                vm.gameCreated = theGame.created;
+
                 if(vm.teams.length <= 0) {
                     vm.teams = [];
                 } else {
@@ -422,10 +427,14 @@ export default {
                 // we could use all string or using JSON.stringfy
                 vm.gameId = md5(isoDate + gameLeague + ageGroup + genderGroup +
                                  homeTeam + guestTeam);
+                // set the game created time to null.
+                // so the default value will be used, which is NOW.
+                vm.gameCreated = null;
             }
 
             return {
                 id: vm.gameId,
+                created: vm.gameCreated,
                 table: "gameinfo",
                 gender_group: genderGroup, // boys, men, women
                 age_group: ageGroup,
