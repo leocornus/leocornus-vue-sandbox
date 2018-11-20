@@ -326,7 +326,7 @@ export default {
                 var query = {
                     query: "*:*",
                     params: {
-                      sort: "_timestamp_ desc",
+                      sort: "created desc",
                       rows: 8,
                       start: 0,
                       fq: ["table:gameinfo"]
@@ -618,7 +618,7 @@ export default {
               "params": {
                 "rows": 0,
                 "start": 0,
-                "sort": "_timestamp_ desc",
+                "sort": "_timestamp_ asc",
                 "facet": "on",
                 "facet.pivot": [
                   "team,score",
