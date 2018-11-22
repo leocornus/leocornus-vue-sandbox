@@ -77,8 +77,9 @@
     </b-input-group>
   </div>
 
+  <!-- Game report area -->
   <div v-if="!(gameId === null)">
-    <b-input-group>
+    <b-input-group class="text-center">
       <b-input-group-append>
         <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
       </b-input-group-append>
@@ -87,9 +88,13 @@
         Reload
       </b-button>
     </b-input-group>
+    <!-- stats in table format -->
     <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
+    <!-- side by side bar chart -->
+    <div :id="chartId" class="d-none"></div>
   </div>
 
+  <!-- Game Settings modal -->
   <b-modal ref="gameSettings" title="Game Settings"
            @ok="setGame">
     <p class="h4">Home Team</p>
@@ -205,7 +210,11 @@ export default {
              *     {Action:"Free Throw", "Team One":3, "Team Two":2}
              * ]
              */
-            teamActions: {"items":[], "fields":[]}
+            teamActions: {"items":[], "fields":[]},
+
+            /**
+             */
+            chartId: 'no-id'
         }
     },
 
