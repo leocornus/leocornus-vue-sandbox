@@ -67,6 +67,8 @@ export default {
         /**
          * the data will have format
          * [{value:"label", count:"2"}, {}]
+         *
+         * NOTE: in D3, data is prefered to be in Array
          */
         var data = self.chartData;
 
