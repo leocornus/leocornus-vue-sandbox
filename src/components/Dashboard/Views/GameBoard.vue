@@ -84,14 +84,14 @@
         <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
       </b-input-group-append>
       <b-button variant="outline-primary"
-                v-on:click="loadReports">
-        Reload
-      </b-button>
+                v-on:click="loadReports">Reload</b-button>
+      <b-button variant="outline-primary"
+                v-on:click="drawSideBySideBars">Bar Chart</b-button>
     </b-input-group>
     <!-- stats in table format -->
     <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
     <!-- side by side bar chart -->
-    <div :id="chartId" class="d-none"></div>
+    <div :id="chartId" class="no-d-none"></div>
   </div>
 
   <!-- Game Settings modal -->
@@ -120,6 +120,7 @@
 
 <script>
 
+import * as d3 from 'd3'
 import axios from 'axios'
 import md5 from 'md5'
 
@@ -211,6 +212,15 @@ export default {
              * ]
              */
             teamActions: {"items":[], "fields":[]},
+
+            /**
+             * bar actions for d3 bar chart.
+             * [{Action:"Score", "teame one":25, "team two":32},
+             *  {...}]
+             *
+             * NOTE: in D3, data is prefered to be in Array
+             */
+            barActions: [],
 
             /**
              */
@@ -612,6 +622,44 @@ export default {
             }
         },
 
+        //=========================================
+        // D3 functions.
+        // using this observable page as playground:
+        //=========================================
+
+        /**
+         * draw side by side bars for the game statistics.
+         */
+        drawSideBySideBars() {
+
+            var vm = this;
+
+            //console.log("D3 Version Again: " + d3.version);
+            // calculate the dimension for bar chart.
+            // ${} only works indide ``
+            var divId = `#${vm.chartId}`;
+            //var divId = "#chartId";
+            //console.log(d3.select(divId));
+            var divWidth = parseInt(d3.select(divId).style("width"));
+            var margin = {top: 1, right: 2, bottom: 20, left: 2};
+            var width = divWidth - margin.left - margin.right;
+            var height = 250 - margin.top - margin.bottom;
+            console.log(`width = ${width}`);
+
+            /**
+             * the data will have format
+             */
+
+            // make sure the count is number type.
+            //data.forEach(function(d) {
+            //    d.count = +d.count;
+            //});
+        },
+
+        //=========================================
+        // Solr functions
+        //=========================================
+
         /**
          * utility method to get team by actions.
          */
@@ -694,8 +742,10 @@ export default {
                     });
                 });
                 actions.unshift(scoreAction);
+                //console.log(actions);
 
                 vm.teamActions = {"items": actions, "fields": fields};
+                vm.barActions = actions;
             })
             .catch(function(error) {
             });
