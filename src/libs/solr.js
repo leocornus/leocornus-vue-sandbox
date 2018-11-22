@@ -70,9 +70,13 @@ var solr = {
                     //  has NO count value, use 0
                     count = docs[0].count[0];
                 }
-                // work on the comment.
+                // keep the existing comment.
                 if(docs[0].hasOwnProperty('comment')) {
                     existingComment = docs[0].comment;
+                }
+                // keep the created date.
+                if(docs[0].hasOwnProperty('created')) {
+                    tPayload["created"] = docs[0].created;
                 }
             }
 
