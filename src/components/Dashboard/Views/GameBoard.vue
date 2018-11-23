@@ -595,6 +595,7 @@ export default {
             return Object.assign(action,
             {
                 score: score,
+                period: vm.period,
                 game_id: vm.gameId,
                 table: "gameaction"
             });
