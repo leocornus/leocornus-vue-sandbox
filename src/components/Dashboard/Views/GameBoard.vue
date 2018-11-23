@@ -96,7 +96,15 @@
                 v-on:click="loadReports">Reload</b-button>
     </b-input-group>
     <b-tabs card>
-      <b-tab title="Full">
+      <b-tab name="Full">
+        <template slot="title">
+          <b-input-group>
+            <b-button variant="primary" v-for="(rp, index) in reportPeriods"
+                v-on:click="loadReports(rp)" :key="'rp-' + index">
+        {{rp}}
+      </b-button>
+          </b-input-group>
+        </template>
         <b-tabs vertical small>
           <b-tab name="Chart">
             <template slot="title">
@@ -114,12 +122,6 @@
           </b-tab>
         </b-tabs>
       </b-tab>
-      <b-tab title="Period 1"></b-tab>
-      <b-tab title="Period 2"></b-tab>
-      <b-tab title="1st Half"></b-tab>
-      <b-tab title="Period 3"></b-tab>
-      <b-tab title="Period 4"></b-tab>
-      <b-tab title="2nd Half"></b-tab>
     </b-tabs>
   </div>
 
@@ -255,6 +257,12 @@ export default {
              * NOTE: in D3, data is prefered to be in Array
              */
             barActions: [],
+
+            /**
+             * periods for report, some of them are not actual periods.
+             */
+            reportPeriods: ["Full Game", "Period 1", "Period 2",
+                            "1st Half", "Period 3", "Period 4", "2nd Half"],
 
             /**
              */
