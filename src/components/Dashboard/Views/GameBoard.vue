@@ -29,6 +29,15 @@
 
     <b-input-group class="mb-2" v-if="teams.length > 0">
       <b-input-group-append>
+        <span id="period-addon" class="input-group-text">Period: </span>
+      </b-input-group-append>
+      <b-form-select class="form-control"
+          aria-describedby="period-addon"
+          v-model="period" :options="['Period 1','Period 2','Period 3','Period 4']">
+      </b-form-select>
+    </b-input-group>
+    <b-input-group class="mb-2" v-if="teams.length > 0">
+      <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
       </b-input-group-append>
       <b-button variant="outline-primary" v-for="(team, index) in teams"
@@ -165,6 +174,11 @@ export default {
             modalHomePlayers: "1,2,3,4,5",
             modalGuestTeam: "guest",
             modalGuestPlayers: "1,2,3,4,5",
+
+            /**
+             * period.
+             */
+            period: "Period 1",
 
             /**
              * we will collect teams's information from modal.
