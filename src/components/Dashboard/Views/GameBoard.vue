@@ -88,12 +88,18 @@
       <b-button variant="outline-primary"
                 v-on:click="drawSideBySideBars">Bar Chart</b-button>
     </b-input-group>
-    <b-tabs card>
-      <b-tab title="Chart">
+    <b-tabs vertical small>
+      <b-tab name="Chart">
+        <template slot="title">
+          <i class="nc-icon nc-chart-bar-32"></i>
+        </template>
         <!-- side by side bar chart -->
         <div :id="chartId" class="no-d-none"></div>
       </b-tab>
-      <b-tab title="Table">
+      <b-tab name="Table">
+        <template slot="title">
+          <i class="nc-icon nc-bullet-list-67"></i>
+        </template>
         <!-- stats in table format -->
         <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
       </b-tab>
@@ -861,6 +867,7 @@ export default {
 
                 vm.teamActions = {"items": actions, "fields": fields};
                 vm.barActions = actions;
+                vm.drawSideBySideBars();
             })
             .catch(function(error) {
             });
