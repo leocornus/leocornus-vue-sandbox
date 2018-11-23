@@ -88,10 +88,16 @@
       <b-button variant="outline-primary"
                 v-on:click="drawSideBySideBars">Bar Chart</b-button>
     </b-input-group>
-    <!-- stats in table format -->
-    <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
-    <!-- side by side bar chart -->
-    <div :id="chartId" class="no-d-none"></div>
+    <b-tabs card>
+      <b-tab title="Chart">
+        <!-- side by side bar chart -->
+        <div :id="chartId" class="no-d-none"></div>
+      </b-tab>
+      <b-tab title="Table">
+        <!-- stats in table format -->
+        <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
+      </b-tab>
+    </b-tabs>
   </div>
 
   <!-- Game Settings modal -->
