@@ -94,8 +94,6 @@
       </b-input-group-append>
       <b-button variant="outline-primary"
                 v-on:click="loadReports">Reload</b-button>
-      <b-button variant="outline-primary"
-                v-on:click="drawSideBySideBars">Bar Chart</b-button>
     </b-input-group>
     <b-tabs card>
       <b-tab title="Full">
@@ -894,6 +892,7 @@ export default {
 
                 vm.teamActions = {"items": actions, "fields": fields};
                 vm.barActions = actions;
+                // reload chart!
                 vm.drawSideBySideBars();
             })
             .catch(function(error) {
