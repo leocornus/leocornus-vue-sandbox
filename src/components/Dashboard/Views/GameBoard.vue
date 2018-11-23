@@ -109,9 +109,10 @@
       </b-tab>
       <b-tab title="Period 1"></b-tab>
       <b-tab title="Period 2"></b-tab>
-      <b-tab title="Half"></b-tab>
+      <b-tab title="1st Half"></b-tab>
       <b-tab title="Period 3"></b-tab>
       <b-tab title="Period 4"></b-tab>
+      <b-tab title="2nd Half"></b-tab>
     </b-tabs>
   </div>
 
@@ -820,8 +821,10 @@ export default {
               }
             };
 
-            var fields = ["Action", vm.teams[0].name, 
-                          {"key":vm.teams[1].name, "variant":"info"}];
+            var fields = [
+              {key: "Action", variant: "success"},
+              vm.teams[0].name,
+              {key: vm.teams[1].name, variant: "info"}];
 
             // we have to use post for pivot faceting
             axios.post(endPoint, payload).then(function(response) {
