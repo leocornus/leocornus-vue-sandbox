@@ -720,11 +720,14 @@ export default {
                     return y(d.Action)
             }
 
+            // remove the existing one first.
             d3.select(divId).html("");
+            // append the svg to get started.
             var svg = d3.select(divId).append("svg")
                 .attr("class", "card-img-top")
                 .attr("width", labelArea + width + width)
                 .attr("height", height)
+            // TODO: add the responsive call.
 
             svg.selectAll("rect.left")
                 .data(vm.barActions)
