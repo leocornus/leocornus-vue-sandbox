@@ -641,7 +641,8 @@ export default {
             //var divId = "#chartId";
             //console.log(d3.select(divId));
             var divWidth = parseInt(d3.select(divId).style("width"));
-            var margin = {top: 1, right: 2, bottom: 20, left: 2};
+            var margin = {top: 1, right: 2, bottom: 20, left: 2}
+            //var margin = {top: 20, right: 0, bottom: 30, left: 40}
             var width = divWidth - margin.left - margin.right;
             var height = 250 - margin.top - margin.bottom;
             console.log(`width = ${width}`);
@@ -650,10 +651,118 @@ export default {
              * the data will have format
              */
 
-            // make sure the count is number type.
-            //data.forEach(function(d) {
-            //    d.count = +d.count;
-            //});
+            var width = 400
+            var height = 400
+            var labelArea = 120
+            var cols = Object.keys(vm.barActions[0])
+            var labelCol = cols[0]
+            //var lCol = "infant.mortality"
+            var lCol = cols[1]
+            //var rCol = "gdp"
+            var rCol = cols[2]
+            var rightOffset = width + labelArea
+            var xDomain = vm.barActions.map(d => d.Action)
+            var color = d3.scaleOrdinal(d3.schemePaired)
+              .domain(xDomain)
+
+            // left side
+            var xFrom = d3.scaleLinear()
+                .domain([1,20])
+                .range([0, width])
+            // right side
+            var xTo = d3.scaleLinear()
+                .domain([1,20])
+                .range([0, width])
+
+            // set y
+            var y = d3.scaleBand()
+                .domain(xDomain)
+                .range([margin.top, height - margin.bottom])
+                .padding(0.2)
+
+            // pos.
+            var yPosByIndex = d => {
+                    return y(d.Action)
+            }
+
+            d3.select(divId).html("");
+            var svg = d3.select(divId).append("svg")
+                .attr("class", "card-img-top")
+                .attr("width", labelArea + width + width)
+                .attr("height", height)
+
+            svg.selectAll("rect.left")
+                .data(vm.barActions)
+                .enter().append("rect")
+                .attr("x", function (d) {
+                    return width - xFrom(d[lCol]);
+                })
+                .attr("y", yPosByIndex)
+                .attr("class", "left")
+                .attr("width", function (d) {
+                    return xFrom(d[lCol]);
+                })
+                .attr("height", y.bandwidth())
+                .attr("fill", function(d) {return color(d[labelCol])})
+
+            svg.selectAll("text.leftscore")
+                .data(vm.barActions)
+                .enter().append("text")
+                .attr("x", function (d) {
+                    return width - xFrom(d[lCol])-40;
+                })
+                .attr("y", function (d) {
+                    return y(d[labelCol]) + y.bandwidth() / 2;
+                })
+                .attr("dx", "20")
+                .attr("dy", ".36em")
+                .attr("text-anchor", "end")
+                .attr('class', 'leftscore')
+                .text(function(d){return d[lCol];});
+
+            svg.selectAll("text.name")
+                .data(vm.barActions)
+                .enter().append("text")
+                .attr("x", (labelArea / 2) + width)
+                .attr("y", function (d) {
+                    return y(d[labelCol]) + y.bandwidth() / 2;
+                })
+                .attr("dy", ".20em")
+                .attr("text-anchor", "middle")
+                .attr('class', 'name')
+                .text(function(d){return d[labelCol];});
+
+            svg.selectAll("rect.right")
+                .data(vm.barActions)
+                .enter().append("rect")
+                .attr("x", rightOffset)
+                .attr("y", yPosByIndex)
+                .attr("class", "right")
+                .attr("width", function (d) {
+                    return xTo(d[rCol]);
+                })
+                .attr("height", y.bandwidth())
+                .attr("fill", function(d) {return color(d[labelCol])})
+
+            svg.selectAll("text.score")
+                .data(vm.barActions)
+                .enter().append("text")
+                .attr("x", function (d) {
+                    return xTo(d[rCol]) + rightOffset+40;
+                })
+                .attr("y", function (d) {
+                    return y(d[labelCol]) + y.bandwidth() / 2;
+                })
+                .attr("dx", -5)
+                .attr("dy", ".36em")
+                .attr("text-anchor", "end")
+                .attr('class', 'score')
+                .text(function(d){return d[rCol];});
+
+            svg.append("text").attr("x",width/3).attr("y", 10).attr("class","title").text(lCol);
+            svg.append("text").attr("x",width/3+rightOffset).attr("y", 10).attr("class","title").text(rCol);
+            svg.append("text").attr("x",width+labelArea/3).attr("y", 10).attr("class","title").text(labelCol);
+
         },
 
         //=========================================
