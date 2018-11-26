@@ -108,14 +108,14 @@
         <b-tabs vertical small>
           <b-tab name="Chart">
             <template slot="title">
-              <i class="nc-icon nc-chart-bar-32"></i>
+              <font-awesome-icon icon="chart-bar" size="lg"/>
             </template>
             <!-- side by side bar chart -->
             <div :id="chartId" class="no-d-none"></div>
           </b-tab>
           <b-tab name="Table">
             <template slot="title">
-              <i class="nc-icon nc-bullet-list-67"></i>
+              <font-awesome-icon icon="list" size="lg"/>
             </template>
             <!-- stats in table format -->
             <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
