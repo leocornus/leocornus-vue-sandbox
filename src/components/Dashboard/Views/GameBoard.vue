@@ -261,8 +261,8 @@ export default {
             /**
              * periods for report, some of them are not actual periods.
              */
-            reportPeriods: ["Full Game", "Period 1", "Period 2",
-                            "1st Half", "Period 3", "Period 4", "2nd Half"],
+            reportPeriods: ["Final", "1", "2",
+                            "1st", "3", "4", "2nd"],
 
             /**
              */
