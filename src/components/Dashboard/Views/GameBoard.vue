@@ -655,13 +655,44 @@ export default {
         /**
          * load reports.
          */
-        loadReports() {
+        loadReports(timeRange) {
 
             // clean the page!
             this.teamActions = [];
             // execute pivot search only if we have game created or loaded.
             if(!(this.gameId === null)) {
-                this.solrPivotSearch(this.restBaseUrl, {});
+                // construct the query string.
+                var query = "";
+                switch(timeRange) {
+                    case 'Final':
+                        // query everything for final.
+                        query = "*:*";
+                        break;
+                    case '1':
+                        query = 'period:"Period 1"';
+                        break;
+                    case '2':
+                        query = 'period:"Period 2"';
+                        break;
+                    case '1st':
+                        query = 'period:"Period 1" OR period:"Period 2"';
+                        break;
+                    case '3':
+                        query = 'period:"Period 3"';
+                        break;
+                    case '4':
+                        query = 'period:"Period 4"';
+                        break;
+                    case '2nd':
+                        query = 'period:"Period 3" OR period:"Period 4"';
+                        break;
+                    default:
+                        // query everything for final.
+                        query = "*:*";
+                        break;
+                }
+
+                this.solrPivotSearch(this.restBaseUrl, query);
             }
         },
 
@@ -818,15 +849,15 @@ export default {
         /**
          * utility method to get team by actions.
          */
-        solrPivotSearch(baseUrl, payload) {
+        solrPivotSearch(baseUrl, queryString) {
 
             let vm = this;
 
             // using the simple select handler.
             var endPoint = baseUrl + "select";
             // get ready the search payload
-            payload = {
-              "query": "*:*",
+            var payload = {
+              "query": queryString,
               "params": {
                 "rows": 0,
                 "start": 0,

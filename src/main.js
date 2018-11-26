@@ -13,7 +13,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 // import fontawesome
 import fontawesome from '@fortawesome/fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
-// import the icons.
+// import the icons. 
+// it is good pratice to import icons one by one.
 import { faList, faChartBar } from '@fortawesome/free-solid-svg-icons'
 // import icon component
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
