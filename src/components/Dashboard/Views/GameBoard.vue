@@ -125,7 +125,18 @@
               <font-awesome-icon icon="user" size="lg"/>
             </template>
             <!-- stats in table format for each player by team -->
-            coming soon!
+            <b-container>
+              <b-row>
+                <b-col>
+                  <b-table striped :items="playerStats[teams[0].name]"
+                                   :fields="playerStatsFields"></b-table>
+                </b-col>
+                <b-col>
+                  <b-table striped :items="playerStats[teams[1].name]"
+                                   :fields="playerStatsFields"></b-table>
+                </b-col>
+              </b-row>
+            </b-container>
           </b-tab>
         </b-tabs>
       </b-tab>
@@ -255,6 +266,34 @@ export default {
              * ]
              */
             teamActions: {"items":[], "fields":[]},
+
+            /**
+             * player statistics.
+             *
+             * player stats will have the following data structure:
+             *
+             * {"team home": [
+             *    {"player":2, "score":0, "shoot":3, "free throw":1, "foe":1},
+             *    {"player":3, "score":1, "shoot":3, "free throw":2, "foe":0}
+             *  ],
+             *  "team guest": [
+             *    {"player":12, "score":0, "shoot":3, "free throw":1, "foe":2},
+             *    {"player":23, "score":1, "shoot":3, "free throw":2, "foe":1}
+             *  ]
+             * }
+             */
+            playerStats: {},
+
+            /**
+             * fields for player stats.
+             */
+            playerStatsFields: [
+               {key:"Player"},
+               {key:"Score"},
+               {key:"Foe", variant: "danger"},
+               {key:"Shoot"},
+               {key:"Free Throw"}
+            ],
 
             /**
              * bar actions for d3 bar chart.
@@ -703,6 +742,50 @@ export default {
             }
         },
 
+        /**
+         * load players stats for each team.
+         * player stats will have the following data structure:
+         *
+         * {"team home": [
+         *    {"player":2, "score":0, "shoot":3, "free throw":1, "foe":1},
+         *    {"player":3, "score":1, "shoot":3, "free throw":2, "foe":0}
+         *  ],
+         *  "team guest": [
+         *    {"player":12, "score":0, "shoot":3, "free throw":1, "foe":2},
+         *    {"player":23, "score":1, "shoot":3, "free throw":2, "foe":1}
+         *  ]
+         * }
+         */
+        loadPlayerStats(teamPlayerActionScore) {
+
+            var vm = this;
+            // reset the play stats.
+            vm.playerStats = {};
+
+            // TODO: get teams from the vm.teams
+            // teams should after game loaded or created.
+            teamPlayerActionScore.forEach(function(teamPivot) {
+                // initialize the team, create the empty array
+                vm.playerStats[teamPivot.value] = [];
+                // go through each player pivot.
+                teamPivot.pivot.forEach(function(playerPivot) {
+                    // one row for each player,
+                    // which will have all actions.
+                    var playerActions = {"Player": playerPivot.value};
+                    // now the action pivot.
+                    playerPivot.pivot.forEach(function(actionPivot) {
+                      playerActions[actionPivot.value] = actionPivot.count;
+                    });
+                    // TODO how to get the scores for this player?
+
+                    // push to player stats.
+                    vm.playerStats[teamPivot.value].push(playerActions);
+                });
+            });
+
+            console.log(vm.playerStats);
+        },
+
         //=========================================
         // D3 functions.
         // using this observable page as playground:
@@ -873,7 +956,7 @@ export default {
                 "facet.pivot": [
                   "team,score",
                   "action,team",
-                  "team,player,action"
+                  "team,player,action,score"
                 ],
                 "fq": [
                   //"table:gameaction",
@@ -939,8 +1022,14 @@ export default {
                 actions.unshift(scoreAction);
                 //console.log(actions);
 
+                // teamActions will serve the table view for the team.
+                // it will use the structure for Bootstrap-Vue table component.
                 vm.teamActions = {"items": actions, "fields": fields};
+                // the barActions will serve the side by side bar chart.
                 vm.barActions = actions;
+                // TODO: players break down table for each team.
+                vm.loadPlayerStats(pivot['team,player,action,score']);
+
                 // reload chart!
                 vm.drawSideBySideBars();
             })
