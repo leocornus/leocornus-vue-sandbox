@@ -101,8 +101,8 @@
           <b-input-group>
             <b-button variant="primary" v-for="(rp, index) in reportPeriods"
                 v-on:click="loadReports(rp)" :key="'rp-' + index">
-        {{rp}}
-      </b-button>
+              {{rp}}
+            </b-button>
           </b-input-group>
         </template>
         <b-tabs vertical small>
@@ -117,8 +117,15 @@
             <template slot="title">
               <font-awesome-icon icon="list" size="lg"/>
             </template>
-            <!-- stats in table format -->
+            <!-- stats in table format for each team. -->
             <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
+          </b-tab>
+          <b-tab name="Players">
+            <template slot="title">
+              <font-awesome-icon icon="user" size="lg"/>
+            </template>
+            <!-- stats in table format for each player by team -->
+            coming soon!
           </b-tab>
         </b-tabs>
       </b-tab>

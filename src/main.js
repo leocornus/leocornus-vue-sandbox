@@ -15,12 +15,13 @@ import fontawesome from '@fortawesome/fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import the icons. 
 // it is good pratice to import icons one by one.
-import { faList, faChartBar } from '@fortawesome/free-solid-svg-icons'
+import { faList, faChartBar, faUser } from '@fortawesome/free-solid-svg-icons'
 // import icon component
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // add icons.
 library.add(faList)
 library.add(faChartBar)
+library.add(faUser)
 // load the font awesome icon component
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
