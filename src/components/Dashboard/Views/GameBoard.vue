@@ -773,18 +773,32 @@ export default {
             // TODO: get teams from the vm.teams
             // teams should after game loaded or created.
             teamPlayerActionScore.forEach(function(teamPivot) {
+
                 // initialize the team, create the empty array
                 vm.playerStats[teamPivot.value] = [];
                 // go through each player pivot.
                 teamPivot.pivot.forEach(function(playerPivot) {
+
                     // one row for each player,
                     // which will have all actions.
                     var playerActions = {"Player": playerPivot.value};
-                    // now the action pivot.
+                    // initialize the player score.
+                    var playerScores = 0;
+                    // now the action pivot, go through each action.
                     playerPivot.pivot.forEach(function(actionPivot) {
-                      playerActions[actionPivot.value] = actionPivot.count;
+
+                        playerActions[actionPivot.value] = actionPivot.count;
+                        // how to get the scores for action: Shoot and Free Throw
+                        if(["Shoot", "Free Throw"].includes(actionPivot.value)) {
+                            actionPivot.pivot.forEach(function(scorePivot) {
+
+                                playerScores += scorePivot.value * scorePivot.count;
+                            });
+                        }
                     });
-                    // TODO how to get the scores for this player?
+
+                    // add totoal scores.
+                    playerActions["Score"] = playerScores;
 
                     // push to player stats.
                     vm.playerStats[teamPivot.value].push(playerActions);
