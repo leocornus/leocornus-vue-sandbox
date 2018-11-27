@@ -101,6 +101,7 @@
             </b-button>
           </b-input-group>
         </template>
+        <h3 class="text-center mt-0 mb-2">Stats for ??? </h3>
         <b-tabs vertical small>
           <b-tab name="Chart">
             <template slot="title">
