@@ -837,13 +837,16 @@ export default {
             var color = d3.scaleOrdinal(d3.schemePaired)
               .domain(xDomain)
 
+            // get the max score to scale bar width.
+            var maxX = Math.max(vm.barActions[0][vm.teams[0].name],
+                                vm.barActions[0][vm.teams[1].name]);
             // left side
             var xFrom = d3.scaleLinear()
-                .domain([1,20])
+                .domain([1, maxX + 5])
                 .range([0, width])
             // right side
             var xTo = d3.scaleLinear()
-                .domain([1,20])
+                .domain([1, maxX + 5])
                 .range([0, width])
 
             // set y
