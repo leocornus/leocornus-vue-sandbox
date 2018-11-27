@@ -129,11 +129,19 @@
               <b-row>
                 <b-col>
                   <b-table striped :items="playerStats[teams[0].name]"
-                                   :fields="playerStatsFields"></b-table>
+                                   :fields="playerStatsFields" caption-top>
+                    <template slot="table-caption">
+                      <span class="h4">{{teams[0].name}}</span>
+                    </template>
+                  </b-table>
                 </b-col>
                 <b-col>
                   <b-table striped :items="playerStats[teams[1].name]"
-                                   :fields="playerStatsFields"></b-table>
+                                   :fields="playerStatsFields" caption-top>
+                    <template slot="table-caption">
+                      <span class="h4">{{teams[1].name}}</span>
+                    </template>
+                  </b-table>
                 </b-col>
               </b-row>
             </b-container>
