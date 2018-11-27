@@ -88,17 +88,13 @@
 
   <!-- Game report area -->
   <div v-if="!(gameId === null)">
-    <b-input-group class="text-center">
-      <b-input-group-append>
-        <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
-      </b-input-group-append>
-      <b-button variant="outline-primary"
-                v-on:click="loadReports">Reload</b-button>
-    </b-input-group>
     <b-tabs card>
       <b-tab name="Full">
         <template slot="title">
           <b-input-group>
+            <b-input-group-append>
+              <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
+            </b-input-group-append>
             <b-button variant="primary" v-for="(rp, index) in reportPeriods"
                 v-on:click="loadReports(rp)" :key="'rp-' + index">
               {{rp}}
