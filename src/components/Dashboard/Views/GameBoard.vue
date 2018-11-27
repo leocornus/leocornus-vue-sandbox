@@ -101,7 +101,7 @@
             </b-button>
           </b-input-group>
         </template>
-        <h3 class="text-center mt-0 mb-2">Stats for ??? </h3>
+        <h3 class="text-center mt-0 mb-2">{{gameStatsTitle}}</h3>
         <b-tabs vertical small>
           <b-tab name="Chart">
             <template slot="title">
@@ -706,7 +706,7 @@ export default {
         /**
          * load reports.
          */
-        loadReports(timeRange) {
+        loadReports(timeRange='Final') {
 
             // clean the page!
             this.teamActions = [];
@@ -718,24 +718,31 @@ export default {
                     case 'Final':
                         // query everything for final.
                         query = "*:*";
+                        this.gameStatsTitle = "Statistics for Final Game";
                         break;
                     case '1':
                         query = 'period:"Period 1"';
+                        this.gameStatsTitle = "Statistics for Period 1";
                         break;
                     case '2':
                         query = 'period:"Period 2"';
+                        this.gameStatsTitle = "Statistics for Period 2";
                         break;
                     case '1st':
                         query = 'period:"Period 1" OR period:"Period 2"';
+                        this.gameStatsTitle = "Statistics for 1st Half";
                         break;
                     case '3':
                         query = 'period:"Period 3"';
+                        this.gameStatsTitle = "Statistics for Period 3";
                         break;
                     case '4':
                         query = 'period:"Period 4"';
+                        this.gameStatsTitle = "Statistics for Period 4";
                         break;
                     case '2nd':
                         query = 'period:"Period 3" OR period:"Period 4"';
+                        this.gameStatsTitle = "Statistics for 2nd Half";
                         break;
                     default:
                         // query everything for final.
