@@ -767,21 +767,37 @@ export default {
          */
         loadGameStats(actionTeamScore) {
 
+            var vm = this;
+
+            // the score action.
+            var scoreAction = {"Action": "Score"};
+            // set the initial value.
+            scoreAction[vm.teams[0].name] = 0;
+            scoreAction[vm.teams[1].name] = 0;
+            // all other actions.
             var actions = [];
-            // TODO: update the team actions.
-            actionTeamScore['action,team'].forEach(function(actionPivot) {
+            // iterate through each action.
+            actionTeamScore.forEach(function(actionPivot) {
                 // get action name.
                 var actionName = actionPivot['value'];
-                // iterate action pivots.
+                // go through each team.
                 var teams = [];
                 actionPivot.pivot.forEach(function(team) {
                     var oneItem = {};
+                    // team name and action count.
                     oneItem[team.value] = team.count;
                     teams.push(oneItem);
+                    if(["Shoot", "Free Throw"].includes(actionName)) {
+                        // go through each score:0, 1, 2, 3
+                        team.pivot.forEach(function(score) {
+                            scoreAction[team.value] += score.value * score.count;
+                        });
+                    }
                 });
 
                 actions.push(
-                  Object.assign({"Action": actionName}, teams[0], teams[1])
+                    // The first object (arg) will be returned,
+                    Object.assign({"Action": actionName}, teams[0], teams[1])
                 );
             });
 
@@ -800,17 +816,9 @@ export default {
                 return 0;
             });
 
-            // calculate the score.
-            var scoreAction = {"Action": "Score"};
-            actionTeamScore['team,score'].forEach(function(scorePivot) {
-                var teamName = scorePivot['value'];
-                scoreAction[teamName] = 0;
-                scorePivot.pivot.forEach(function(score) {
-                    scoreAction[teamName] += score.value * score.count;
-                });
-            });
+            // unshift will add the new item at beginning of the array.
             actions.unshift(scoreAction);
-            //console.log(actions);
+            console.log(actions);
 
             return actions;
         },
@@ -1044,8 +1052,7 @@ export default {
                 "sort": "_timestamp_ asc",
                 "facet": "on",
                 "facet.pivot": [
-                  "team,score",
-                  "action,team",
+                  "action,team,score",
                   "team,player,action,score"
                 ],
                 "fq": [
@@ -1058,7 +1065,7 @@ export default {
 
             var fields = [
               {key: "Action", variant: "success"},
-              vm.teams[0].name,
+              {key: vm.teams[0].name},
               {key: vm.teams[1].name, variant: "info"}];
 
             // we have to use post for pivot faceting
@@ -1067,7 +1074,7 @@ export default {
                 let pivot = response.data.facet_counts.facet_pivot;
                 console.log(pivot);
 
-                let actions = vm.loadGameStats(pivot);
+                let actions = vm.loadGameStats(pivot['action,team,score']);
                 // teamActions will serve the table view for the team.
                 // it will use the structure for Bootstrap-Vue table component.
                 vm.teamActions = {"items": actions, "fields": fields};
