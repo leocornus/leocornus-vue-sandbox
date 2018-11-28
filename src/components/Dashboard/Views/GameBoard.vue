@@ -244,7 +244,7 @@ export default {
              *     {name: "Defense Rebound"},
              *     {name: "Offense Rebound"},
              *     {name: "Assistance"},
-             *     {name: "Foe"}
+             *     {name: "Foul"}
              * ]
              */
             actions: [],
@@ -264,7 +264,7 @@ export default {
             /**
              * team break down by actions
              * teamActions: [
-             *     {Action:"Foe", "Team One":2, "Team Two":3},
+             *     {Action:"Foul", "Team One":2, "Team Two":3},
              *     {Action:"Shoot", "Team One":9, "Team Two":15},
              *     {Action:"Score", "Team One":9, "Team Two":15},
              *     {Action:"Free Throw", "Team One":3, "Team Two":2}
@@ -278,12 +278,12 @@ export default {
              * player stats will have the following data structure:
              *
              * {"team home": [
-             *    {"player":2, "score":0, "shoot":3, "free throw":1, "foe":1},
-             *    {"player":3, "score":1, "shoot":3, "free throw":2, "foe":0}
+             *    {"player":2, "score":0, "shoot":3, "free throw":1, "foul":1},
+             *    {"player":3, "score":1, "shoot":3, "free throw":2, "foul":0}
              *  ],
              *  "team guest": [
-             *    {"player":12, "score":0, "shoot":3, "free throw":1, "foe":2},
-             *    {"player":23, "score":1, "shoot":3, "free throw":2, "foe":1}
+             *    {"player":12, "score":0, "shoot":3, "free throw":1, "foul":2},
+             *    {"player":23, "score":1, "shoot":3, "free throw":2, "foul":1}
              *  ]
              * }
              */
@@ -295,7 +295,7 @@ export default {
             playerStatsFields: [
                {key:"Player"},
                {key:"Score"},
-               {key:"Foe", variant: "danger"},
+               {key:"Foul", variant: "danger"},
                {key:"Shoot"},
                {key:"Free Throw"}
             ],
@@ -603,7 +603,7 @@ export default {
                 //{name: "Defense Rebound"},
                 //{name: "Offense Rebound"},
                 //{name: "Assistance"},
-                {name: "Foe"}
+                {name: "Foul"}
             ];
         },
 
@@ -759,12 +759,12 @@ export default {
          * player stats will have the following data structure:
          *
          * {"team home": [
-         *    {"player":2, "score":0, "shoot":3, "free throw":1, "foe":1},
-         *    {"player":3, "score":1, "shoot":3, "free throw":2, "foe":0}
+         *    {"player":2, "score":0, "shoot":3, "free throw":1, "foul":1},
+         *    {"player":3, "score":1, "shoot":3, "free throw":2, "foul":0}
          *  ],
          *  "team guest": [
-         *    {"player":12, "score":0, "shoot":3, "free throw":1, "foe":2},
-         *    {"player":23, "score":1, "shoot":3, "free throw":2, "foe":1}
+         *    {"player":12, "score":0, "shoot":3, "free throw":1, "foul":2},
+         *    {"player":23, "score":1, "shoot":3, "free throw":2, "foul":1}
          *  ]
          * }
          */
