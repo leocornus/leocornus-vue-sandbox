@@ -755,6 +755,67 @@ export default {
         },
 
         /**
+         * load game stats for each team.
+         * it will have the following statistics:
+         *
+         * [
+         *   {"Action": "Score", "Team One": 23, "Team Two": 20},
+         *   {"Action": "Shoot", "Team One": 20, "Team Two": 12},
+         *   {"Action": "Foul", "Team One": 8, "Team Two": 9}
+         * ]
+         *
+         */
+        loadGameStats(actionTeamScore) {
+
+            var actions = [];
+            // TODO: update the team actions.
+            actionTeamScore['action,team'].forEach(function(actionPivot) {
+                // get action name.
+                var actionName = actionPivot['value'];
+                // iterate action pivots.
+                var teams = [];
+                actionPivot.pivot.forEach(function(team) {
+                    var oneItem = {};
+                    oneItem[team.value] = team.count;
+                    teams.push(oneItem);
+                });
+
+                actions.push(
+                  Object.assign({"Action": actionName}, teams[0], teams[1])
+                );
+            });
+
+            // sort by action name.
+            actions.sort(function(a, b) {
+                var nameA = a.Action.toUpperCase(); // ignore upper and lowercase
+                var nameB = b.Action.toUpperCase(); // ignore upper and lowercase
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+
+                // names must be equal
+                return 0;
+            });
+
+            // calculate the score.
+            var scoreAction = {"Action": "Score"};
+            actionTeamScore['team,score'].forEach(function(scorePivot) {
+                var teamName = scorePivot['value'];
+                scoreAction[teamName] = 0;
+                scorePivot.pivot.forEach(function(score) {
+                    scoreAction[teamName] += score.value * score.count;
+                });
+            });
+            actions.unshift(scoreAction);
+            //console.log(actions);
+
+            return actions;
+        },
+
+        /**
          * load players stats for each team.
          * player stats will have the following data structure:
          *
@@ -1006,51 +1067,7 @@ export default {
                 let pivot = response.data.facet_counts.facet_pivot;
                 console.log(pivot);
 
-                var actions = [];
-                // TODO: update the team actions.
-                pivot['action,team'].forEach(function(actionPivot) {
-                    // get action name.
-                    var actionName = actionPivot['value'];
-                    // iterate action pivots.
-                    var teams = [];
-                    actionPivot.pivot.forEach(function(team) {
-                        var oneItem = {};
-                        oneItem[team.value] = team.count;
-                        teams.push(oneItem);
-                    });
-
-                    actions.push(
-                      Object.assign({Action: actionName}, teams[0], teams[1])
-                    );
-                });
-
-                // sort by action name.
-                actions.sort(function(a, b) {
-                    var nameA = a.Action.toUpperCase(); // ignore upper and lowercase
-                    var nameB = b.Action.toUpperCase(); // ignore upper and lowercase
-                    if (nameA < nameB) {
-                        return -1;
-                    }
-                    if (nameA > nameB) {
-                        return 1;
-                    }
-
-                    // names must be equal
-                    return 0;
-                });
-
-                // calculate the score.
-                var scoreAction = {"Action": "Score"};
-                pivot['team,score'].forEach(function(scorePivot) {
-                    var teamName = scorePivot['value'];
-                    scoreAction[teamName] = 0;
-                    scorePivot.pivot.forEach(function(score) {
-                        scoreAction[teamName] += score.value * score.count;
-                    });
-                });
-                actions.unshift(scoreAction);
-                //console.log(actions);
-
+                let actions = vm.loadGameStats(pivot);
                 // teamActions will serve the table view for the team.
                 // it will use the structure for Bootstrap-Vue table component.
                 vm.teamActions = {"items": actions, "fields": fields};
