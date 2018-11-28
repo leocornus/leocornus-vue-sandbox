@@ -774,6 +774,7 @@ export default {
             // set the initial value.
             scoreAction[vm.teams[0].name] = 0;
             scoreAction[vm.teams[1].name] = 0;
+
             // all other actions.
             var actions = [];
             // iterate through each action.
@@ -786,13 +787,13 @@ export default {
                     var oneItem = {};
                     // team name and action count.
                     oneItem[team.value] = team.count;
-                    teams.push(oneItem);
                     if(["Shoot", "Free Throw"].includes(actionName)) {
                         // go through each score:0, 1, 2, 3
                         team.pivot.forEach(function(score) {
                             scoreAction[team.value] += score.value * score.count;
                         });
                     }
+                    teams.push(oneItem);
                 });
 
                 actions.push(
@@ -818,7 +819,7 @@ export default {
 
             // unshift will add the new item at beginning of the array.
             actions.unshift(scoreAction);
-            console.log(actions);
+            //console.log(actions);
 
             return actions;
         },
@@ -863,10 +864,14 @@ export default {
                         playerActions[actionPivot.value] = actionPivot.count;
                         // how to get the scores for action: Shoot and Free Throw
                         if(["Shoot", "Free Throw"].includes(actionPivot.value)) {
+                            // add break down
+                            var breakDown = [];
                             actionPivot.pivot.forEach(function(scorePivot) {
-
                                 playerScores += scorePivot.value * scorePivot.count;
+                                breakDown.push(scorePivot.value + " : " + scorePivot.count);
                             });
+                            playerActions[actionPivot.value] = actionPivot.count +
+                              " (" + breakDown.join("|") + ")";
                         }
                     });
 
