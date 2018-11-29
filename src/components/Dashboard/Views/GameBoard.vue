@@ -293,9 +293,9 @@ export default {
              * fields for player stats.
              */
             playerStatsFields: [
-               {key:"Player"},
-               {key:"Score"},
-               {key:"Foul", variant: "danger"},
+               {key:"Player", variant: "info", sortable: true},
+               {key:"Score", sortable: true},
+               {key:"Foul", variant: "danger", sortable: true},
                {key:"Shoot"},
                {key:"Free Throw"}
             ],
@@ -844,7 +844,7 @@ export default {
             // reset the play stats.
             vm.playerStats = {};
 
-            // TODO: get teams from the vm.teams
+            // get teams from the vm.teams
             // teams should after game loaded or created.
             teamPlayerActionScore.forEach(function(teamPivot) {
 
@@ -870,8 +870,9 @@ export default {
                                 playerScores += scorePivot.value * scorePivot.count;
                                 breakDown.push(scorePivot.value + " : " + scorePivot.count);
                             });
-                            playerActions[actionPivot.value] = actionPivot.count +
-                              " (" + breakDown.join("|") + ")";
+                            // TODO: Find a better way to show the score break down.
+                            //playerActions[actionPivot.value] = actionPivot.count +
+                            //  " (" + breakDown.join("|") + ")";
                         }
                     });
 
@@ -1085,7 +1086,7 @@ export default {
                 vm.teamActions = {"items": actions, "fields": fields};
                 // the barActions will serve the side by side bar chart.
                 vm.barActions = actions;
-                // TODO: players break down table for each team.
+                // players break down table for each team.
                 vm.loadPlayerStats(pivot['team,player,action,score']);
 
                 // reload chart!
