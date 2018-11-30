@@ -27,24 +27,32 @@
                 v-on:click="showGameSettings('update')">Game Settings</b-button>
     </div>
 
-    <b-input-group class="mb-2" v-if="teams.length > 0">
-      <b-input-group-append>
-        <span id="period-addon" class="input-group-text">Period: </span>
-      </b-input-group-append>
-      <b-form-select class="form-control"
-          aria-describedby="period-addon"
-          v-model="period" :options="['Period 1','Period 2','Period 3','Period 4']">
-      </b-form-select>
-    </b-input-group>
-    <b-input-group class="mb-2" v-if="teams.length > 0">
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Teams: </span>
-      </b-input-group-append>
-      <b-button variant="outline-primary" v-for="(team, index) in teams"
-                v-on:click="setTeam(team.name, index)" :key="'team-' + index">
-        {{team.name}}
-      </b-button>
-    </b-input-group>
+    <b-row class="mb-2" v-if="teams.length > 0">
+      <b-col></b-col>
+      <b-col>
+        <b-form-select class="form-control"
+            aria-describedby="period-addon"
+            v-model="period" :options="['Period 1','Period 2','Period 3','Period 4']">
+        </b-form-select>
+      </b-col>
+      <b-col></b-col>
+    </b-row>
+
+    <b-row class="mb-2" v-if="teams.length > 0">
+      <b-col class="text-center">
+        <b-button variant="outline-primary"
+                  v-on:click="setTeam(teams[0].name, 0)">
+          {{teams[0].name}}
+        </b-button>
+      </b-col>
+      <b-col class="text-center">
+        <b-button variant="outline-primary"
+                  v-on:click="setTeam(teams[1].name, 1)">
+          {{teams[1].name}}
+        </b-button>
+      </b-col>
+    </b-row>
+
     <b-input-group class="mb-2" v-if="tracking.team.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Players: </span>
@@ -54,6 +62,7 @@
         {{player.number}}
       </b-button>
     </b-input-group>
+
     <b-input-group class="mb-2" v-if="actions.length > 0">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
