@@ -54,7 +54,7 @@
     </b-row>
 
     <b-row class="mb-2" v-if="tracking.team.length > 0">
-    <b-col class="text-left"
+    <b-col :class="trackingButtonClass">
       <b-button v-for="(player, index) in players" :key="'player-' + index"
                 class="mr-2"      variant="outline-warning"
                 v-on:click="setPlayer(player.number)" >
@@ -62,7 +62,8 @@
       </b-button>
     </b-col></b-row>
 
-    <b-row v-if="actions.length > 0" class="mb-2"><b-col class="text-right">
+    <b-row v-if="actions.length > 0" class="mb-2">
+    <b-col :class="trackingButtonClass">
       <b-button variant="outline-primary" v-for="(action, index) in actions"
                 class="mr-2"
                 v-on:click="setAction(action.name)" :key="'action-' + index">
@@ -72,7 +73,7 @@
 
     <b-row class="mb-2"
            v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
-    <b-col class="text-center">
+    <b-col :class="trackingButtonClass">
       <b-button variant="outline-success" v-for="point in points"
                 class="mr-2"
                 v-on:click="setPoint(point)" :key="'point-' + point">
@@ -349,6 +350,22 @@ export default {
          */
         showPoints() {
             return ['Shoot','Free Throw'].includes(this.tracking.action);
+        },
+
+        /**
+         */
+        trackingButtonClass() {
+
+            var align = "text-left";
+
+            if(this.tracking.team === this.teams[1].name) {
+                align = "text-right";
+            }
+
+            var ret = {};
+            ret[align] = true;
+
+            return align;
         }
     },
 
