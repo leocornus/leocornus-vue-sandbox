@@ -53,46 +53,48 @@
       </b-col>
     </b-row>
 
-    <b-input-group class="mb-2" v-if="tracking.team.length > 0">
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Players: </span>
-      </b-input-group-append>
-      <b-button variant="outline-warning" v-for="(player, index) in players"
-                v-on:click="setPlayer(player.number)" :key="'player-' + index">
+    <b-row class="mb-2" v-if="tracking.team.length > 0">
+    <b-col class="text-left"
+      <b-button v-for="(player, index) in players" :key="'player-' + index"
+                class="mr-2"      variant="outline-warning"
+                v-on:click="setPlayer(player.number)" >
         {{player.number}}
       </b-button>
-    </b-input-group>
+    </b-col></b-row>
 
-    <b-input-group class="mb-2" v-if="actions.length > 0">
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Actions: </span>
-      </b-input-group-append>
+    <b-row v-if="actions.length > 0" class="mb-2"><b-col class="text-right">
       <b-button variant="outline-primary" v-for="(action, index) in actions"
+                class="mr-2"
                 v-on:click="setAction(action.name)" :key="'action-' + index">
         {{action.name}}
       </b-button>
-    </b-input-group>
-    <b-input-group class="mb-2"
-                   v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Points: </span>
-      </b-input-group-append>
+    </b-col></b-row>
+
+    <b-row class="mb-2"
+           v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
+    <b-col class="text-center">
       <b-button variant="outline-success" v-for="point in points"
+                class="mr-2"
                 v-on:click="setPoint(point)" :key="'point-' + point">
         {{point}}
       </b-button>
-    </b-input-group>
-    <b-input-group class="mb-2" size="lg" v-if="tracking.team.length > 0">
-      <b-input-group-append>
-        <span id="restBaseUrl-addon" class="input-group-text">Tracking: </span>
-      </b-input-group-append>
+    </b-col></b-row>
+
+    <b-row class="mb-2" size="lg" v-if="tracking.team.length > 0">
+      <b-col>
+        <b-button variant="outline-primary" v-on:click="send">submit</b-button>
+      </b-col>
+      <b-col cols="8" class="text-center">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text text-danger">
           {{trackingMessage}}
         </span>
       </b-input-group-append>
-      <b-button variant="outline-primary" v-on:click="send">Submit</b-button>
-    </b-input-group>
+      </b-col>
+      <b-col class="text-right">
+        <b-button variant="outline-primary" v-on:click="send">submit</b-button>
+      </b-col>
+    </b-row>
   </div>
 
   <!-- Game report area -->
@@ -105,6 +107,7 @@
               <span id="loadreports-addon" class="input-group-text">Game Stats: </span>
             </b-input-group-append>
             <b-button variant="primary" v-for="(rp, index) in reportPeriods"
+                class="mr-2"
                 v-on:click="loadReports(rp)" :key="'rp-' + index">
               {{rp}}
             </b-button>
