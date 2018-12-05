@@ -27,6 +27,8 @@ import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue
 import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
 // Game
 import GameBoard from '../components/Dashboard/Views/GameBoard.vue'
+// Charts
+import ChartBoard from '../components/Dashboard/Views/ChartBoard.vue'
 
 const routes = [
   {
@@ -53,6 +55,11 @@ const routes = [
         path: 'gameboard',
         name: 'Game Board',
         component: GameBoard
+      },
+      {
+        path: 'chartboard',
+        name: 'Chart Board',
+        component: ChartBoard
       },
       {
         path: 'realestate',
