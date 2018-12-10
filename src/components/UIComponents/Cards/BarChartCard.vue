@@ -133,7 +133,7 @@ export default {
             .text(function(d) {return d.value+ ": " + d.count;});
 
         // add the x Axis
-        bar.append("g")
+        svg.append("g")
             .attr("transform", "translate(0," + height + ")")
             .call(d3.axisBottom(x));
 
