@@ -1,10 +1,13 @@
 <template>
-  <svg width="500" height="270">
-    <g transform="translate(0, 10)">
+<div>
+  <svg :width="width" :height="height">
+    <g transform="translate(0, 0)">
       <path :d="line" />
     </g>
-    <g v-axis:x="scale" transform="translate(0, 25)"></g>
+    <g v-axis:x="scale"></g>
+    <g v-axis:y="scale"></g>
   </svg>
+</div>
 </template>
 
 <script>
@@ -18,7 +21,9 @@ export default {
 
   data() {
     return {
-      data: [99, 71, 78, 25, 36, 92]
+      width: 0,
+      height: 0,
+      data: [99, 71, 78, 25, 36, 92, 1, 34, 45]
     };
   },
 
@@ -36,13 +41,19 @@ export default {
       }
   },
 
+  mounted() {
+
+      this.onResize();
+  },
+
   computed: {
 
     scale() {
-      const x = d3.scaleTime().range([0, 430]);
-      const y = d3.scaleLinear().range([210, 0]);
+      const x = d3.scaleTime().range([0, this.width]);
+      const y = d3.scaleLinear().range([this.height, 0]);
 
       x.domain(d3.extent(this.data, (d, i) => i));
+      //x.domain(d3.extent(this.data));
       y.domain([0, d3.max(this.data, d => d)]);
 
       return { x, y };
@@ -56,13 +67,23 @@ export default {
 
       return path(this.data);
     }
+  },
+
+  methods: {
+
+      onResize() {
+
+          this.width = this.$el.offsetWidth;
+          //this.height = this.$el.offsetHeight;
+          this.height = 300;
+      }
   }
 };
 </script>
 
 <style lang="sass" scoped>
 svg
-  margin: 25px;
+  margin: 0px;
   border: solid black 0px;
 
 path
