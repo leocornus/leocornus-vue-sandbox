@@ -1,16 +1,21 @@
 <template>
 <div>
   <svg :width="width" :height="height">
-    <g transform="translate(20, 0)">
+    <g transform="translate(20, 20)">
       <path :d="line" />
+      <g v-axis:x="scale"></g>
+      <g v-axis:y="scale"></g>
     </g>
-    <g v-axis:x="scale" :transform="`translate(20,${height})`"></g>
-    <g v-axis:y="scale" transform="translate(20,0)"></g>
   </svg>
 </div>
 </template>
 
 <script>
+// TODO: check this bl.ocks:
+// - https://bl.ocks.org/mbostock/1166403
+// TODO: this one with grids:
+// - https://bl.ocks.org/d3noob/c506ac45617cf9ed39337f99f8511218
+
 import * as d3 from 'd3';
 
 // define he properties for this component here.
