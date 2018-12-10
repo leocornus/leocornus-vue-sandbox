@@ -1,11 +1,11 @@
 <template>
 <div>
   <svg :width="width" :height="height">
-    <g transform="translate(0, 0)">
+    <g transform="translate(20, 0)">
       <path :d="line" />
     </g>
-    <g v-axis:x="scale"></g>
-    <g v-axis:y="scale"></g>
+    <g v-axis:x="scale" :transform="`translate(20,${height})`"></g>
+    <g v-axis:y="scale" transform="translate(20,0)"></g>
   </svg>
 </div>
 </template>
