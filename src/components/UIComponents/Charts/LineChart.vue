@@ -44,7 +44,10 @@ export default {
 
       d3.select('#' + this.svgId)
           .append("g")
-          .attr("transform", "translate(0, 10px)")
+          // the powerful transform, details from this page:
+          // - https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform
+          .attr("transform", "translate(0, 250)")
+          // call function will work with a D3 selection
           .call(d3.axisBottom(scale.x));
     },
   },
@@ -54,7 +57,7 @@ export default {
 <style lang="sass" scoped>
 svg
   margin: 25px;
-  border: solid black 1px;
+  border: solid black 0px;
 
 path
   fill: none
