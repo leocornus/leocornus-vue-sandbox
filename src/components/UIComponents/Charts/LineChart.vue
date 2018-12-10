@@ -1,6 +1,6 @@
 <template>
   <svg width="500" height="270" :id="svgId">
-    <g style="transform: translate(0, 10px)">
+    <g style="transform: translate(0, 10)">
       <path :d="line" />
     </g>
   </svg>
