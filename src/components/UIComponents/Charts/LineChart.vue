@@ -43,6 +43,7 @@ export default {
 
   mounted() {
 
+      window.addEventListener('resize', this.onResize);
       this.onResize();
   },
 
