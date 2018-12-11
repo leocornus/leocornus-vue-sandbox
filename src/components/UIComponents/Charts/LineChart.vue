@@ -1,11 +1,13 @@
 <template>
 <div>
   <svg :width="width" :height="height">
-    <g transform="translate(20, 20)">
+    <g :transform="`translate(${margin.left},${margin.top})`">
       <path :d="line" />
-      <g v-axis:x="scale"></g>
-      <g v-axis:y="scale"></g>
     </g>
+    <g v-axis:x="scale"
+       :transform="`translate(${margin.left},${height - margin.bottom})`"></g>
+    <g v-axis:y="scale"
+       :transform="`translate(${margin.left},${margin.top})`"></g>
   </svg>
 </div>
 </template>
@@ -28,6 +30,13 @@ export default {
     return {
       width: 0,
       height: 0,
+      // margin will be used to hold the axes
+      margin: {
+          top: 20,
+          right: 20,
+          bottom: 20,
+          left: 30
+      },
       data: [99, 71, 78, 25, 36, 92, 1, 34, 45]
     };
   },
@@ -55,8 +64,10 @@ export default {
   computed: {
 
     scale() {
-      const x = d3.scaleTime().range([0, this.width]);
-      const y = d3.scaleLinear().range([this.height, 0]);
+      const x = d3.scaleTime()
+          .range([0, this.width - this.margin.left - this.margin.right]);
+      const y = d3.scaleLinear()
+          .range([this.height - this.margin.bottom - this.margin.top, 0]);
 
       x.domain(d3.extent(this.data, (d, i) => i));
       //x.domain(d3.extent(this.data));
@@ -81,6 +92,11 @@ export default {
 
           this.width = this.$el.offsetWidth;
           //this.height = this.$el.offsetHeight;
+          // TODO: calculate the height based on:
+          // - width
+          // - aspect ratio ??? where does this come from.
+          // - domain, this will come from data.
+          // scale range will calculated based on width and height
           this.height = 300;
       }
   }
