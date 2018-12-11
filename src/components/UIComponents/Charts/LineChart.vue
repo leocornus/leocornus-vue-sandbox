@@ -37,7 +37,7 @@ export default {
           bottom: 20,
           left: 30
       },
-      data: [99, 71, 78, 25, 36, 92, 1, 34, 45]
+      data: [190, 71, 78, 125, 36, 92, 20, 34, 45]
     };
   },
 
@@ -64,6 +64,8 @@ export default {
   computed: {
 
     scale() {
+
+      // using scaleTime for a quick try.
       const x = d3.scaleTime()
           .range([0, this.width - this.margin.left - this.margin.right]);
       const y = d3.scaleLinear()
