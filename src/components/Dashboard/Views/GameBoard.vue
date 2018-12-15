@@ -40,13 +40,13 @@
 
     <b-row class="mb-2" v-if="teams.length > 0">
       <b-col class="text-center">
-        <b-button variant="outline-primary"
+        <b-button variant="primary"
                   v-on:click="setTeam(teams[0].name, 0)">
           {{teams[0].name}}
         </b-button>
       </b-col>
       <b-col class="text-center">
-        <b-button variant="outline-primary"
+        <b-button variant="primary"
                   v-on:click="setTeam(teams[1].name, 1)">
           {{teams[1].name}}
         </b-button>
@@ -633,7 +633,7 @@ export default {
                 {name: "Rebound"},
                 //{name: "Defense Rebound"},
                 //{name: "Offense Rebound"},
-                //{name: "Assistance"},
+                {name: "Assistance"},
                 {name: "Foul"}
             ];
         },
@@ -688,6 +688,21 @@ export default {
                 table: "gameaction"
             });
 
+        },
+
+        /**
+         * reset board.
+         */
+        reset() {
+
+            var vm = this;
+
+            // reset board.
+            vm.actions = [];
+            // seset the tracking message.
+            Object.keys(vm.tracking).forEach(function(item) {
+                vm.tracking[item] = "";
+            });
         },
 
         /**
