@@ -56,9 +56,9 @@
     <b-row class="mb-2" v-if="tracking.team.length > 0">
     <b-col :class="trackingButtonClass">
       <b-button v-for="(player, index) in players" :key="'player-' + index"
-                class="mr-2"      variant="outline-warning"
+                class="btn btn-warning btn-lg btn-circle mr-2"
                 v-on:click="setPlayer(player.number)" >
-        {{player.number}}
+        <strong>{{player.number}}</strong>
       </b-button>
     </b-col></b-row>
 
@@ -75,7 +75,7 @@
            v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
     <b-col :class="trackingButtonClass">
       <b-button variant="outline-success" v-for="point in points"
-                class="mr-2"
+                class="btn btn-info btn-circle mr-2"
                 v-on:click="setPoint(point)" :key="'point-' + point">
         {{point}}
       </b-button>
@@ -83,9 +83,10 @@
 
     <b-row class="mb-2" size="lg" v-if="tracking.team.length > 0">
       <b-col>
-        <b-button variant="outline-primary" v-on:click="send">submit</b-button>
+        <b-button class="btn btn-success btn-circle" size="lg" v-on:click="send">Go</b-button>
+        <b-button class="btn btn-danger btn-circle" size="lg" v-on:click="reset">X</b-button>
       </b-col>
-      <b-col cols="8" class="text-center">
+      <b-col cols="6" class="text-center">
       <b-input-group-append>
         <span id="restBaseUrl-addon" class="input-group-text text-danger">
           {{trackingMessage}}
@@ -93,7 +94,8 @@
       </b-input-group-append>
       </b-col>
       <b-col class="text-right">
-        <b-button variant="outline-primary" v-on:click="send">submit</b-button>
+        <b-button class="btn btn-danger btn-circle" size="lg" v-on:click="reset">X</b-button>
+        <b-button class="btn btn-success btn-circle" size="lg" v-on:click="send">Go</b-button>
       </b-col>
     </b-row>
   </div>
@@ -1180,6 +1182,34 @@ export default {
 }
 </script>
 <style>
+    .btn-circle-sm {
+        width: 30px;
+        height: 30px;
+        padding: 6px 0px;
+        border-radius: 15px;
+        text-align: center;
+        font-size: 12px;
+        line-height: 1.42857;
+    }
+    .btn-circle {
+        width: 50px;
+        height: 50px;
+        padding: 6px 0px;
+        border-radius: 25px;
+        text-align: center;
+        font-size: 18px;
+        line-height: 1.42857;
+    }
+
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        border-radius: 35px;
+        font-size: 18px;
+        line-height: 1.33;
+    }
+
     .search-input {
         width: 100%;
         /**padding: 1.5em 1em;*/
