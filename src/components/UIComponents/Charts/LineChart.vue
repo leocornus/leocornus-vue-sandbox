@@ -8,6 +8,8 @@
        :transform="`translate(${margin.left},${height - margin.bottom})`"></g>
     <g v-axis:y="scale"
        :transform="`translate(${margin.left},${margin.top})`"></g>
+    <g v-axis:yr="scale"
+       :transform="`translate(${width - margin.right},${margin.top})`"></g>
   </svg>
 </div>
 </template>
@@ -48,7 +50,7 @@ export default {
       axis(el, binding) {
 
           const axis = binding.arg;
-          const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
+          const axisMethod = { x: "axisBottom", y: "axisLeft", yr: "axisRight"}[axis];
           const methodArg = binding.value[axis];
 
           d3.select(el).call(d3[axisMethod](methodArg));
