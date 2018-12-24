@@ -308,11 +308,15 @@ export default {
              * fields for player stats.
              */
             playerStatsFields: [
-               {key:"Player", variant: "info", sortable: true},
-               {key:"Score", sortable: true},
-               {key:"Foul", variant: "danger", sortable: true},
-               {key:"Shoot"},
-               {key:"Free Throw"}
+               {key:"Player", label: "#", variant: "info", sortable: true},
+               {key:"Score", label: "P", sortable: true},
+               {key:"Foul", label: "PF", variant: "danger", sortable: true},
+               //{key:"Shoot"},
+               {key:"2P Shoot", label: "2PS", variant: "success"},
+               {key:"3P Shoot", label: "3PS", variant: "success"},
+               {key:"Free Throw", label: "FT", variant: "success"},
+               {key:"Rebound", label: "REB"},
+               {key:"Assist", label: "AST"}
             ],
 
             /**
