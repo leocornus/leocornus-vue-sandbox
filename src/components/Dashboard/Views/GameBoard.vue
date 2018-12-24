@@ -72,7 +72,7 @@
     </b-col></b-row>
 
     <b-row class="mb-2"
-           v-if="['Shoot','Free Throw'].includes(this.tracking.action)">
+           v-if="this.isShootAction(this.tracking.action)">
     <b-col :class="trackingButtonClass">
       <b-button variant="outline-success" v-for="point in points"
                 class="btn btn-info btn-circle mr-2"
@@ -351,7 +351,7 @@ export default {
          * show or hide points gorup.
          */
         showPoints() {
-            return ['Shoot','Free Throw'].includes(this.tracking.action);
+            return this.isShootAction(this.tracking.action);
         },
 
         /**
@@ -609,8 +609,12 @@ export default {
             this.tracking.action = actionName;
 
             switch(actionName) {
-            case 'Shoot':
-                this.points = [0,2,3];
+            case '2P Shoot':
+                this.points = [0,2];
+                // wait the input for points.
+                break;
+            case '3P Shoot':
+                this.points = [0,3];
                 // wait the input for points.
                 break;
             case 'Free Throw':
@@ -630,6 +634,17 @@ export default {
         },
 
         /**
+         * tells the action.
+         */
+        isShootAction(actionName) {
+
+            // shoot actions:
+            let shoots = ["Shoot", "2P Shoot", "3P Shoot", "Free Throw"];
+
+            return shoots.includes(actionName);
+        },
+
+        /**
          * set action.
          */
         setPlayer(playerNumber) {
@@ -638,7 +653,8 @@ export default {
             // set palyer actions
             this.actions = [
                 // player actions
-                {name: "Shoot"},
+                {name: "2P Shoot"},
+                {name: "3P Shoot"},
                 {name: "Free Throw"},
                 {name: "Rebound"},
                 //{name: "Defense Rebound"},
@@ -860,7 +876,7 @@ export default {
                     var oneItem = {};
                     // team name and action count.
                     oneItem[team.value] = team.count;
-                    if(["Shoot", "Free Throw"].includes(actionName)) {
+                    if(vm.isShootAction(actionName)) {
                         // go through each score:0, 1, 2, 3
                         team.pivot.forEach(function(score) {
                             scoreAction[team.value] += score.value * score.count;
@@ -936,7 +952,7 @@ export default {
 
                         playerActions[actionPivot.value] = actionPivot.count;
                         // how to get the scores for action: Shoot and Free Throw
-                        if(["Shoot", "Free Throw"].includes(actionPivot.value)) {
+                        if(vm.isShootAction(actionPivot.value)) {
                             // add break down
                             var breakDown = [];
                             actionPivot.pivot.forEach(function(scorePivot) {
