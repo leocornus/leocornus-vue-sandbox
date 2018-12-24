@@ -313,7 +313,7 @@ export default {
                {key:"Foul", label: "PF", variant: "danger", sortable: true},
                //{key:"Shoot"},
                {key:"2P Shoot", label: "2PS", variant: "success"},
-               {key:"3P Shoot", label: "3PS", variant: "success"},
+               {key:"3P Shoot", label: "3PS"},
                {key:"Free Throw", label: "FT", variant: "success"},
                {key:"Rebound", label: "REB"},
                {key:"Assist", label: "AST"}
@@ -957,15 +957,22 @@ export default {
                         playerActions[actionPivot.value] = actionPivot.count;
                         // how to get the scores for action: Shoot and Free Throw
                         if(vm.isShootAction(actionPivot.value)) {
-                            // add break down
-                            var breakDown = [];
+                            // calculate made / total for all shoot action.
+                            // we already have total count,
+                            // only need find out how many made count.
+                            let made = 0;
                             actionPivot.pivot.forEach(function(scorePivot) {
+                                // calculate player score.
                                 playerScores += scorePivot.value * scorePivot.count;
-                                breakDown.push(scorePivot.value + " : " + scorePivot.count);
+
+                                if(scorePivot.value > 0) {
+                                    made += scorePivot.count;
+                                }
                             });
-                            // TODO: Find a better way to show the score break down.
-                            //playerActions[actionPivot.value] = actionPivot.count +
-                            //  " (" + breakDown.join("|") + ")";
+                            // reset the shoot action's count
+                            // with made/total format.
+                            playerActions[actionPivot.value] =
+                                `${made}/${actionPivot.count}`;
                         }
                     });
 
