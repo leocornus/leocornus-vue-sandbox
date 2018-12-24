@@ -595,9 +595,10 @@ export default {
         setTeam(teamName, index) {
 
             this.tracking.team = teamName;
+            this.tracking.teamIndex = index;
             this.players = this.teams[index].players;
             // there is only one team action for now.
-            this.actions = [{name:"Timeout"}]
+            this.actions = [{name:"Timeout"}];
         },
 
         /**
@@ -606,15 +607,24 @@ export default {
         setAction(actionName) {
 
             this.tracking.action = actionName;
+
             switch(actionName) {
             case 'Shoot':
                 this.points = [0,2,3];
+                // wait the input for points.
                 break;
             case 'Free Throw':
                 this.points = [0,1];
+                // wait the input for points
                 break;
             default:
+                // send the tracking informaion.
+                this.solrPost(this.restBaseUrl,
+                              this.buildGameAction());
+                // no need for points.
                 this.points = [];
+                // reset actions list.
+                this.actions = [{name:"Timeout"}];
                 break;
             }
         },
@@ -664,6 +674,8 @@ export default {
 
             // clone the tracking information.
             let action = Object.assign({}, vm.tracking);
+            // remove the team index.
+            delete action.teamIndex;
 
             var thePoint = action.point;
             var score = 0;
