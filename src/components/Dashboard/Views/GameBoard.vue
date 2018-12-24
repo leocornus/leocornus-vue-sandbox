@@ -643,7 +643,7 @@ export default {
                 {name: "Rebound"},
                 //{name: "Defense Rebound"},
                 //{name: "Offense Rebound"},
-                {name: "Assistance"},
+                {name: "Assist"},
                 {name: "Foul"}
             ];
         },
@@ -663,6 +663,14 @@ export default {
             } else {
                 this.tracking.point = point + "";
             }
+
+            // send the tracking informaion.
+            this.solrPost(this.restBaseUrl,
+                          this.buildGameAction());
+            // no need for points.
+            this.points = [];
+            // reset actions list.
+            this.actions = [{name:"Timeout"}];
         },
 
         /**
@@ -674,6 +682,13 @@ export default {
 
             // clone the tracking information.
             let action = Object.assign({}, vm.tracking);
+            // seset the tracking message.
+            Object.keys(vm.tracking).forEach(function(item) {
+                vm.tracking[item] = "";
+            });
+            // set the current team for convinient!
+            vm.tracking.team = action.team;
+
             // remove the team index.
             delete action.teamIndex;
 
