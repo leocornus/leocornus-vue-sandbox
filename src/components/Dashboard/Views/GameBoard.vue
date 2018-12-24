@@ -316,7 +316,8 @@ export default {
                {key:"3P Shoot", label: "3PS"},
                {key:"Free Throw", label: "FT", variant: "success"},
                {key:"Rebound", label: "REB"},
-               {key:"Assist", label: "AST"}
+               {key:"Assist", label: "AST"},
+               {key:"Steal", label: "STL"}
             ],
 
             /**
@@ -664,6 +665,7 @@ export default {
                 //{name: "Defense Rebound"},
                 //{name: "Offense Rebound"},
                 {name: "Assist"},
+                {name: "Steal"},
                 {name: "Foul"}
             ];
         },
