@@ -973,6 +973,14 @@ export default {
                             // with made/total format.
                             playerActions[actionPivot.value] =
                                 `${made}/${actionPivot.count}`;
+
+                            // TODO: for some old game actions!
+                            // before we split shoot action into 2 Point shoot and
+                            // 3 point shoot.
+                            if(actionPivot.value === "Shoot") {
+                                playerActions["2P Shoot"] =
+                                    `${made}/${actionPivot.count}`;
+                            }
                         }
                     });
 
