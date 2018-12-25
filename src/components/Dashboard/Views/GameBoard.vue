@@ -813,31 +813,31 @@ export default {
                     case 'Final':
                         // query everything for final.
                         query = "*:*";
-                        this.gameStatsTitle = "Statistics for Final Game";
+                        this.gameStatsTitle = "Final Game";
                         break;
                     case '1':
                         query = 'period:"Period 1"';
-                        this.gameStatsTitle = "Statistics for Period 1";
+                        this.gameStatsTitle = "Quarter 1";
                         break;
                     case '2':
                         query = 'period:"Period 2"';
-                        this.gameStatsTitle = "Statistics for Period 2";
+                        this.gameStatsTitle = "Quarter 2";
                         break;
                     case '1st':
                         query = 'period:"Period 1" OR period:"Period 2"';
-                        this.gameStatsTitle = "Statistics for 1st Half";
+                        this.gameStatsTitle = "1st Half";
                         break;
                     case '3':
                         query = 'period:"Period 3"';
-                        this.gameStatsTitle = "Statistics for Period 3";
+                        this.gameStatsTitle = "Quarter 3";
                         break;
                     case '4':
                         query = 'period:"Period 4"';
-                        this.gameStatsTitle = "Statistics for Period 4";
+                        this.gameStatsTitle = "Quarter 4";
                         break;
                     case '2nd':
                         query = 'period:"Period 3" OR period:"Period 4"';
-                        this.gameStatsTitle = "Statistics for 2nd Half";
+                        this.gameStatsTitle = "2nd Half";
                         break;
                     default:
                         // query everything for final.
