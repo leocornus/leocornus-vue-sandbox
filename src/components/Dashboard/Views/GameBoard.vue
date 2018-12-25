@@ -158,6 +158,19 @@
               </b-row>
             </b-container>
           </b-tab>
+          <b-tab name="tracking">
+            <template slot="title">
+              <font-awesome-icon icon="align-justify" size="lg"/>
+            </template>
+    <div>
+      <h3 class="mt-2">Action list:</h3>
+      <ul class="list-group" style="height: 350px; overflow-y: auto;">
+        <li class="list-group-item">
+          Team, Player, Action
+        </li>
+      </ul>
+    </div>
+          </b-tab>
         </b-tabs>
       </b-tab>
     </b-tabs>
