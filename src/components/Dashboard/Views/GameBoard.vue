@@ -913,9 +913,18 @@ export default {
                     oneItem[team.value] = team.count;
                     if(vm.isShootAction(actionName)) {
                         // go through each score:0, 1, 2, 3
+                        // calc made /total attempts
+                        let made = 0;
                         team.pivot.forEach(function(score) {
+                            // calc the total score.
                             scoreAction[team.value] += score.value * score.count;
+
+                            // count the made ones.
+                            if(score.value > 0) {
+                                made += score.count;
+                            }
                         });
+                        oneItem[team.value] = `${made}/${team.count}`;
                     }
                     teams.push(oneItem);
                 });
