@@ -118,13 +118,6 @@
         </template>
         <h3 class="text-center mt-0 mb-2">{{gameStatsTitle}}</h3>
         <b-tabs vertical small>
-          <b-tab name="tracking">
-            <template slot="title">
-              <font-awesome-icon icon="align-justify" size="lg"/>
-            </template>
-            <!-- stats in table format for each team. -->
-            <b-table striped :items="messages" :fields="messageFields"></b-table>
-          </b-tab>
           <b-tab name="Chart">
             <template slot="title">
               <font-awesome-icon icon="chart-bar" size="lg"/>
@@ -164,6 +157,13 @@
                 </b-col>
               </b-row>
             </b-container>
+          </b-tab>
+          <b-tab name="tracking">
+            <template slot="title">
+              <font-awesome-icon icon="align-justify" size="lg"/>
+            </template>
+            <!-- stats in table format for each team. -->
+            <b-table striped :items="messages" :fields="messageFields"></b-table>
           </b-tab>
         </b-tabs>
       </b-tab>
