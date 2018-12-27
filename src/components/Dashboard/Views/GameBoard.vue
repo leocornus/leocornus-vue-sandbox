@@ -118,6 +118,13 @@
         </template>
         <h3 class="text-center mt-0 mb-2">{{gameStatsTitle}}</h3>
         <b-tabs vertical small>
+          <b-tab name="tracking">
+            <template slot="title">
+              <font-awesome-icon icon="align-justify" size="lg"/>
+            </template>
+            <!-- stats in table format for each team. -->
+            <b-table striped :items="messages" :fields="messageFields"></b-table>
+          </b-tab>
           <b-tab name="Chart">
             <template slot="title">
               <font-awesome-icon icon="chart-bar" size="lg"/>
@@ -157,19 +164,6 @@
                 </b-col>
               </b-row>
             </b-container>
-          </b-tab>
-          <b-tab name="tracking">
-            <template slot="title">
-              <font-awesome-icon icon="align-justify" size="lg"/>
-            </template>
-    <div>
-      <h3 class="mt-2">Action list:</h3>
-      <ul class="list-group" style="height: 350px; overflow-y: auto;">
-        <li class="list-group-item">
-          Team, Player, Action
-        </li>
-      </ul>
-    </div>
           </b-tab>
         </b-tabs>
       </b-tab>
@@ -331,6 +325,25 @@ export default {
                {key:"Rebound", label: "REB"},
                {key:"Assist", label: "AST"},
                {key:"Steal", label: "STL"}
+            ],
+
+            /**
+             * tracking messages are array of objects.
+             * [
+             *   {team: "team one", player: "23", action: "3Point Shoot", point:"3"},
+             *   {team: "team one", player: "23", action: "Rebound", point:""}
+             * ]
+             */
+            messages: [],
+
+            /**
+             * message fiels.
+             */
+            messageFields: [
+                {key: "team"},
+                {key: "player"},
+                {key: "action"},
+                {key: "point"}
             ],
 
             /**
@@ -717,11 +730,14 @@ export default {
 
             // clone the tracking information.
             let action = Object.assign({}, vm.tracking);
-            // seset the tracking message.
+            // add to messages.
+            // NOTE: we need clone the object first.
+            vm.messages.unshift(Object.assign({}, vm.tracking));
+            // reset the tracking message.
             Object.keys(vm.tracking).forEach(function(item) {
                 vm.tracking[item] = "";
             });
-            // set the current team for convinient!
+            // set the current team for convenient!
             vm.tracking.team = action.team;
 
             // remove the team index.
