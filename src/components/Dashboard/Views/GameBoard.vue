@@ -1110,6 +1110,7 @@ export default {
                 .attr("height", height)
             // TODO: add the responsive call.
 
+            // drawing the left side bars.
             svg.selectAll("rect.left")
                 .data(vm.barActions)
                 .enter().append("rect")
@@ -1123,7 +1124,7 @@ export default {
                 })
                 .attr("height", y.bandwidth())
                 .attr("fill", function(d) {return color(d[labelCol])})
-
+            // adding the label for left side bars
             svg.selectAll("text.leftscore")
                 .data(vm.barActions)
                 .enter().append("text")
@@ -1139,6 +1140,7 @@ export default {
                 .attr('class', 'leftscore')
                 .text(function(d){return d[lCol];});
 
+            // drawing the action label in the middle of bars.
             svg.selectAll("text.name")
                 .data(vm.barActions)
                 .enter().append("text")
@@ -1151,6 +1153,7 @@ export default {
                 .attr('class', 'name')
                 .text(function(d){return d[labelCol];});
 
+            // right side bars.
             svg.selectAll("rect.right")
                 .data(vm.barActions)
                 .enter().append("rect")
