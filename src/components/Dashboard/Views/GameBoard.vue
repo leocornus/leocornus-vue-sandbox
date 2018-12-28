@@ -1236,7 +1236,20 @@ export default {
                 // it will use the structure for Bootstrap-Vue table component.
                 vm.teamActions = {"items": actions, "fields": fields};
                 // the barActions will serve the side by side bar chart.
-                vm.barActions = actions;
+                vm.barActions = actions.map(action => {
+
+                    let rAction = Object.assign({}, action);
+                    //console.log(rAction);
+
+                    if(vm.isShootAction(rAction['Action'])) {
+                        let keys = Object.keys(rAction);
+                        //console.log(keys);
+                        rAction[keys[1]] = rAction[keys[1]].split('/')[1];
+                        rAction[keys[2]] = rAction[keys[2]].split('/')[1];
+                    }
+
+                    return rAction;
+                });
                 // players break down table for each team.
                 vm.loadPlayerStats(pivot['team,player,action,score']);
 
