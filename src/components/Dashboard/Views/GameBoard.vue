@@ -130,7 +130,9 @@
               <font-awesome-icon icon="list" size="lg"/>
             </template>
             <!-- stats in table format for each team. -->
-            <b-table striped :items="teamActions.items" :fields="teamActions.fields"></b-table>
+            <b-table striped outlined 
+                :items="teamActions.items" 
+                :fields="teamActions.fields"></b-table>
           </b-tab>
           <b-tab name="Players">
             <template slot="title">
@@ -140,16 +142,18 @@
             <b-container>
               <b-row>
                 <b-col>
-                  <b-table striped :items="playerStats[teams[0].name]"
-                                   :fields="playerStatsFields" caption-top>
+                  <b-table striped outlined small
+                      :items="playerStats[teams[0].name]"
+                      :fields="playerStatsFields" caption-top>
                     <template slot="table-caption">
                       <span class="h4">{{teams[0].name}}</span>
                     </template>
                   </b-table>
                 </b-col>
                 <b-col>
-                  <b-table striped :items="playerStats[teams[1].name]"
-                                   :fields="playerStatsFields" caption-top>
+                  <b-table striped outlined small
+                      :items="playerStats[teams[1].name]"
+                      :fields="playerStatsFields" caption-top>
                     <template slot="table-caption">
                       <span class="h4">{{teams[1].name}}</span>
                     </template>
