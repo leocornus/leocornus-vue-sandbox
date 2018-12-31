@@ -1047,9 +1047,25 @@ export default {
         /**
          * draw side by side bars for the game statistics.
          */
-        drawSideBySideBars() {
+        drawSideBySideBars(actions) {
 
             var vm = this;
+
+                // the barActions will serve the side by side bar chart.
+                let barActions = actions.map(action => {
+
+                    let rAction = Object.assign({}, action);
+                    //console.log(rAction);
+
+                    if(vm.isShootAction(rAction['Action'])) {
+                        let keys = Object.keys(rAction);
+                        //console.log(keys);
+                        rAction[keys[1]] = parseInt(rAction[keys[1]].split('/')[1]);
+                        rAction[keys[2]] = parseInt(rAction[keys[2]].split('/')[1]);
+                    }
+
+                    return rAction;
+                });
 
             //console.log("D3 Version Again: " + d3.version);
             // calculate the dimension for bar chart.
@@ -1071,20 +1087,20 @@ export default {
             var width = 400
             var height = 400
             var labelArea = 120
-            var cols = Object.keys(vm.barActions[0])
+            var cols = Object.keys(barActions[0])
             var labelCol = cols[0]
             //var lCol = "infant.mortality"
             var lCol = cols[1]
             //var rCol = "gdp"
             var rCol = cols[2]
             var rightOffset = width + labelArea
-            var xDomain = vm.barActions.map(d => d.Action)
+            var xDomain = barActions.map(d => d.Action)
             var color = d3.scaleOrdinal(d3.schemePaired)
               .domain(xDomain)
 
             // get the max score to scale bar width.
-            var maxX = Math.max(vm.barActions[0][vm.teams[0].name],
-                                vm.barActions[0][vm.teams[1].name]);
+            var maxX = Math.max(barActions[0][vm.teams[0].name],
+                                barActions[0][vm.teams[1].name]);
             // left side
             var xFrom = d3.scaleLinear()
                 .domain([1, maxX + 5])
@@ -1116,7 +1132,7 @@ export default {
 
             // drawing the left side bars.
             svg.selectAll("rect.left")
-                .data(vm.barActions)
+                .data(barActions)
                 .enter().append("rect")
                 .attr("x", function (d) {
                     return width - xFrom(d[lCol]);
@@ -1130,7 +1146,7 @@ export default {
                 .attr("fill", function(d) {return color(d[labelCol])})
             // adding the label for left side bars
             svg.selectAll("text.leftscore")
-                .data(vm.barActions)
+                .data(barActions)
                 .enter().append("text")
                 .attr("x", function (d) {
                     return width - xFrom(d[lCol])-40;
@@ -1146,7 +1162,7 @@ export default {
 
             // drawing the action label in the middle of bars.
             svg.selectAll("text.name")
-                .data(vm.barActions)
+                .data(barActions)
                 .enter().append("text")
                 .attr("x", (labelArea / 2) + width)
                 .attr("y", function (d) {
@@ -1159,7 +1175,7 @@ export default {
 
             // right side bars.
             svg.selectAll("rect.right")
-                .data(vm.barActions)
+                .data(barActions)
                 .enter().append("rect")
                 .attr("x", rightOffset)
                 .attr("y", yPosByIndex)
@@ -1171,7 +1187,7 @@ export default {
                 .attr("fill", function(d) {return color(d[labelCol])})
 
             svg.selectAll("text.score")
-                .data(vm.barActions)
+                .data(barActions)
                 .enter().append("text")
                 .attr("x", function (d) {
                     return xTo(d[rCol]) + rightOffset+40;
@@ -1239,26 +1255,11 @@ export default {
                 // teamActions will serve the table view for the team.
                 // it will use the structure for Bootstrap-Vue table component.
                 vm.teamActions = {"items": actions, "fields": fields};
-                // the barActions will serve the side by side bar chart.
-                vm.barActions = actions.map(action => {
-
-                    let rAction = Object.assign({}, action);
-                    //console.log(rAction);
-
-                    if(vm.isShootAction(rAction['Action'])) {
-                        let keys = Object.keys(rAction);
-                        //console.log(keys);
-                        rAction[keys[1]] = parseInt(rAction[keys[1]].split('/')[1]);
-                        rAction[keys[2]] = parseInt(rAction[keys[2]].split('/')[1]);
-                    }
-
-                    return rAction;
-                });
                 // players break down table for each team.
                 vm.loadPlayerStats(pivot['team,player,action,score']);
 
                 // reload chart!
-                vm.drawSideBySideBars();
+                vm.drawSideBySideBars(actions.slice());
             })
             .catch(function(error) {
             });
