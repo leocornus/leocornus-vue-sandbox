@@ -1055,13 +1055,14 @@ export default {
                 let barActions = actions.map(action => {
 
                     let rAction = Object.assign({}, action);
-                    //console.log(rAction);
 
                     if(vm.isShootAction(rAction['Action'])) {
-                        let keys = Object.keys(rAction);
-                        //console.log(keys);
-                        rAction[keys[1]] = parseInt(rAction[keys[1]].split('/')[1]);
-                        rAction[keys[2]] = parseInt(rAction[keys[2]].split('/')[1]);
+                        rAction[vm.teams[0].name] =
+                            rAction.hasOwnProperty(vm.teams[0].name) ?
+                            parseInt(rAction[vm.teams[0].name].split('/')[1]) : 0;
+                        rAction[vm.teams[1].name] =
+                            rAction.hasOwnProperty(vm.teams[1].name) ?
+                            parseInt(rAction[vm.teams[1].name].split('/')[1]) : 0;
                     }
 
                     return rAction;
