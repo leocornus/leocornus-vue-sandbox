@@ -130,7 +130,7 @@
               <font-awesome-icon icon="list" size="lg"/>
             </template>
             <!-- stats in table format for each team. -->
-            <b-table striped outlined 
+            <b-table striped bordered
                 :items="teamActions.items" 
                 :fields="teamActions.fields"></b-table>
           </b-tab>
@@ -142,7 +142,7 @@
             <b-container>
               <b-row>
                 <b-col>
-                  <b-table striped outlined small
+                  <b-table striped bordered small
                       :items="playerStats[teams[0].name]"
                       :fields="playerStatsFields" caption-top>
                     <template slot="table-caption">
@@ -151,7 +151,7 @@
                   </b-table>
                 </b-col>
                 <b-col>
-                  <b-table striped outlined small
+                  <b-table striped bordered small
                       :items="playerStats[teams[1].name]"
                       :fields="playerStatsFields" caption-top>
                     <template slot="table-caption">
@@ -1051,22 +1051,22 @@ export default {
 
             var vm = this;
 
-                // the barActions will serve the side by side bar chart.
-                let barActions = actions.map(action => {
+            // the barActions will serve the side by side bar chart.
+            let barActions = actions.map(action => {
 
-                    let rAction = Object.assign({}, action);
+                let rAction = Object.assign({}, action);
 
-                    if(vm.isShootAction(rAction['Action'])) {
-                        rAction[vm.teams[0].name] =
-                            rAction.hasOwnProperty(vm.teams[0].name) ?
-                            parseInt(rAction[vm.teams[0].name].split('/')[1]) : 0;
-                        rAction[vm.teams[1].name] =
-                            rAction.hasOwnProperty(vm.teams[1].name) ?
-                            parseInt(rAction[vm.teams[1].name].split('/')[1]) : 0;
-                    }
+                if(vm.isShootAction(rAction['Action'])) {
+                    rAction[vm.teams[0].name] =
+                        rAction.hasOwnProperty(vm.teams[0].name) ?
+                        parseInt(rAction[vm.teams[0].name].split('/')[1]) : 0;
+                    rAction[vm.teams[1].name] =
+                        rAction.hasOwnProperty(vm.teams[1].name) ?
+                        parseInt(rAction[vm.teams[1].name].split('/')[1]) : 0;
+                }
 
-                    return rAction;
-                });
+                return rAction;
+            });
 
             //console.log("D3 Version Again: " + d3.version);
             // calculate the dimension for bar chart.
@@ -1242,9 +1242,9 @@ export default {
             };
 
             var fields = [
-              {key: "Action", variant: "success"},
-              {key: vm.teams[0].name},
-              {key: vm.teams[1].name, variant: "info"}];
+              {key: vm.teams[0].name, 'class': 'text-right'},
+              {key: "Action", variant: "info", 'class': 'text-center'},
+              {key: vm.teams[1].name}];
 
             // we have to use post for pivot faceting
             axios.post(endPoint, payload).then(function(response) {
