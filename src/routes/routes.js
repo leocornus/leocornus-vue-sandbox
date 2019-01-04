@@ -45,6 +45,8 @@ const routes = [
     path: '/admin',
     component: DashboardLayout,
     redirect: '/admin/overview',
+    // children are nested routes.
+    // they will be loaded inside the parent component
     children: [
       {
         path: 'overview',
