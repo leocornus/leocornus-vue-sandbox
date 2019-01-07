@@ -1,5 +1,4 @@
 // import fontawesome
-import fontawesome from '@fortawesome/fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 // import the icons. 
 // it is good pratice to import icons one by one.
