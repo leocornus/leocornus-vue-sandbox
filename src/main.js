@@ -10,21 +10,9 @@ import LightBootstrap from './light-bootstrap-main'
 // bootstrap-vue css.
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-// import fontawesome
-import fontawesome from '@fortawesome/fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core'
-// import the icons. 
-// it is good pratice to import icons one by one.
-import { faList, faChartBar, faUser, faAlignJustify } from '@fortawesome/free-solid-svg-icons'
-// import icon component
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-// add icons.
-library.add(faList)
-library.add(faChartBar)
-library.add(faUser)
-library.add(faAlignJustify)
-// load the font awesome icon component
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+// import FontAwesome
+import FontAwesome from './fontawesome'
+Vue.use(FontAwesome)
 
 // local settings
 import LocalSettings from './local-settings.js'
