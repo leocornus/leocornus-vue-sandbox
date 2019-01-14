@@ -9,7 +9,7 @@
         </ul>
       </nav>
       <div class="copyright text-center">
-        &copy; 2018
+        &copy; 2019
         <a href="https://www.leocorn.com" target="_blank">Leocornus LTD.</a>.
       </div>
     </div>
