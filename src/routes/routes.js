@@ -1,4 +1,5 @@
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
+import OneColumnLayout from '../components/Dashboard/Layout/OneColumnLayout.vue'
 // GeneralViews
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 
@@ -42,6 +43,20 @@ const routes = [
     component: Login
   },
   {
+    path: '/game',
+    component: OneColumnLayout,
+    redirect: '/game/gameboard',
+    // children are nested routes.
+    // they will be loaded inside the parent component
+    children: [
+      {
+        path: 'gameboard',
+        name: 'Game Board',
+        component: GameBoard
+      }
+    ]
+  },
+  {
     path: '/admin',
     component: DashboardLayout,
     redirect: '/admin/overview',
@@ -52,11 +67,6 @@ const routes = [
         path: 'overview',
         name: 'Overview',
         component: Overview
-      },
-      {
-        path: 'gameboard',
-        name: 'Game Board',
-        component: GameBoard
       },
       {
         path: 'chartboard',
