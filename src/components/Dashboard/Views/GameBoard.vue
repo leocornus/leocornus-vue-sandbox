@@ -928,7 +928,8 @@ export default {
                                 made += score.count;
                             }
                         });
-                        oneItem[team.value] = `${made}/${team.count}`;
+                        let percent = d3.format('.1f')((made / team.count) * 100.0);
+                        oneItem[team.value] = `${made}/${team.count} - ${percent}%`;
                     }
                     teams.push(oneItem);
                 });
