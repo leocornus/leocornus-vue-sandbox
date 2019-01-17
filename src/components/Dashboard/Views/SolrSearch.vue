@@ -52,6 +52,12 @@
                aria-describedby="idField-addon"
                v-model="idField"
                placeholder=""/>
+        <b-input-group-prepend>
+          <span id="perpage-addon" class="input-group-text">Items Per Page: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="perpage"
+               aria-describedby="perpage-addon"
+               v-model="perPage"/>
       </b-input-group>
       <b-input-group class="mb-2">
         <b-input-group-prepend>
