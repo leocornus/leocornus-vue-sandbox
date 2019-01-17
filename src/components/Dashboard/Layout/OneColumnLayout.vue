@@ -13,7 +13,7 @@
 
 </style>
 <script>
-  import TopNavbar from './TopNavbar.vue'
+  import TopNavbar from './TopNavbarOneColumn.vue'
   import ContentFooter from './ContentFooter.vue'
   import DashboardContent from './Content.vue'
   export default {
