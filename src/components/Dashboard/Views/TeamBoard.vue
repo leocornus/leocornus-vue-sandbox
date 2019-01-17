@@ -23,7 +23,7 @@
           <b-row>
             <b-col>
               <b-table striped bordered small
-                  :items="playerStats[teamLabel]"
+                  :items="playerStats"
                   :fields="playerStatsFields" caption-top>
                 <template slot="table-caption">
                   <span class="h4">{{teamLabel}}</span>
@@ -75,17 +75,12 @@ export default {
              *
              * player stats will have the following data structure:
              *
-             * {"team home": [
+             * [
              *    {"player":2, "score":0, "shoot":3, "free throw":1, "foul":1},
              *    {"player":3, "score":1, "shoot":3, "free throw":2, "foul":0}
-             *  ],
-             *  "team guest": [
-             *    {"player":12, "score":0, "shoot":3, "free throw":1, "foul":2},
-             *    {"player":23, "score":1, "shoot":3, "free throw":2, "foul":1}
-             *  ]
-             * }
+             * ],
              */
-            playerStats: {},
+            playerStats: [],
 
             /**
              * fields for player stats.
@@ -159,65 +154,58 @@ export default {
          *  ]
          * }
          */
-        loadPlayerStats(teamPlayerActionScore) {
+        loadPlayerStats(playerActionScore) {
 
             var vm = this;
             // reset the play stats.
-            vm.playerStats = {};
+            vm.playerStats = [];
 
-            // get teams from the vm.teams
-            // teams should after game loaded or created.
-            teamPlayerActionScore.forEach(function(teamPivot) {
+            // go through each player pivot.
+            playerActionScore.forEach(function(playerPivot) {
 
-                // initialize the team, create the empty array
-                vm.playerStats[teamPivot.value] = [];
-                // go through each player pivot.
-                teamPivot.pivot.forEach(function(playerPivot) {
+                // one row for each player,
+                // which will have all actions.
+                var playerActions = {"Player": playerPivot.value};
+                // initialize the player score.
+                var playerScores = 0;
+                // now the action pivot, go through each action.
+                playerPivot.pivot.forEach(function(actionPivot) {
 
-                    // one row for each player,
-                    // which will have all actions.
-                    var playerActions = {"Player": playerPivot.value};
-                    // initialize the player score.
-                    var playerScores = 0;
-                    // now the action pivot, go through each action.
-                    playerPivot.pivot.forEach(function(actionPivot) {
+                    playerActions[actionPivot.value] = actionPivot.count;
+                    // how to get the scores for action: Shoot and Free Throw
+                    if(vm.isShootAction(actionPivot.value)) {
+                        // calculate made / total for all shoot action.
+                        // we already have total count,
+                        // only need find out how many made count.
+                        let made = 0;
+                        actionPivot.pivot.forEach(function(scorePivot) {
+                            // calculate player score.
+                            playerScores += scorePivot.value * scorePivot.count;
 
-                        playerActions[actionPivot.value] = actionPivot.count;
-                        // how to get the scores for action: Shoot and Free Throw
-                        if(vm.isShootAction(actionPivot.value)) {
-                            // calculate made / total for all shoot action.
-                            // we already have total count,
-                            // only need find out how many made count.
-                            let made = 0;
-                            actionPivot.pivot.forEach(function(scorePivot) {
-                                // calculate player score.
-                                playerScores += scorePivot.value * scorePivot.count;
-
-                                if(scorePivot.value > 0) {
-                                    made += scorePivot.count;
-                                }
-                            });
-                            // reset the shoot action's count
-                            // with made/total format.
-                            playerActions[actionPivot.value] =
-                                `${made}/${actionPivot.count}`;
-
-                            // TODO: for some old game actions!
-                            // before we split shoot action into 2 Point shoot and
-                            // 3 point shoot.
-                            if(actionPivot.value === "Shoot") {
-                                playerActions["2P Shoot"] =
-                                    `${made}/${actionPivot.count}`;
+                            if(scorePivot.value > 0) {
+                                made += scorePivot.count;
                             }
+                        });
+                        // reset the shoot action's count
+                        // with made/total format.
+                        playerActions[actionPivot.value] =
+                            `${made}/${actionPivot.count}`;
+
+                        // TODO: for some old game actions!
+                        // before we split shoot action into 2 Point shoot and
+                        // 3 point shoot.
+                        if(actionPivot.value === "Shoot") {
+                            playerActions["2P Shoot"] =
+                                `${made}/${actionPivot.count}`;
                         }
-                    });
-
-                    // add totoal scores.
-                    playerActions["Score"] = playerScores;
-
-                    // push to player stats.
-                    vm.playerStats[teamPivot.value].push(playerActions);
+                    }
                 });
+
+                // add totoal scores.
+                playerActions["Score"] = playerScores;
+
+                // push to player stats.
+                vm.playerStats.push(playerActions);
             });
 
             console.log(vm.playerStats);
@@ -245,7 +233,7 @@ export default {
                 "sort": "_timestamp_ asc",
                 "facet": "on",
                 "facet.pivot": [
-                  "team,player,action,score"
+                  "player,action,score"
                 ],
                 "fq": [
                   "table:gameaction"
@@ -262,7 +250,7 @@ export default {
                 console.log(pivot);
 
                 // players break down table for each team.
-                vm.loadPlayerStats(pivot['team,player,action,score']);
+                vm.loadPlayerStats(pivot['player,action,score']);
             })
             .catch(function(error) {
             });
