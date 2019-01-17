@@ -2,7 +2,7 @@
 <div class="content container">
   <div id="game-app">
     <b-input-group class="mb-2">
-      <b-button variait="warning"
+      <b-button variant="warning"
                 v-on:click="showGameSettings('new')">Create New Game</b-button>
       <b-form-input type="text" placeholder="Select a existing game..."
           class="search-input"
@@ -23,7 +23,7 @@
     <!-- game summary and timer (TODO) -->
     <div v-if="!(gameId === null)" class="text-center">
       <span class="h3">{{teams[0].name}} Vs. {{teams[1].name}}</span>
-      <b-button variait="primary" v-if="!(gameId === null)"
+      <b-button variant="info" v-if="!(gameId === null)"
                 v-on:click="showGameSettings('update')">Game Settings</b-button>
     </div>
 
