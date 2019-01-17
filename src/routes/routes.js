@@ -28,6 +28,7 @@ import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue
 import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
 // Game
 import GameBoard from '../components/Dashboard/Views/GameBoard.vue'
+import TeamBoard from '../components/Dashboard/Views/TeamBoard.vue'
 // Charts
 import ChartBoard from '../components/Dashboard/Views/ChartBoard.vue'
 
@@ -53,6 +54,11 @@ const routes = [
         path: 'gameboard',
         name: 'Game Board',
         component: GameBoard
+      },
+      {
+        path: 'teamboard',
+        name: 'Team Board',
+        component: TeamBoard 
       }
     ]
   },
