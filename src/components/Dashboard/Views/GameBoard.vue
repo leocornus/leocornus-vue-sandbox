@@ -1016,16 +1016,10 @@ export default {
                             });
                             // reset the shoot action's count
                             // with made/total format.
+                            let percent = d3.format('.1f')(
+                                (made / actionPivot.count) * 100.0);
                             playerActions[actionPivot.value] =
-                                `${made}/${actionPivot.count}`;
-
-                            // TODO: for some old game actions!
-                            // before we split shoot action into 2 Point shoot and
-                            // 3 point shoot.
-                            if(actionPivot.value === "Shoot") {
-                                playerActions["2P Shoot"] =
-                                    `${made}/${actionPivot.count}`;
-                            }
+                                `${made}/${actionPivot.count} - ${percent}%`;
                         }
                     });
 
