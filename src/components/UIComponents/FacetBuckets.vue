@@ -59,7 +59,7 @@ export default {
     computed: {
         // the facet label.
         facetLabel() {
-            return this.facet.label;
+            return this.facet.name;
         },
 
         // ids for collapse.
