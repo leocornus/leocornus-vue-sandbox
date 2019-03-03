@@ -1,40 +1,41 @@
 <template>
 <div class="content container">
+<b-input-group class="mb-2">
+  <div class="input-group-prepend">
+    <span id="restBaseUrl-addon" class="input-group-text">Base URL: </span>
+  </div>
+  <b-form-select class="form-control"
+      aria-describedby="restBaseUrl-addon"
+      v-model="restBaseUrl" :options="baseUrlOptions">
+  </b-form-select>
+</b-input-group>
+
 <b-card no-body>
 <b-tabs card>
   <b-tab title="Search" active>
   <div id="search-app">
 
     <b-input-group class="mb-2">
-      <div class="input-group-prepend">
-        <span id="restBaseUrl-addon" class="input-group-text">Base URL: </span>
-      </div>
-      <b-form-select class="form-control"
-          aria-describedby="restBaseUrl-addon"
-          v-model="restBaseUrl" :options="baseUrlOptions">
-      </b-form-select>
-      <div class="input-group-prepend">
-        <span id="query-addon" class="input-group-text">Query: </span>
-      </div>
       <b-form-input type="text" id="inputQuery"
              v-model="query"
              aria-describedby="query-addon"
              v-on:keyup.enter.native="loadItems"
              placeholder="Search b-form-group for..."/>
       <b-input-group-append>
-        <b-button variant="outline-primary" v-if="!autoRefresh"
-            v-on:click="loadItems">Refresh</b-button>
-        <div class="input-group-text text-primary">
-          <b-form-checkbox v-model="autoRefresh" @change="toggleAutoRefresh">
-            Auto Refresh
-          </b-form-checkbox>
-        </div>
-        <b-form-select v-if="autoRefresh" class="form-control" 
-            @change="resetRefreshInterval"
-            v-model="refreshInterval" :options="refreshIntervalOptions">
-        </b-form-select>
+        <b-button variant="outline-primary"
+                v-on:click="loadItems">Search!</b-button>
+        <b-button variant="success" v-b-modal.query-params>
+          Query Params
+        </b-button>
+        <b-button v-b-modal.search-settings>
+          <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
+        </b-button>
       </b-input-group-append>
     </b-input-group>
+
+    <b-modal id="query-params" title="Query Parameters" ok-only>
+      <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
+    </b-modal>
 
     <!-- result list -->
     <p>
