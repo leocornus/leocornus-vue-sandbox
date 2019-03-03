@@ -70,13 +70,52 @@
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <listing-details v-for="(doc, index) in results" :doc="doc" :key="doc.id" 
-                           :index="index" idFieldName=".id" :thePage="page">
+                           :index="index" :idFieldName="idField" :thePage="page">
           </listing-details>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
         </div>
       </div>
-    </p>
+    </p> <!-- END result list -->
+
+    <!-- search settings modal -->
+    <b-modal id="search-settings" title="Search Settings"
+             @ok="loadItems">
+      <b-input-group class="mb-2">
+        <b-input-group-append>
+          <span id="idField-addon" class="input-group-text">Id Field: </span>
+        </b-input-group-append>
+        <b-form-input type="text" class="form-control" id="idField"
+               aria-describedby="idField-addon"
+               v-model="idField"
+               placeholder=""/>
+        <b-input-group-prepend>
+          <span id="perpage-addon" class="input-group-text">Items Per Page: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="perpage"
+               aria-describedby="perpage-addon"
+               v-model="perPage"/>
+      </b-input-group>
+      <b-input-group class="mb-2">
+        <b-input-group-prepend>
+          <span id="sort-addon" class="input-group-text">Sort: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="sort"
+               aria-describedby="sort-addon"
+               v-model="sort"
+               placeholder="set sort here: id desc,type asc"/>
+      </b-input-group>
+
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <span id="facetFields-addon" class="input-group-text">Facets: </span>
+        </div>
+        <input type="text" class="form-control" id="facetFields"
+               aria-describedby="facetFields-addon"
+               v-model="facetFields"
+               placeholder="for example: .id,table">
+      </div>
+    </b-modal> <!-- END search settings modal -->
   </div>
   </b-tab>
   <!-- reports tab -->
@@ -155,6 +194,7 @@ export default {
     data() {
       return {
         restBaseUrl: 'http://search.example.com',
+        idField: '.id',
 
         query: '*:*',
         // default facet field is empty.
