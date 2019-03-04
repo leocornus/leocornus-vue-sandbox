@@ -65,7 +65,7 @@ export default {
         // ids for collapse.
         facetID() {
             // replace the white space with -.
-            return this.facet.label.replace(/ /g, '-');
+            return this.facet.name;
         },
 
         // we could use the computed property as a normal property
