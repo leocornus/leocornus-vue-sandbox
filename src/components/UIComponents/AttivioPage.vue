@@ -194,11 +194,13 @@ export default {
     data() {
       return {
         restBaseUrl: 'http://search.example.com',
+
         idField: '.id',
+        // , separated string for the facet fields.
+        // default is table field and listvalue_i field with statistics.
+        facetFields: "table,listvalue_i(statistics=true)",
 
         query: '*:*',
-        // default facet field is empty.
-        facetFields: "",
 
         // set the default filter query to empty.
         //filterQuery: "c4c_type:project,log_level:INFO",
@@ -486,12 +488,18 @@ export default {
             //     }
             //   }
             // }
-            if(this.page.hasOwnProperty("customizeGetFacetFields")) {
-                return this.page.customizeGetFacetFields();
-            } else {
-                // by default, this is no facet.
+
+            if(this.facetFields === "") {
                 return [];
+            } else {
+                return this.facetFields.trim().split(",");
             }
+            //if(this.page.hasOwnProperty("customizeGetFacetFields")) {
+            //    return this.page.customizeGetFacetFields();
+            //} else {
+            //    // by default, this is no facet.
+            //    return [];
+            //}
         },
 
         /**
