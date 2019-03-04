@@ -1,6 +1,13 @@
 <template>
 
 <b-card no-body class="mb-1">
+<b-media>
+  <img slot="aside" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
+
+  <h3 class="mt-0">{{doc.title[0] + ', ' + doc.city[0]}}</h3>
+  <p>{{doc['teaser'][0]}}</p>
+</b-media>
+
 <b-card-header :id="listingID" class="p-0">
   <h5 class="mb-0">
     <b-button class="btn-link" v-b-toggle="collapseID">
@@ -125,6 +132,7 @@ export default {
 
             // get the fields name for each doc.
             var docFields = [];
+
             Object.keys(vm.doc).forEach(function(fieldName) {
 
                 var theName = fieldName;
@@ -153,7 +161,7 @@ export default {
             });
 
             // using array map to customize field values:
-            if(vm.thePage.hasOwnProperty("customizeListingDetailsField")) {
+            if(vm.thePage.hasOwnProperty("customizeListingDetailsPreviewField")) {
                 //console.log(vm.$localSettings.customizeField);
                 // the customizeField will follow the specification of
                 // Array.map callback function.
