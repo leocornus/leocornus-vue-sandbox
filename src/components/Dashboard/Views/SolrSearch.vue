@@ -475,6 +475,7 @@ export default {
                 // get ready the facet object.
                 var facetItem = {
                   label: fieldName,
+                  name: fieldName,
                   buckets: facetBuckets
                 };
 
