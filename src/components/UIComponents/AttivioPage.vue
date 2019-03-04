@@ -198,7 +198,7 @@ export default {
         idField: '.id',
         // , separated string for the facet fields.
         // default is table field and listvalue_i field with statistics.
-        facetFields: "table,listvalue_i(statistics=true)",
+        facetFields: "table,city,agentname,neighbourhoodname,agentphone,listvalue_i(statistics=true)",
 
         query: '*:*',
 
