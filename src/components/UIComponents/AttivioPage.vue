@@ -67,6 +67,8 @@
         </div>
         <div class="col-9 accordion">
           <h3 class="m-0">{{resultSummary}}</h3>
+          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+                        v-model="currentPage" align="center"></b-pagination>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <listing-details-preview v-for="(doc, index) in results" 
