@@ -69,9 +69,10 @@
           <h3 class="m-0">{{resultSummary}}</h3>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :key="doc.id" 
-                           :index="index" :idFieldName="idField" :thePage="page">
-          </listing-details>
+          <listing-details-preview v-for="(doc, index) in results" 
+              :doc="doc" :key="doc.id" 
+              :index="index" :idFieldName="idField" :thePage="page">
+          </listing-details-preview>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
         </div>
@@ -162,7 +163,7 @@ import bFormCheckbox from 'bootstrap-vue/es/components/form-checkbox/form-checkb
 import bFormSelect from 'bootstrap-vue/es/components/form-select/form-select';
 
 import axios from 'axios'
-import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
+import ListingDetailsPreview from '@/components/UIComponents/ListingDetailsPreview.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 import StatisticsCard from '@/components/UIComponents/StatisticsCard.vue'
 
@@ -171,7 +172,7 @@ import strategy from '@/libs/strategy'
 
 export default {
     components: {
-      'listing-details': ListingDetails,
+      'listing-details-preview': ListingDetailsPreview,
       'facet-buckets': FacetBuckets,
       'stats-card': StatisticsCard,
       'b-dropdown': bDropdown,
