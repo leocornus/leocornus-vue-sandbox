@@ -73,7 +73,8 @@
           </results-list -->
           <listing-details-preview v-for="(doc, index) in results" 
               :doc="doc" :key="doc.id" 
-              :index="index" :idFieldName="idField" :thePage="page">
+              :index="index" :idFieldName="idField" :thePage="page"
+              v-on:show-slides="showSlides">
           </listing-details-preview>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
@@ -119,6 +120,26 @@
                placeholder="for example: .id,table">
       </div>
     </b-modal> <!-- END search settings modal -->
+
+    <!-- carousel modal -->
+    <b-modal ref="carouselModal" hide-footer hide-header>
+<b-carousel
+      id="carousel1"
+      style="text-shadow: 1px 1px 2px #333;"
+      controls
+      indicators
+      background="#ababab"
+      :interval="4000"
+      img-width="1024"
+      img-height="480"
+    >
+  <b-carousel-slide v-for="(img, index) in slideImages"
+    :img-src="img" :index="index" :key="index"
+  >
+  </b-carousel-slide>
+</b-carousel>
+    </b-modal>
+    <!-- END carousel modal -->
   </div>
   </b-tab>
   <!-- reports tab -->
@@ -223,6 +244,9 @@ export default {
         // pagination properties.
         currentPage: 1,
         perPage: 15,
+
+        // the images for slide show
+        slideImages: [],
 
         // result summary
         resultSummary: "Click search to start..",
@@ -630,6 +654,16 @@ export default {
                 fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
             this.loadItems();
+        },
+
+        /**
+         */
+        showSlides(images) {
+
+            console.log(images);
+            this.slideImages = images;
+
+            this.$refs.carouselModal.show();
         },
 
         /**

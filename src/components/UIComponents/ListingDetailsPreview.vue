@@ -1,7 +1,7 @@
 <template>
 <b-card no-body class="mb-1">
 <div>
-  <b-link href="#" @click="">
+  <b-link href="#" @click="$emit('show-slides', doc['img.uri.preview'])">
   <b-img left class="mr-4" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
   </b-link>
 
