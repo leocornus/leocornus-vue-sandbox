@@ -1,12 +1,13 @@
 <template>
-
 <b-card no-body class="mb-1">
-<b-media>
-  <img slot="aside" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
+<div>
+  <b-link href="#" @click="">
+  <b-img left class="mr-4" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
+  </b-link>
 
   <h3 class="mt-0">{{doc.title[0] + ', ' + doc.city[0]}}</h3>
   <p>{{doc['teaser'][0]}}</p>
-</b-media>
+</div>
 
 <b-card-header :id="listingID" class="p-0">
   <h5 class="mb-0">
@@ -40,6 +41,7 @@
   </b-card-body>
 </b-collapse>
 </b-card>
+
 </template>
 
 <script>
