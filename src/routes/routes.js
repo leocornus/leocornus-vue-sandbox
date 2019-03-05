@@ -43,6 +43,7 @@ const routes = [
     name: 'login',
     component: Login
   },
+  // app for game board and team board.
   {
     path: '/game',
     component: OneColumnLayout,
@@ -59,6 +60,19 @@ const routes = [
         path: 'teamboard',
         name: 'Team Board',
         component: TeamBoard 
+      }
+    ]
+  },
+  // app for AgentReva
+  {
+    path: '/reva',
+    component: OneColumnLayout,
+    redirect: '/reva/revasearch',
+    children: [
+      {
+        path: 'revasearch',
+        name: 'Reva Search',
+        component: RevaSearch
       }
     ]
   },
