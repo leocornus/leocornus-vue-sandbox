@@ -2,7 +2,7 @@
   <div class="wrapper">
       <top-navbar></top-navbar>
 
-      <dashboard-content @click="toggleSidebar">
+      <dashboard-content>
 
       </dashboard-content>
 
@@ -23,13 +23,6 @@
       TopNavbar,
       ContentFooter,
       DashboardContent,
-    },
-    methods: {
-      toggleSidebar () {
-        if (this.$sidebar.showSidebar) {
-          this.$sidebar.displaySidebar(false)
-        }
-      }
     }
   }
 

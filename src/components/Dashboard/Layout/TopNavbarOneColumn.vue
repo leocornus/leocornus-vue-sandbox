@@ -1,17 +1,14 @@
 <template>
   <nav class="navbar navbar-expand-lg mb-2">
     <div class="container">
-      <a class="navbar-brand" href="#">VO Components</a>
+      <a class="navbar-brand" href="#">{{topNavBarBrandTitle}}</a>
       <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="/#/game/gameboard">
-              GameBoard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/#/game/teamboard">
-              TeamBoard
+          <li class="nav-item" 
+              v-for="(link, index) in this.$localSettings.topNavLinks"
+              :key="index">
+            <a class="nav-link" :href="'/#' + link.to">
+              {{link.title}}
             </a>
           </li>
           <li class="nav-item">
