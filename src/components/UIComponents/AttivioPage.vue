@@ -657,10 +657,11 @@ export default {
         },
 
         /**
+         * set the images and load the carousel modal.
          */
         showSlides(images) {
 
-            console.log(images);
+            //console.log(images);
             this.slideImages = images;
 
             this.$refs.carouselModal.show();
