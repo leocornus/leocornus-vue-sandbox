@@ -84,8 +84,9 @@
 
     <!-- search settings modal -->
     <b-modal id="search-settings" title="Search Settings"
+             button-size="sm"
              @ok="loadItems">
-      <b-input-group class="mb-2">
+      <b-input-group class="mb-2" size="sm">
         <b-input-group-append>
           <span id="idField-addon" class="input-group-text">Id Field: </span>
         </b-input-group-append>
@@ -100,7 +101,7 @@
                aria-describedby="perpage-addon"
                v-model="perPage"/>
       </b-input-group>
-      <b-input-group class="mb-2">
+      <b-input-group class="mb-2" size="sm">
         <b-input-group-prepend>
           <span id="sort-addon" class="input-group-text">Sort: </span>
         </b-input-group-prepend>
@@ -110,16 +111,17 @@
                placeholder="set sort here: id desc,type asc"/>
       </b-input-group>
 
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
+      <b-input-group class="mb-2" size="sm">
+        <b-input-group-prepend>
           <span id="facetFields-addon" class="input-group-text">Facets: </span>
-        </div>
-        <input type="text" class="form-control" id="facetFields"
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="facetFields"
                aria-describedby="facetFields-addon"
                v-model="facetFields"
-               placeholder="for example: .id,table">
-      </div>
-    </b-modal> <!-- END search settings modal -->
+               placeholder="for example: .id,table"/>
+      </b-input-group>
+    </b-modal>
+    <!-- END search settings modal -->
 
     <!-- carousel modal -->
     <b-modal ref="carouselModal" hide-footer hide-header>
