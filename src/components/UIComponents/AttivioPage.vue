@@ -1,6 +1,6 @@
 <template>
 <div class="content container">
-<b-input-group class="mb-2">
+<b-input-group class="mb-2 d-none">
   <div class="input-group-prepend">
     <span id="restBaseUrl-addon" class="input-group-text">Base URL: </span>
   </div>
