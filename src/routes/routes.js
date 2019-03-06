@@ -73,6 +73,11 @@ const routes = [
         path: 'revasearch',
         name: 'Reva Search',
         component: RevaSearch
+      },
+      {
+        path: 'attivioinspector',
+        name: 'Attivio Inspector',
+        component: AttivioInspector
       }
     ]
   },
