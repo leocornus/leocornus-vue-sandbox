@@ -84,16 +84,21 @@
 
     <!-- search settings modal -->
     <b-modal id="search-settings" title="Search Settings"
-             button-size="sm"
+             button-size="sm" size="lg"
              @ok="loadItems">
+      <b-row>
+        <b-col sm="4">
       <b-input-group class="mb-2" size="sm">
+        <!-- Id field -->
         <b-input-group-append>
-          <span id="idField-addon" class="input-group-text">Id Field: </span>
+          <span id="idField-addon" class="d-none input-group-text">Id Field: </span>
         </b-input-group-append>
-        <b-form-input type="text" class="form-control" id="idField"
+        <b-form-input type="text" class="d-none form-control" id="idField"
                aria-describedby="idField-addon"
                v-model="idField"
                placeholder=""/>
+
+        <!-- Items per page -->
         <b-input-group-prepend>
           <span id="perpage-addon" class="input-group-text">Items Per Page: </span>
         </b-input-group-prepend>
@@ -101,7 +106,10 @@
                aria-describedby="perpage-addon"
                v-model="perPage"/>
       </b-input-group>
+        </b-col>
+        <b-col>
       <b-input-group class="mb-2" size="sm">
+        <!-- sorting -->
         <b-input-group-prepend>
           <span id="sort-addon" class="input-group-text">Sort: </span>
         </b-input-group-prepend>
@@ -109,6 +117,52 @@
                aria-describedby="sort-addon"
                v-model="sort"
                placeholder="set sort here: id desc,type asc"/>
+      </b-input-group>
+        </b-col>
+      </b-row>
+
+      <b-input-group class="mb-2" size="sm">
+        <b-input-group-prepend>
+          <span id="residence-addon"
+                class="input-group-text">Residence Type: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="residencetype"
+               aria-describedby="residence-addon"
+               v-model="residenceType"
+               placeholder="chose residence type"/>
+        <b-input-group-prepend>
+          <span id="price-addon" class="input-group-text">Price Range: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="pricefrom"
+               aria-describedby="price-addon"
+               v-model="priceFrom"
+               placeholder="set price"/>
+        <b-input-group-prepend>
+          <span id="priceto-addon"
+                class="input-group-text">--</span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="priceto"
+               aria-describedby="priceto-addon"
+               v-model="priceTo"
+               placeholder="set price"/>
+      </b-input-group>
+
+      <b-input-group class="mb-2" size="sm">
+        <b-input-group-prepend>
+          <span id="city-addon" class="input-group-text">City: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="city"
+               aria-describedby="city-addon"
+               v-model="city"
+               placeholder="set city"/>
+        <b-input-group-prepend>
+          <span id="neighbourhood-addon"
+                class="input-group-text">Neighbourhood: </span>
+        </b-input-group-prepend>
+        <b-form-input type="text" class="form-control" id="neighbourhood"
+               aria-describedby="neighbourhood-addon"
+               v-model="neighbourhood"
+               placeholder="set neighbourhood"/>
       </b-input-group>
 
       <b-input-group class="mb-2" size="sm">
