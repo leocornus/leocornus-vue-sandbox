@@ -299,7 +299,14 @@ export default {
 
         // pagination properties.
         currentPage: 1,
+
+        // the properties for search settings modal.
         perPage: 15,
+        city: "",
+        neighbourhood: "",
+        residenceType: "",
+        priceFrom: null,
+        priceTo: null,
 
         // the images for slide show
         slideImages: [],
@@ -552,13 +559,25 @@ export default {
             // if user set the price range.
             if(vm.priceFrom && vm.priceTo) {
                 if(vm.priceTo > vm.priceFrom) {
+                    // get ready the range search query string.
                     let priceRange = "listvalue_i:[" + vm.priceFrom +
                       " to " + vm.priceTo + "]";
-                    vm.filterQuery = vm.filterQuery === "" ?
-                        priceRange : vm.filterQuery + "," + priceRange;
+
+                    // check if price range query is exist?
+                    if(vm.filterQuery === "") {
+                        vm.filterQuery = priceRange;
+                    } else if(vm.filterQuery.includes('listvalue_i')) {
+                        // remove it first if it is exist.
+                        let newFq = vm.filterQuery.split(",")
+                          .filter(fq => ! fq.includes('listvalue_i'));
+                        newFq.push(priceRange);
+                        vm.filterQuery = newFq.join(',');
+                    } else {
+                        // just append to the end.
+                        vm.filterQuery = vm.filterQuery + "," + priceRange;
+                    }
                 }
             }
-            return;
         },
 
         /**
