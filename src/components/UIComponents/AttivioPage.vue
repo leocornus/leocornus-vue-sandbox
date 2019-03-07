@@ -89,7 +89,6 @@
       <b-row>
         <b-col sm="4">
       <b-input-group class="mb-2" size="sm">
-        <!-- Id field -->
         <b-input-group-append>
           <span id="idField-addon" class="d-none input-group-text">Id Field: </span>
         </b-input-group-append>
@@ -306,6 +305,8 @@ export default {
 
         // result summary
         resultSummary: "Click search to start..",
+
+        // variables for reports.
         cities: "",
         // gessages.
         messages: [],
@@ -707,11 +708,30 @@ export default {
          */
         handleBucketSelect(fieldName, bucketValue) {
 
+            // prepare the filter query string based on Attivio query syntax.
             var fq = fieldName.toLowerCase() + ":\"" + bucketValue + "\"";
+            // update the filter query with new field.
             this.filterQuery = this.filterQuery === "" ? 
                 fq : this.filterQuery + "," + fq;
+
             // load items to refresh the list.
             this.loadItems();
+
+            // update fields on settings modal.
+            switch(fieldName.toLowerCase()) {
+                case 'city':
+                    this.city = bucketValue;
+                    break;
+                case 'neighbourhoodname':
+                    this.neighbourhood = bucketValue;
+                    break;
+                case 'residencetype':
+                    this.residenceType = bucketValue;
+                    break;
+                default:
+                    // Do nothing here, just skip!
+                    break;
+            }
         },
 
         /**
@@ -730,10 +750,30 @@ export default {
          */
         removeFilter(filter) {
 
+            // remove the filter from the filterQuery.
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             // join will use , as the default separator
+            // reset the filterQuery.
             this.filterQuery = fqs.join();
+            // load the resule set.
             this.loadItems();
+
+            // remove the fields from settings modal.
+            let fieldName = filter.split(":")[0];
+            switch(fieldName) {
+                case 'city':
+                    this.city = "";
+                    break;
+                case 'neighbourhoodname':
+                    this.neighbourhood = "";
+                    break;
+                case 'residencetype':
+                    this.residenceType = "";
+                    break;
+                default:
+                    // Do nothing here, just skip!
+                    break;
+            }
         },
 
         /**
