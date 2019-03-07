@@ -85,7 +85,7 @@
     <!-- search settings modal -->
     <b-modal id="search-settings" title="Search Settings"
              button-size="sm" size="lg"
-             @ok="loadItems">
+             @ok="updateSearchSettings">
       <b-row>
         <b-col sm="4">
       <b-input-group class="mb-2" size="sm">
@@ -130,24 +130,6 @@
                v-model="residenceType"
                placeholder="chose residence type"/>
         <b-input-group-prepend>
-          <span id="price-addon" class="input-group-text">Price Range: </span>
-        </b-input-group-prepend>
-        <b-form-input type="text" class="form-control" id="pricefrom"
-               aria-describedby="price-addon"
-               v-model="priceFrom"
-               placeholder="set price"/>
-        <b-input-group-prepend>
-          <span id="priceto-addon"
-                class="input-group-text">--</span>
-        </b-input-group-prepend>
-        <b-form-input type="text" class="form-control" id="priceto"
-               aria-describedby="priceto-addon"
-               v-model="priceTo"
-               placeholder="set price"/>
-      </b-input-group>
-
-      <b-input-group class="mb-2" size="sm">
-        <b-input-group-prepend>
           <span id="city-addon" class="input-group-text">City: </span>
         </b-input-group-prepend>
         <b-form-input type="text" class="form-control" id="city"
@@ -162,6 +144,24 @@
                aria-describedby="neighbourhood-addon"
                v-model="neighbourhood"
                placeholder="set neighbourhood"/>
+      </b-input-group>
+
+      <b-input-group class="mb-2" size="sm">
+        <b-input-group-prepend>
+          <span id="price-addon" class="input-group-text">Price Range: </span>
+        </b-input-group-prepend>
+        <b-form-input type="number" class="form-control" id="pricefrom"
+               aria-describedby="price-addon"
+               v-model="priceFrom"
+               placeholder="set price"/>
+        <b-input-group-prepend>
+          <span id="priceto-addon"
+                class="input-group-text">--</span>
+        </b-input-group-prepend>
+        <b-form-input type="number" class="form-control" id="priceto"
+               aria-describedby="priceto-addon"
+               v-model="priceTo"
+               placeholder="set price"/>
       </b-input-group>
 
       <b-input-group class="mb-2" size="sm">
@@ -282,7 +282,8 @@ export default {
         query: '*:*',
 
         // set the default filter query to empty.
-        //filterQuery: "c4c_type:project,log_level:INFO",
+        // filterQuery: "category:\"test one\",keywords:\"key one\"",
+        // price:[1000 to 2000]
         filterQuery: "",
 
         // set the default sort
@@ -468,6 +469,16 @@ export default {
         },
 
         /**
+         * update search settings,
+         * handle the ok button on search settings modal.
+         */
+        updateSearchSettings() {
+            // prepare price range.
+            this.preparePriceRange();
+            this.loadItems();
+        },
+
+        /**
          * create a facility function to get ready post query.
          * for Attivio search.
          */
@@ -480,7 +491,7 @@ export default {
 
             // the parameters for query.
             // this will show how to use query parameters in a JSON request.
-            console.log(thisVm.getQueryString());
+            //console.log(thisVm.getQueryString());
             var postParams = {
                 workflow: "search",
                 query: thisVm.getQueryString(),
@@ -512,6 +523,7 @@ export default {
             if(this.page.hasOwnProperty("customizeGetQueryString")) {
                 return this.page.customizeGetQueryString();
             } else {
+
                 // set a query.
                 let queryString = this.query;
                 if(queryString === "") {
@@ -528,6 +540,25 @@ export default {
                            ',AND(' + this.filterQuery + '))';
                 }
             }
+        },
+
+        /**
+         * get price range.
+         */
+        preparePriceRange() {
+
+            let vm = this;
+
+            // if user set the price range.
+            if(vm.priceFrom && vm.priceTo) {
+                if(vm.priceTo > vm.priceFrom) {
+                    let priceRange = "listvalue_i:[" + vm.priceFrom +
+                      " to " + vm.priceTo + "]";
+                    vm.filterQuery = vm.filterQuery === "" ?
+                        priceRange : vm.filterQuery + "," + priceRange;
+                }
+            }
+            return;
         },
 
         /**
@@ -769,6 +800,10 @@ export default {
                     break;
                 case 'residencetype':
                     this.residenceType = "";
+                    break;
+                case 'listvalue_i':
+                    this.priceFrom = 0;
+                    this.priceTo = 0;
                     break;
                 default:
                     // Do nothing here, just skip!
