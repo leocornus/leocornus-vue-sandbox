@@ -20,7 +20,7 @@
              v-model="query"
              aria-describedby="query-addon"
              v-on:keyup.enter.native="loadItems"
-             placeholder="Search b-form-group for..."/>
+             placeholder="Type your search term here"/>
       <b-input-group-append>
         <b-button variant="outline-primary"
                 v-on:click="loadItems">Search!</b-button>
@@ -511,17 +511,19 @@ export default {
             if(this.page.hasOwnProperty("customizeGetQueryString")) {
                 return this.page.customizeGetQueryString();
             } else {
-                if(this.query === "") {
+                // set a query.
+                let queryString = this.query;
+                if(queryString === "") {
                     // reset it to select all
-                    this.query = "*:*";
+                    queryString = "*:*";
                 }
 
                 if(this.filterQuery === "") {
                     // by default, search everything
-                    return this.query;
+                    return queryString;
                 } else {
                     // apply the filer.
-                    return 'FILTER(' + this.query +
+                    return 'FILTER(' + queryString +
                            ',AND(' + this.filterQuery + '))';
                 }
             }
