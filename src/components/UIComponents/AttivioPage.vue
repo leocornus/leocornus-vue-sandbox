@@ -115,7 +115,7 @@
         <b-form-input type="text" class="form-control" id="sort"
                aria-describedby="sort-addon"
                v-model="sort"
-               placeholder="set sort here: id desc,type asc"/>
+               placeholder="set sort here: id:desc,type:asc"/>
       </b-input-group>
         </b-col>
       </b-row>
@@ -502,6 +502,7 @@ export default {
             var postParams = {
                 workflow: "search",
                 query: thisVm.getQueryString(),
+                sort: thisVm.getQuerySort(),
                 searchProfile: "checkcity",
                 //queryLanguage: "simple",
                 queryLanguage: "advanced",
@@ -582,14 +583,20 @@ export default {
 
         /**
          * get sort for query.
+         * Attivio is using array for sorting parameters.
+         * "sort":["id:asc","title:desc"]
          */
         getQuerySort() {
 
             if(this.page.hasOwnProperty("customizeGetQuerySort")) {
                 return this.page.customizeGetQuerySort();
             } else {
-                // by default, search everything
-                return "id desc";
+                if(this.sort === "") {
+                    // by default
+                    return [];
+                } else {
+                    return this.sort.trim().split(',');
+                }
             }
         },
 
