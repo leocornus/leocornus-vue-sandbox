@@ -63,7 +63,7 @@ const routes = [
       }
     ]
   },
-  // app for AgentReva
+  // app for reva
   {
     path: '/reva',
     component: OneColumnLayout,
@@ -81,6 +81,25 @@ const routes = [
       }
     ]
   },
+  // solr search and inspection.
+  {
+    path: '/solr',
+    component: OneColumnLayout,
+    redirect: '/solr/solrsearch',
+    children: [
+      {
+        path: 'solrsearch',
+        name: 'Solr Search',
+        component: SolrSearch
+      },
+      {
+        path: 'solreventqueue',
+        name: 'Solr Event Queue',
+        component: SolrEventQueue
+      }
+    ]
+  },
+  // admin staff
   {
     path: '/admin',
     component: DashboardLayout,
