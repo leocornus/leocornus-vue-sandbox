@@ -43,8 +43,11 @@
     </b-modal>
 
     <b-modal id="search-settings" title="Search Settings"
+             button-size="sm" size="lg"
              @ok="simpleSearch">
-      <b-input-group class="mb-2">
+      <b-row>
+        <b-col sm="5">
+      <b-input-group class="mb-2" size="sm">
         <b-input-group-append>
           <span id="idField-addon" class="input-group-text">Id Field: </span>
         </b-input-group-append>
@@ -59,7 +62,9 @@
                aria-describedby="perpage-addon"
                v-model="perPage"/>
       </b-input-group>
-      <b-input-group class="mb-2">
+        </b-col>
+        <b-col>
+      <b-input-group class="mb-2" size="sm">
         <b-input-group-prepend>
           <span id="sort-addon" class="input-group-text">Sort: </span>
         </b-input-group-prepend>
@@ -68,7 +73,10 @@
                v-model="sort"
                placeholder="set sort here: id desc,type asc"/>
       </b-input-group>
-      <div class="input-group mb-2">
+        </b-col>
+      </b-row>
+
+      <b-input-group class="mb-2" size="sm">
         <div class="input-group-prepend">
           <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
         </div>
@@ -76,9 +84,9 @@
                aria-describedby="filterQuery-addon"
                v-model="filterQuery"
                placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
-      </div>
+      </b-input-group>
 
-      <div class="input-group mb-2">
+      <b-input-group class="mb-2" size="sm">
         <div class="input-group-prepend">
           <span id="fieldList-addon" class="input-group-text">Field List: </span>
         </div>
@@ -86,9 +94,9 @@
                aria-describedby="fieldList-addon"
                v-model="fieldList"
                placeholder="set a list of fields to return: id,project_id,customer_id">
-      </div>
+      </b-input-group>
 
-      <div class="input-group mb-2">
+      <div class="input-group mb-2" size="sm">
         <div class="input-group-prepend">
           <span id="facetFields-addon" class="input-group-text">Facets: </span>
         </div>
