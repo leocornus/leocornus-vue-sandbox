@@ -134,9 +134,9 @@
         <div class="col-9 accordion">
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
+          <listing-details-table v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
                            :key="index" :index="index" :thePage="page">
-          </listing-details>
+          </listing-details-table>
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
         </div>
@@ -175,14 +175,14 @@ import bInputGroupAppend from 'bootstrap-vue/es/components/input-group/input-gro
 import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 
 import axios from 'axios'
-import ListingDetails from '@/components/UIComponents/ListingDetails.vue'
+import ListingDetailsTable from '@/components/UIComponents/ListingDetailsTable.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
 import solr from '@/libs/solr'
 
 export default {
     components: {
-      'listing-details': ListingDetails,
+      'listing-details-table': ListingDetailsTable,
       'facet-buckets': FacetBuckets,
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
