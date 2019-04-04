@@ -134,7 +134,12 @@
         <div class="col-9 accordion">
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <b-table striped :items="results"></b-table>
+          <b-table striped :items="results">
+            <!-- A virtual composite column -->
+            <template slot="products" slot-scope="data">
+             {{ data.item.products.join(", ") }}
+            </template>
+          </b-table>
           <listing-details-table v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
                            :key="index" :index="index" :thePage="page">
           </listing-details-table>
