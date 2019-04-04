@@ -139,6 +139,12 @@
             <template slot="products" slot-scope="data">
              {{ data.item.products.join(", ") }}
             </template>
+            <template slot="_created_" slot-scope="data">
+             {{ new Date(data.item._created_).toLocaleString() }}
+            </template>
+            <template slot="_modified_" slot-scope="data">
+             {{ new Date(data.item._modified_).toLocaleString() }}
+            </template>
           </b-table>
           <listing-details-table v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
                            :key="index" :index="index" :thePage="page">
