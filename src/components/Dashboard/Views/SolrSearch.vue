@@ -132,23 +132,12 @@
           </facet-buckets>
         </div>
         <div class="col-9 accordion">
+
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <b-table striped :items="results">
-            <!-- A virtual composite column -->
-            <template slot="products" slot-scope="data">
-             {{ data.item.products.join(", ") }}
-            </template>
-            <template slot="_created_" slot-scope="data">
-             {{ new Date(data.item._created_).toLocaleString() }}
-            </template>
-            <template slot="_modified_" slot-scope="data">
-             {{ new Date(data.item._modified_).toLocaleString() }}
-            </template>
-          </b-table>
-          <listing-details-table v-for="(doc, index) in results" :doc="doc" :idFieldName="idField"
-                           :key="index" :index="index" :thePage="page">
+          <listing-details-table :docs="results" :idFieldName="idField" :thePage="page">
           </listing-details-table>
+
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="center"></b-pagination>
         </div>

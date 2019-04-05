@@ -1,38 +1,18 @@
 <template>
 
-<b-card no-body class="mb-1">
-<b-card-header :id="listingID" class="p-0">
-  <h5 class="mb-0">
-    <b-button class="btn-link" v-b-toggle="collapseID">
-      {{caption}}
-    </b-button>
-  </h5>
-</b-card-header>
-<b-collapse :id="collapseID"> 
-  <b-card-body>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col" width="20px">#</th>
-      <th scope="col" width="88px">Field</th>
-      <th scope="col">Value</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- tr v-for="(fieldName, index) in Object.keys(doc)"
-        :index="index" :fieldName="fieldName" -->
-    <tr v-for="(field, index) in fields"
-        :index="index" :field="field">
-      <!-- th scope="row">{{formatIndex(index)}}</th -->
-      <th scope="row">{{index}}</th>
-      <td><span v-html='field["fieldName"]'></span></td>
-      <td style="white-space:pre-wrap"><span v-html='field["fieldValue"]'></span></td>
-    </tr>
-  </tbody>
-</table>
-  </b-card-body>
-</b-collapse>
-</b-card>
+  <b-table striped :items="docs">
+    <!-- A virtual composite column -->
+    <template slot="products" slot-scope="data">
+     {{ data.item.products.join(", ") }}
+    </template>
+    <template slot="_created_" slot-scope="data">
+     {{ new Date(data.item._created_).toLocaleString() }}
+    </template>
+    <template slot="_modified_" slot-scope="data">
+     {{ new Date(data.item._modified_).toLocaleString() }}
+    </template>
+  </b-table>
+
 </template>
 
 <script>
@@ -66,8 +46,7 @@ export default {
 
     // the doc will have all details and a index field.
     props: {
-        "doc": Object,
-        "index": Number,
+        "docs": Object,
         // set the name for id field.
         "idFieldName": {
             type: String,
