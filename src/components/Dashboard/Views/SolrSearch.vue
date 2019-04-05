@@ -133,13 +133,16 @@
         </div>
         <div class="col-9 accordion">
 
+          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+                        v-model="currentPage" align="right"></b-pagination>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details-table :docs="results" :idFieldName="idField" :thePage="page">
+          <listing-details-table :docs="results" v-if="results"
+                                 :idFieldName="idField" :thePage="page">
           </listing-details-table>
 
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
-                        v-model="currentPage" align="center"></b-pagination>
+                        v-model="currentPage" align="right"></b-pagination>
         </div>
       </div>
     </p>
@@ -352,6 +355,7 @@ export default {
 
             this.collectionLabel = this.collections[index].name;
             this.restBaseUrl = this.collections[index].url;
+            // TODO: set the default fields list and facets for the collection.
             this.currentPage = 1;
             this.simpleSearch();
             this.adminLuke();
