@@ -3,7 +3,7 @@
   <b-table striped :items="docs">
     <!-- A virtual composite column -->
     <template slot="products" slot-scope="data">
-     {{ data.item.products.join(", ") }}
+     {{ data.item.hasOwnProperty('products')?data.item.products.join(", "):"" }}
     </template>
     <template slot="_created_" slot-scope="data">
      {{ new Date(data.item._created_).toLocaleString() }}
