@@ -38,75 +38,6 @@
       </b-input-group-append>
     </b-input-group>
 
-    <b-modal id="query-params" title="Query Parameters" ok-only>
-      <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
-    </b-modal>
-
-    <b-modal id="search-settings" title="Search Settings"
-             button-size="sm" size="lg"
-             @ok="simpleSearch">
-      <b-row>
-        <b-col sm="5">
-      <b-input-group class="mb-2" size="sm">
-        <b-input-group-append>
-          <span id="idField-addon" class="input-group-text">Id Field: </span>
-        </b-input-group-append>
-        <b-form-input type="text" class="form-control" id="idField"
-               aria-describedby="idField-addon"
-               v-model="idField"
-               placeholder=""/>
-        <b-input-group-prepend>
-          <span id="perpage-addon" class="input-group-text">Items Per Page: </span>
-        </b-input-group-prepend>
-        <b-form-input type="text" class="form-control" id="perpage"
-               aria-describedby="perpage-addon"
-               v-model="perPage"/>
-      </b-input-group>
-        </b-col>
-        <b-col>
-      <b-input-group class="mb-2" size="sm">
-        <b-input-group-prepend>
-          <span id="sort-addon" class="input-group-text">Sort: </span>
-        </b-input-group-prepend>
-        <b-form-input type="text" class="form-control" id="sort"
-               aria-describedby="sort-addon"
-               v-model="sort"
-               placeholder="set sort here: id desc,type asc"/>
-      </b-input-group>
-        </b-col>
-      </b-row>
-
-      <b-input-group class="mb-2" size="sm">
-        <div class="input-group-prepend">
-          <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
-        </div>
-        <input type="text" class="form-control" id="filterQuery"
-               aria-describedby="filterQuery-addon"
-               v-model="filterQuery"
-               placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
-      </b-input-group>
-
-      <b-input-group class="mb-2" size="sm">
-        <div class="input-group-prepend">
-          <span id="fieldList-addon" class="input-group-text">Field List: </span>
-        </div>
-        <input type="text" class="form-control" id="fieldList"
-               aria-describedby="fieldList-addon"
-               v-model="fieldList"
-               placeholder="set a list of fields to return: id,project_id,customer_id">
-      </b-input-group>
-
-      <div class="input-group mb-2" size="sm">
-        <div class="input-group-prepend">
-          <span id="facetFields-addon" class="input-group-text">Facets: </span>
-        </div>
-        <input type="text" class="form-control" id="facetFields"
-               aria-describedby="facetFields-addon"
-               v-model="facetFields"
-               placeholder="for example: project_id,customer_name">
-      </div>
-    </b-modal>
-
     <!-- result list -->
     <p>
       <h3>{{resultSummary}}</h3>
@@ -166,9 +97,79 @@
   </b-tab>
 </b-tabs>
 </b-card>
+
+<b-modal id="query-params" title="Query Parameters" ok-only>
+  <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
+</b-modal>
+
+<b-modal id="search-settings" title="Search Settings"
+         button-size="sm" size="lg"
+         @ok="simpleSearch">
+  <b-row>
+    <b-col sm="5">
+  <b-input-group class="mb-2" size="sm">
+    <b-input-group-append>
+      <span id="idField-addon" class="input-group-text">Id Field: </span>
+    </b-input-group-append>
+    <b-form-input type="text" class="form-control" id="idField"
+           aria-describedby="idField-addon"
+           v-model="idField"
+           placeholder=""/>
+    <b-input-group-prepend>
+      <span id="perpage-addon" class="input-group-text">Items Per Page: </span>
+    </b-input-group-prepend>
+    <b-form-input type="text" class="form-control" id="perpage"
+           aria-describedby="perpage-addon"
+           v-model="perPage"/>
+  </b-input-group>
+    </b-col>
+    <b-col>
+  <b-input-group class="mb-2" size="sm">
+    <b-input-group-prepend>
+      <span id="sort-addon" class="input-group-text">Sort: </span>
+    </b-input-group-prepend>
+    <b-form-input type="text" class="form-control" id="sort"
+           aria-describedby="sort-addon"
+           v-model="sort"
+           placeholder="set sort here: id desc,type asc"/>
+  </b-input-group>
+    </b-col>
+  </b-row>
+
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
+    </div>
+    <input type="text" class="form-control" id="filterQuery"
+           aria-describedby="filterQuery-addon"
+           v-model="filterQuery"
+           placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
+  </b-input-group>
+
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="fieldList-addon" class="input-group-text">Field List: </span>
+    </div>
+    <input type="text" class="form-control" id="fieldList"
+           aria-describedby="fieldList-addon"
+           v-model="fieldList"
+           placeholder="set a list of fields to return: id,project_id,customer_id">
+  </b-input-group>
+
+  <div class="input-group mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="facetFields-addon" class="input-group-text">Facets: </span>
+    </div>
+    <input type="text" class="form-control" id="facetFields"
+           aria-describedby="facetFields-addon"
+           v-model="facetFields"
+           placeholder="for example: project_id,customer_name">
+  </div>
+</b-modal>
 </div>
 </template>
 
+<!-- JavaScript -->
 <script>
 // TODO: need merge this into SolrPage ocmponent
 
