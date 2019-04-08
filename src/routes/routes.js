@@ -93,6 +93,11 @@ const routes = [
         component: SolrSearch
       },
       {
+        path: 'solrinspector',
+        name: 'Solr Inspector',
+        component: SolrInspector
+      },
+      {
         path: 'solreventqueue',
         name: 'Solr Event Queue',
         component: SolrEventQueue
