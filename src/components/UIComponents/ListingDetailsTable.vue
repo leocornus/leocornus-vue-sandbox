@@ -1,6 +1,11 @@
 <template>
 
   <b-table striped :items="docs" :fields="fields">
+    <template :slot="idFieldName" slot-scope="data">
+      <b-link href="#" @click="$emit('show-details', data.item[idFieldName])">
+        <i class="nc-icon nc-paper-2 text-primary"></i>
+      </b-link>
+    </template>
     <!-- A virtual composite column -->
     <template slot="products" slot-scope="data">
      {{ data.item.hasOwnProperty('products')?data.item.products.join(", "):"" }}
@@ -9,9 +14,7 @@
      {{ new Date(data.item._created_).toLocaleString() }}
     </template>
     <template slot="_modified_" slot-scope="data">
-      <b-link href="#" @click="$emit('show-details', data.item[idFieldName])">
      {{ new Date(data.item._modified_).toLocaleString() }}
-      </b-link>
     </template>
   </b-table>
 
@@ -48,7 +51,8 @@ export default {
 
     // the doc will have all details and a index field.
     props: {
-        "docs": Object,
+
+        "docs": Array,
         // set the name for id field.
         "idFieldName": {
             type: String,
@@ -110,7 +114,11 @@ export default {
             if(this.fieldList === "") {
                 return [this.idFieldName];
             } else {
-                return this.fieldList.split(",");
+                let list = this.fieldList.split(",");
+                if(!list.includes(this.idFieldName)) {
+                    list.unshift(this.idFieldName);
+                }
+                return list;
             }
         }
     },
