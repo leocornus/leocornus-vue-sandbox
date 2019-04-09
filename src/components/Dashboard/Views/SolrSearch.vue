@@ -69,7 +69,8 @@
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
-                                 :idFieldName="idField" :thePage="page">
+                                 :idFieldName="idField" :thePage="page"
+                                 v-on:show-details="showItemDetails">
           </listing-details-table>
 
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
@@ -425,6 +426,8 @@ export default {
 
         /**
          * get field list.
+         * the return value will be the object like this:
+         * - fl: ["id","project_id"],
          */
         getFieldList() {
 
@@ -432,10 +435,13 @@ export default {
                 // not fieldList specified, return an enpty object.
                 return {};
             } else {
+                let fields = this.fieldList.split(",");
+                if(!fields.includes(this.idFieldName)) {
+                    fields.push(this.idFieldName);
+                }
                 return {
                   // field list, control what fields to return in response.
-                  //fl: ["id","project_id"],
-                  fl: this.fieldList.split(",")
+                  fl: fields
                 };
             }
         },
@@ -535,6 +541,10 @@ export default {
          * @param: itemId the unique id for the item.
          */
         showItemDetails(itemId) {
+
+            this.selectedItem = {
+                id: itemId
+            }
 
             // query to load the full item, set to selectedItem
             this.$refs.itemDetailsModal.show();
