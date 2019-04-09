@@ -68,7 +68,7 @@
                         v-model="currentPage" align="right"></b-pagination>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <listing-details-table :docs="results" v-if="results"
+          <listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
                                  :idFieldName="idField" :thePage="page">
           </listing-details-table>
 
@@ -166,6 +166,12 @@
            placeholder="for example: project_id,customer_name">
   </div>
 </b-modal>
+
+<b-modal id="item-details" title="Item Details" ok-only
+         ref="itemDetailsModal" button-size="sm" size="lg">
+  <pre style="height: 220px">{{JSON.stringify(this.selectedItem, null,2)}}</pre>
+</b-modal>
+
 </div>
 </template>
 
@@ -227,6 +233,9 @@ export default {
         perPage: 15,
 
         resultSummary: "Click search to start..",
+
+        // selectedItem will show in the details modal.
+        selectedItem: {},
 
         // luke in the structure of b-table.
         luke: {"items":[], "fields":[]},
@@ -519,6 +528,16 @@ export default {
             var fqs = this.filterQuery.split(",").filter(fq => fq != filter);
             this.filterQuery = fqs.join();
             this.simpleSearch();
+        },
+
+        /**
+         * show details for the selected item.
+         * @param: itemId the unique id for the item.
+         */
+        showItemDetails(itemId) {
+
+            // query to load the full item, set to selectedItem
+            this.$refs.itemDetailsModal.show();
         },
 
         /**
