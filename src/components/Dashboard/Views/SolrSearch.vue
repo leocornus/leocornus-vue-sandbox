@@ -435,6 +435,7 @@ export default {
                 // not fieldList specified, return an enpty object.
                 return {};
             } else {
+                // always add the id field to the field list..
                 let fields = this.fieldList.split(",");
                 if(!fields.includes(this.idFieldName)) {
                     fields.push(this.idFieldName);
