@@ -9,7 +9,9 @@
      {{ new Date(data.item._created_).toLocaleString() }}
     </template>
     <template slot="_modified_" slot-scope="data">
+      <b-link href="#" @click="$emit('show-details', data.item[idFieldName])">
      {{ new Date(data.item._modified_).toLocaleString() }}
+      </b-link>
     </template>
   </b-table>
 
