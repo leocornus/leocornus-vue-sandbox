@@ -543,12 +543,20 @@ export default {
          */
         showItemDetails(itemId) {
 
-            this.selectedItem = {
-                id: itemId
-            }
+            var vm = this;
 
+            var endPoint = vm.restBaseUrl + "select";
             // query to load the full item, set to selectedItem
-            this.$refs.itemDetailsModal.show();
+            axios.get(endPoint, {
+              "params": {
+                "q": vm.idField + ":" + itemId
+              }
+            })
+            .then(function(response) {
+
+                vm.selectedItem = response.data.response.docs[0];
+                vm.$refs.itemDetailsModal.show();
+            });
         },
 
         /**
