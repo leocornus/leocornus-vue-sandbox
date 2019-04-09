@@ -1,6 +1,6 @@
 <template>
 
-  <b-table striped :items="docs">
+  <b-table striped :items="docs" :fields="fields">
     <!-- A virtual composite column -->
     <template slot="products" slot-scope="data">
      {{ data.item.hasOwnProperty('products')?data.item.products.join(", "):"" }}
@@ -52,6 +52,11 @@ export default {
             type: String,
             default: "id"
         },
+        // field List.
+        "fieldList":{ 
+            type: String,
+            default: ""
+        },
         "thePage": Object
     },
 
@@ -100,45 +105,10 @@ export default {
          */
         fields() {
 
-            var vm = this;
-
-            // get the fields name for each doc.
-            var docFields = [];
-            Object.keys(vm.doc).forEach(function(fieldName) {
-
-                var theName = fieldName;
-
-                // if we not process the field value, set the value as it is.
-                var theValue = vm.doc[fieldName];
-
-                var docField = {
-                    fieldName: theName,
-                    fieldValue: theValue
-                };
-                docFields.push(docField);
-            });
-
-            // sort by field name.
-            docFields.sort(function(a, b) {
-                if(a.fieldName < b.fieldName) {
-                    return -1;
-                }
-
-                if(a.fieldName > b.fieldName) {
-                    return 1;
-                }
-
-                return 0;
-            });
-
-            // using array map to customize field values:
-            if(vm.thePage.hasOwnProperty("customizeListingDetailsField")) {
-                //console.log(vm.$localSettings.customizeField);
-                // the customizeField will follow the specification of
-                // Array.map callback function.
-                return docFields.map(vm.thePage.customizeListingDetailsField);
+            if(this.fieldList === "") {
+                return [this.idFieldName];
             } else {
-                return docFields;
+                return this.fieldList.split(",");
             }
         }
     },
