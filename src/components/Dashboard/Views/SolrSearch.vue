@@ -437,8 +437,8 @@ export default {
             } else {
                 // always add the id field to the field list..
                 let fields = this.fieldList.split(",");
-                if(!fields.includes(this.idFieldName)) {
-                    fields.push(this.idFieldName);
+                if(!fields.includes(this.idField)) {
+                    fields.push(this.idField);
                 }
                 return {
                   // field list, control what fields to return in response.
