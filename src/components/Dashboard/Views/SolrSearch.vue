@@ -363,9 +363,11 @@ export default {
         switchCollection(collectionName, index) {
 
             //console.log("["+ index + "] " + collectionName);
+            let newColl = this.collections[index];
 
-            this.collectionLabel = this.collections[index].name;
-            this.restBaseUrl = this.collections[index].url;
+            this.collectionLabel = newColl.name;
+            this.restBaseUrl = newColl.url;
+            this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
             // TODO: set the default fields list and facets for the collection.
             this.currentPage = 1;
             this.simpleSearch();
@@ -640,6 +642,7 @@ export default {
       // set the the default collection, the first colleciton in the list.
       this.restBaseUrl = this.collections[0].url;
       this.collectionLabel = this.collections[0].name;
+      //this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
 
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
