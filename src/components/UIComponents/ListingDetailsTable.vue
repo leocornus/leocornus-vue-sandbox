@@ -10,6 +10,9 @@
     <template slot="products" slot-scope="data">
      {{ data.item.hasOwnProperty('products')?data.item.products.join(", "):"" }}
     </template>
+    <template slot="_timestamp_" slot-scope="data">
+     {{ new Date(data.item._timestamp_).toLocaleString() }}
+    </template>
     <template slot="_created_" slot-scope="data">
      {{ new Date(data.item._created_).toLocaleString() }}
     </template>
