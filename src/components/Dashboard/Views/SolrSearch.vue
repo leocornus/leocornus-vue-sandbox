@@ -164,7 +164,16 @@
     <input type="text" class="form-control" id="facetFields"
            aria-describedby="facetFields-addon"
            v-model="facetFields"
-           placeholder="for example: project_id,customer_name">
+           placeholder="for example: id,category">
+  </b-input-group>
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="bq-addon" class="input-group-text">BQ: </span>
+    </div>
+    <input type="text" class="form-control" id="boostQuery"
+           aria-describedby="facetFields-addon"
+           v-model="boostQuery"
+           placeholder="for example: category:abc OR tag:cde">
   </b-input-group>
 </b-modal>
 
@@ -223,6 +232,8 @@ export default {
 
         // set default field list to empty, which will return all fields.
         fieldList: "",
+        // the boostQuery field.
+        boostQuery: "",
 
         totalHits: 0,
         facets: null,
