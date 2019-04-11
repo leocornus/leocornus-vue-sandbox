@@ -157,7 +157,7 @@
            placeholder="set a list of fields to return: id,project_id,customer_id">
   </b-input-group>
 
-  <div class="input-group mb-2" size="sm">
+  <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="facetFields-addon" class="input-group-text">Facets: </span>
     </div>
@@ -165,7 +165,7 @@
            aria-describedby="facetFields-addon"
            v-model="facetFields"
            placeholder="for example: project_id,customer_name">
-  </div>
+  </b-input-group>
 </b-modal>
 
 <b-modal id="item-details" title="Item Details" ok-only
