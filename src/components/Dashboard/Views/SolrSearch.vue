@@ -410,10 +410,11 @@ export default {
             // we will use Object assign to merge them all together.
             var params = Object.assign({
               rows: thisVm.perPage,
+              defType: "edismax",
               start: startRow,
               sort: thisVm.sort
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
-               thisVm.getFilterQuery());
+               thisVm.getFilterQuery(), thisVm.getBoostQuery());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
@@ -467,6 +468,20 @@ export default {
                   // field list, control what fields to return in response.
                   fl: fields
                 };
+            }
+        },
+
+        /**
+         * return the boost query field.
+         */
+        getBoostQuery() {
+
+            if(this.boostQuery === "") {
+                return {};
+            } else {
+                return {
+                    "bq": this.boostQuery
+                }
             }
         },
 
