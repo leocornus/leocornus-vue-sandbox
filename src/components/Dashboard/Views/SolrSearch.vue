@@ -391,8 +391,16 @@ export default {
 
             this.collectionLabel = newColl.name;
             this.restBaseUrl = newColl.url;
+
             // get the default field list.
-            this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
+            this.fieldList = newColl.hasOwnProperty('fieldList') ? 
+                             newColl.fieldList : "";
+            this.boostQuery = newColl.hasOwnProperty('boostQuery') ? 
+                              newColl.boostQuery : "";
+            this.facetFields = newColl.hasOwnProperty('facetFields') ? 
+                             newColl.facetFields : "";
+            this.sort = newColl.hasOwnProperty('sort') ? 
+                             newColl.sort : "";
             // TODO: get default values for other fields
         },
 
