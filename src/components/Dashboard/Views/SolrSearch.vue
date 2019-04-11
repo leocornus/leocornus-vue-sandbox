@@ -363,16 +363,26 @@ export default {
         switchCollection(collectionName, index) {
 
             //console.log("["+ index + "] " + collectionName);
-            let newColl = this.collections[index];
+            this.loadCollection(this.collections[index]);
 
-            this.collectionLabel = newColl.name;
-            this.restBaseUrl = newColl.url;
-            this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
-            // TODO: set the default fields list and facets for the collection.
             this.currentPage = 1;
             this.simpleSearch();
             this.adminLuke();
             this.adminSchema();
+        },
+
+        /**
+         * utility method to load collections.
+         * mostly some the default values for some fields.
+         * @param newColl the collection object set on local-settings.js
+         */
+        loadCollection(newColl) {
+
+            this.collectionLabel = newColl.name;
+            this.restBaseUrl = newColl.url;
+            // get the default field list.
+            this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
+            // TODO: get default values for other fields
         },
 
         /**
@@ -639,10 +649,9 @@ export default {
 
       // get the collections.
       this.collections = this.page.collections;
+
       // set the the default collection, the first colleciton in the list.
-      this.restBaseUrl = this.collections[0].url;
-      this.collectionLabel = this.collections[0].name;
-      //this.fieldList = newColl.hasOwnProperty('fieldList') ? newColl.fieldList : "";
+      this.loadCollection(this.collections[0]);
 
       // set the tracking base url.
       solr.config.trackingBaseUrl = this.$localSettings.solrTrackingUrl;
