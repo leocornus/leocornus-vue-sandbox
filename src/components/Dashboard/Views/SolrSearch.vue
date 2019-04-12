@@ -566,7 +566,7 @@ export default {
          */
         handleBucketSelect(fieldName, bucketValue) {
 
-            var fq = fieldName + ":" + bucketValue;
+            var fq = fieldName + ":\"" + bucketValue + "\"";
             this.filterQuery = this.filterQuery === "" ?
                 fq : this.filterQuery + "," + fq;
             // load items to refresh the list.
