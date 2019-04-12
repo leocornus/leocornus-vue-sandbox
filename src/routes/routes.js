@@ -36,7 +36,8 @@ const routes = [
   {
     path: '/',
     component: DashboardLayout,
-    redirect: '/admin/overview'
+    redirect: '/solr/solrsearch'
+    //redirect: '/admin/overview'
   },
   {
     path: '/login',
