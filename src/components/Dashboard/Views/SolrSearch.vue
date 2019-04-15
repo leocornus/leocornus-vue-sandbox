@@ -64,8 +64,22 @@
         </div>
         <div class="col-9 accordion">
 
-          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
+          <!-- Action icons -->
+          <b-row>
+            <b-col class="mt-1">
+              <b-link href="#" @click="">
+                <font-awesome-icon icon="chart-bar" size="lg"/>
+              </b-link>
+              <b-link href="#" @click="">
+                <font-awesome-icon icon="list" size="lg"/>
+              </b-link>
+            </b-col>
+            <b-col>
+          <b-pagination :total-rows="totalHits" :per-page="perPage"
+                        v-if="results" size="sm" class="mb-2"
                         v-model="currentPage" align="right"></b-pagination>
+            </b-col>
+          </b-row>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
           <product-preview v-for="(doc, index) in results"
