@@ -1,9 +1,9 @@
 <template>
-<b-card no-body class="mb-1">
-  <div>
+<b-card no-body class="mb-3 border border-info border-top-0 border-left-0 border-right-0">
+  <div class="text-warning">
     {{doc['product_spec_sub_type']}} - {{doc['product_spec_type']}} - {{doc['product_type']}}
   </div>
-  <div>
+  <div class="big">
     <b-link href="#" @click="$emit('show-details', doc[idFieldName])">
       {{doc['sku']}}
     </b-link>
@@ -12,7 +12,7 @@
     {{doc['product_title_en']}}<br/>
     {{doc['product_title_fr']}}
   </div>
-  <div>
+  <div class="small">
     {{doc['language']}}, PUBLICATION DATE, Published by {{doc['publisher']}} 
   </div>
 </b-card>
