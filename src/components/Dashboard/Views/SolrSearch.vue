@@ -40,7 +40,7 @@
 
     <!-- result list -->
     <p>
-      <h3>{{resultSummary}}</h3>
+      <h3 class="text-center">{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
 <b-card v-if="filters" no-body class="border-info mb-2">
