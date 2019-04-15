@@ -14,8 +14,10 @@
 
 </style>
 <script>
-  //  vutify css.
-  import 'vuetify/dist/vuetify.min.css'
+  // vutify css.
+  // TODO: the vutify css has conflict with bootstrap-vue styles.
+  // comment out for now!
+  //import 'vuetify/dist/vuetify.min.css'
 
   export default {
   }
