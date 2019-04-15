@@ -1,5 +1,6 @@
 import DashboardLayout from '../components/Dashboard/Layout/DashboardLayout.vue'
 import OneColumnLayout from '../components/Dashboard/Layout/OneColumnLayout.vue'
+import VutifyLayout from '../components/Dashboard/Layout/VutifyLayout.vue'
 // GeneralViews
 import NotFound from '../components/GeneralViews/NotFoundPage.vue'
 
@@ -43,6 +44,26 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  // app for vuetify layout
+  {
+    path: '/vy',
+    component: VutifyLayout,
+    redirect: '/vy/gameboard',
+    // children are nested routes.
+    // they will be loaded inside the parent component
+    children: [
+      {
+        path: 'gameboard',
+        name: 'Game Board',
+        component: GameBoard
+      },
+      {
+        path: 'teamboard',
+        name: 'Team Board',
+        component: TeamBoard 
+      }
+    ]
   },
   // app for game board and team board.
   {
