@@ -14,10 +14,12 @@
     {{doc['product_title_fr']}}
   </div>
   <div class="small">
-    <span class="text-success font-weight-bold">Score {{doc['score']}}</span>,
+    <span class="text-success">Score 
+      <span class="font-weight-bold">{{doc['score']}}</span>
+    </span>,
     {{doc['language']}},
     <span class="text-danger">PUBLICATION YEAR</span>,
-    Published by {{doc['publisher']}},
+    Published by <span class="font-weight-bold">{{doc['publisher']}}</span>
   </div>
 </b-card>
 </template>
