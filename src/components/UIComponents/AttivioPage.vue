@@ -971,22 +971,10 @@ export default {
         },
 
         /**
+         * the function is in seetings page.
          */
         testDownload() {
 
-            //axios.get('https://qapolaris.serv.csagroup.org/drm/gdownload').then(function(res) {
-            axios.post("https://qapolaris.serv.csagroup.org/drm/download",
-                { DocCode: '2090-13A1-1F1E-00001F97',
-                  UserName: 'roman.olyakevich+pl514_1@gmail.com',
-                  UserSetType: 'Retail',
-                  DocExpiryDate: '2069-12-31'
-                }).then(function(res) {
-
-                console.dir(res.headers);
-                console.log(res.data);
-            }).catch(function(err) {
-                console.log(err.data);
-            });
         }
     },
 
