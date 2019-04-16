@@ -3,8 +3,9 @@
   <div class="text-warning">
     {{doc['product_spec_sub_type']}} - {{doc['product_spec_type']}} - {{doc['product_type']}}
   </div>
-  <div class="big">
-    <b-link href="#" @click="$emit('show-details', doc[idFieldName])">
+  <div>
+    <b-link href="#" @click="$emit('show-details', doc[idFieldName])"
+            class="font-weight-bold">
       {{doc['sku']}}
     </b-link>
   </div>
@@ -13,7 +14,8 @@
     {{doc['product_title_fr']}}
   </div>
   <div class="small">
-    {{doc['language']}}, PUBLICATION DATE, Published by {{doc['publisher']}} 
+    {{doc['language']}}, PUBLICATION YEAR, Published by {{doc['publisher']}},
+    <span class="text-success font-weight-bold">Score {{doc['score']}}</span>
   </div>
 </b-card>
 </template>
