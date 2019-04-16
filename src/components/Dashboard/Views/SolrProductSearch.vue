@@ -17,7 +17,7 @@
 </b-input-group>
 
   <div id="search-app">
-    <b-input-group class="mb-2">
+    <b-input-group class="mb-2" size="sm">
       <b-form-input type="text" id="inputQuery"
              v-model="query"
              v-on:keyup.enter.native="simpleSearch"
@@ -30,6 +30,9 @@
         </b-button>
         <b-button v-b-modal.search-settings>
           <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
+        </b-button>
+        <b-button variant="info">
+          <font-awesome-icon icon="list"/> Boostings
         </b-button>
       </b-input-group-append>
     </b-input-group>
