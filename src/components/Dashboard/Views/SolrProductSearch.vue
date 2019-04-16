@@ -31,7 +31,7 @@
         <b-button v-b-modal.search-settings>
           <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
         </b-button>
-        <b-button variant="info">
+        <b-button variant="info" v-b-modal.boost-settings>
           <font-awesome-icon icon="list"/> Boostings
         </b-button>
       </b-input-group-append>
@@ -177,6 +177,11 @@
            placeholder="for example: category:abc OR tag:cde">
     </b-form-input>
   </b-input-group>
+</b-modal>
+
+<b-modal id="boost-settings" title="Boost Settings"
+         size="lg" button-size="sm">
+  Hello Boosting...
 </b-modal>
 
 <b-modal id="item-details" title="Item Details" ok-only
