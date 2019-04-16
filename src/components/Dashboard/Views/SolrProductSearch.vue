@@ -36,7 +36,6 @@
 
     <!-- result list -->
     <p>
-      <h3 class="text-center">{{resultSummary}}</h3>
       <div class="row">
         <div class="col-3">
 <b-card v-if="filters" no-body class="border-info mb-2">
@@ -61,19 +60,14 @@
         <div class="col-9 accordion">
 
           <!-- Action icons -->
-          <b-row>
-            <b-col class="mt-1">
-              <b-link href="#" @click="">
-                <font-awesome-icon icon="chart-bar" size="lg"/>
-              </b-link>
-              <b-link href="#" @click="">
-                <font-awesome-icon icon="list" size="lg"/>
-              </b-link>
+          <b-row class="border border-info border-0">
+            <b-col class="text-left text-info">
+              <span class="h4">{{resultSummary}}</span>
             </b-col>
             <b-col>
-          <b-pagination :total-rows="totalHits" :per-page="perPage"
-                        v-if="results" size="sm" class="mb-2"
-                        v-model="currentPage" align="right"></b-pagination>
+              <b-pagination :total-rows="totalHits" :per-page="perPage"
+                            v-if="results" size="sm" class="mb-1"
+                            v-model="currentPage" align="right"></b-pagination>
             </b-col>
           </b-row>
           <!-- results-list :docs="results" v-if="results">
@@ -88,8 +82,16 @@
                                  v-on:show-details="showItemDetails">
           </listing-details-table -->
 
-          <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
-                        v-model="currentPage" align="right"></b-pagination>
+          <b-row class="border border-info border-0" v-if="results">
+            <b-col class="text-left text-info">
+              <span class="h4">{{resultSummary}}</span>
+            </b-col>
+            <b-col>
+              <b-pagination :total-rows="totalHits" :per-page="perPage"
+                            size="sm" class="mb-1"
+                            v-model="currentPage" align="right"></b-pagination>
+            </b-col>
+          </b-row>
         </div>
       </div>
     </p>

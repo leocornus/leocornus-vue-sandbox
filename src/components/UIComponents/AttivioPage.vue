@@ -207,6 +207,7 @@
             placeholder="pick cities..." v-b-tooltip="suggestionTooltip"/>
       <b-button variant="outline-primary"
           v-on:click="neighborhoodAgents">Agents by Neighborhood Report</b-button>
+      <b-button variant="outline-success" v-on:click="testDownload">Download</b-button>
       <div class="input-group-prepend" v-if="dataHref">
         <a :href="dataHref" download="report.json" class="btn">Download Report</a>
       </div>
@@ -956,6 +957,9 @@ export default {
             });
         },
 
+        /**
+         * utility method to update report messages.
+         */
         updateMessages(oneItem) {
 
             if(this.messages.length > 1000) {
@@ -964,6 +968,25 @@ export default {
             }
 
             this.messages.unshift(oneItem);
+        },
+
+        /**
+         */
+        testDownload() {
+
+            //axios.get('https://qapolaris.serv.csagroup.org/drm/gdownload').then(function(res) {
+            axios.post("https://qapolaris.serv.csagroup.org/drm/download",
+                { DocCode: '2090-13A1-1F1E-00001F97',
+                  UserName: 'roman.olyakevich+pl514_1@gmail.com',
+                  UserSetType: 'Retail',
+                  DocExpiryDate: '2069-12-31'
+                }).then(function(res) {
+
+                console.dir(res.headers);
+                console.log(res.data);
+            }).catch(function(err) {
+                console.log(err.data);
+            });
         }
     },
 
