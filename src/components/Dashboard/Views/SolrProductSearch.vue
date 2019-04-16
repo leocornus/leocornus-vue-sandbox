@@ -182,6 +182,8 @@
 <b-modal id="boost-settings" title="Boost Settings"
          size="lg" button-size="sm">
   Hello Boosting...
+  <b-table striped small=true :items="boostParams">
+  </b-table>
 </b-modal>
 
 <b-modal id="item-details" title="Item Details" ok-only
@@ -257,6 +259,12 @@ export default {
 
         // selectedItem will show in the details modal.
         selectedItem: {},
+
+        // boosting parameters.
+        boostParams: [
+          {field:"category", value:"abc", weight:2},
+          {field:"keywords", value:"def", weight:3}
+        ],
 
         // luke in the structure of b-table.
         luke: {"items":[], "fields":[]},
