@@ -16,10 +16,6 @@
          placeholder="RESTful API base URL https://www.rest.com"/>
 </b-input-group>
 
-<!-- tabs -->
-<b-card no-body>
-<b-tabs card>
-  <b-tab title="Search" active>
   <div id="search-app">
     <b-input-group class="mb-2">
       <b-form-input type="text" id="inputQuery"
@@ -98,25 +94,6 @@
       </div>
     </p>
   </div>
-  </b-tab>
-
-  <b-tab title="Fields">
-    All fields are list here: output of admin/luke/!
-    <b-button variant="outline-primary"
-            v-on:click="adminLuke">Reload</b-button>
-    <b-table striped hover :items="luke.items" :fields="luke.fields"></b-table>
-    <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
-  </b-tab>
-
-  <b-tab title="Schema">
-    All fields are list here: output of schema API.
-    <b-button variant="outline-primary"
-            v-on:click="adminSchema">Reload</b-button>
-    <b-table striped hover :items="schema.items" :fields="schema.fields"></b-table>
-    <pre style="height: 220px">{{JSON.stringify(schema,null,2)}}</pre>
-  </b-tab>
-</b-tabs>
-</b-card>
 
 <b-modal id="query-params" title="Query Parameters" ok-only>
   <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
@@ -234,7 +211,7 @@ export default {
 
     data() {
       return {
-        pageName: 'search',
+        pageName: 'productSearch',
         idField: 'id',
         restBaseUrl: 'http://search.example.com',
         // available collections, we will load it at the created hook.
