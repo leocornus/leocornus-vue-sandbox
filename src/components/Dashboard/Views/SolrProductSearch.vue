@@ -168,10 +168,11 @@
     <div class="input-group-prepend">
       <span id="bq-addon" class="input-group-text">BQ: </span>
     </div>
-    <input type="text" class="form-control" id="boostQuery"
+    <b-form-input type="text" class="form-control" id="boostQuery"
            aria-describedby="facetFields-addon"
-           v-model="boostQuery"
+           v-model="boostQuery" readonly
            placeholder="for example: category:abc OR tag:cde">
+    </b-form-input>
   </b-input-group>
 </b-modal>
 
