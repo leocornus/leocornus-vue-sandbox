@@ -21,6 +21,7 @@ import RealEstate from '../components/Dashboard/Views/RealEstate.vue'
 import D3Tryout from '../components/Dashboard/Views/D3Tryout.vue'
 import SPTryout from '../components/Dashboard/Views/SPTryout.vue'
 import SolrSearch from '../components/Dashboard/Views/SolrSearch.vue'
+import SolrProductSearch from '../components/Dashboard/Views/SolrProductSearch.vue'
 import SolrInspector from '../components/Dashboard/Views/SolrInspector.vue'
 import SolrEventQueue from '../components/Dashboard/Views/SolrEventQueue.vue'
 import SolrTracking from '../components/Dashboard/Views/SolrTracking.vue'
@@ -113,6 +114,11 @@ const routes = [
         path: 'solrsearch',
         name: 'Solr Search',
         component: SolrSearch
+      },
+      {
+        path: 'productsearch',
+        name: 'Product Search',
+        component: SolrProductSearch
       },
       {
         path: 'solrinspector',
