@@ -485,12 +485,15 @@ export default {
          */
         getBoostQuery() {
 
-            if(this.boostQuery === "") {
-                return {};
+            // check the settings.
+            if(this.page.hasOwnProperty('buildBoostQuery')) {
+                this.boostQuery = this.page.buildBoostQuery(this.query);
             } else {
-                return {
-                    "bq": this.boostQuery
-                }
+                this.boostQuery ="";
+            }
+
+            return {
+                "bq": this.boostQuery
             }
         },
 
