@@ -181,8 +181,44 @@
 
 <b-modal id="boost-settings" title="Boost Settings"
          size="lg" button-size="sm">
-  <b-table small striped :items="boostParams">
-  </b-table>
+  <b-row>
+    <b-col cols="7" style="max-height: 220px; overflow-y:scroll">
+      <b-table small striped :items="boostParams" :fields="boostParamFields">
+      </b-table>
+    </b-col>
+    <b-col>
+      <span class="font-weight-bold text-info">Add new boost parameter:</span>
+
+      <b-input-group class="mb-2" size="sm">
+        <div class="input-group-prepend">
+          <span id="boostField-addon" class="input-group-text">Field: </span>
+        </div>
+        <input type="text" class="form-control" id="boostField"
+               aria-describedby="boostField-addon"
+               v-model="boostField"
+               placeholder="for example: category">
+      </b-input-group>
+
+      <b-input-group class="mb-2" size="sm">
+        <div class="input-group-prepend">
+          <span id="boostValue-addon" class="input-group-text">Value: </span>
+        </div>
+        <input type="text" class="form-control" id="boostValue"
+               aria-describedby="boostValue-addon"
+               v-model="boostValue"
+               placeholder="for example: news">
+      </b-input-group>
+
+      <b-input-group class="mb-2" size="sm">
+        <div class="input-group-prepend">
+          <span id="boostWeight-addon" class="input-group-text">Weight: </span>
+        </div>
+        <input type="number" class="form-control" id="boostWeight"
+               aria-describedby="boostWeight-addon"
+               v-model="boostWeight">
+      </b-input-group>
+    </b-col>
+  </b-row>
 </b-modal>
 
 <b-modal id="item-details" title="Item Details" ok-only
@@ -268,8 +304,36 @@ export default {
         // boosting parameters.
         boostParams: [
           {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
+          {field:"category", value:"abc", weight:2},
           {field:"keywords", value:"def", weight:3}
         ],
+
+        // define the fields for the boost parameters.
+        boostParamFields: [
+          'field',
+          'value',
+          {key: 'weight', label: 'Weight', sortable: true},
+          'action'
+        ],
+        boostField: "",
+        boostValue: "",
+        boostWeight: 0.1,
 
         // luke in the structure of b-table.
         luke: {"items":[], "fields":[]},
