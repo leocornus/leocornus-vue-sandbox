@@ -496,6 +496,8 @@ export default {
                              newColl.fieldList : "";
             this.boostParams = newColl.hasOwnProperty('boostQuery') ? 
                               newColl.boostParams : [];
+            this.queryFields = newColl.hasOwnProperty('queryFields') ? 
+                              newColl.queryFields : [];
             this.facetFields = newColl.hasOwnProperty('facetFields') ? 
                              newColl.facetFields : "";
             this.sort = newColl.hasOwnProperty('sort') ? 
