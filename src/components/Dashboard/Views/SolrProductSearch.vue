@@ -107,6 +107,8 @@
 <b-modal id="search-settings" title="Search Settings"
          button-size="sm" size="lg"
          @ok="simpleSearch">
+
+  <span class="d-none">ID, Per Page and Sort</span>
   <b-row>
     <b-col sm="5">
   <b-input-group class="mb-2" size="sm">
@@ -138,6 +140,7 @@
     </b-col>
   </b-row>
 
+  <span class="d-none">Set the filter query</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="filterQuery-addon" class="input-group-text">Filter Query: </span>
@@ -148,6 +151,7 @@
            placeholder="set filter query here: c4c_type:certificate,project_id:2453450">
   </b-input-group>
 
+  <span class="d-none">Set the field list to return</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="fieldList-addon" class="input-group-text">Field List: </span>
@@ -158,6 +162,7 @@
            placeholder="set a list of fields to return: id,project_id,customer_id">
   </b-input-group>
 
+  <span class="d-none">Set facet fields</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="facetFields-addon" class="input-group-text">Facets: </span>
@@ -167,6 +172,8 @@
            v-model="facetFields"
            placeholder="for example: id,category">
   </b-input-group>
+
+  <span class="d-none">Set Boost Query</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="bq-addon" class="input-group-text">BQ: </span>
