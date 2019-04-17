@@ -14,6 +14,9 @@
     {{doc['product_title_fr']}}
   </div>
   <div class="small">
+    designation: {{doc['designation']}}
+  </div>
+  <div class="small">
     <span class="text-success">Score 
       <span class="font-weight-bold">{{doc['score']}}</span>
     </span>,
