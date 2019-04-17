@@ -217,6 +217,9 @@
                aria-describedby="boostWeight-addon"
                v-model="boostWeight">
       </b-input-group>
+
+      <b-button variant="success" block size="sm"
+                v-on:click="addBoost">Add Boost Parameter</b-button>
     </b-col>
   </b-row>
 </b-modal>
@@ -693,6 +696,30 @@ export default {
                 vm.$refs.itemDetailsModal.show();
             });
         },
+
+        //=====================================================================
+        // functions related to boost settings.
+        //
+        /**
+         * add the boost parameters.
+         */
+        addBoost() {
+
+            let vm = this;
+
+            // TODO: data verification
+
+            // push to the boostParams
+            vm.boostParams.push(
+                {field: vm.boostField, value: vm.boostValue, weight: vm.boostWeight}
+            );
+            
+            // reset the new boost parameter area.
+            vm.boostField = "";
+            vm.boostValue = "";
+            vm.boostWeight = 0.1;
+        },
+        //=====================================================================
 
         /**
          * generate a list of fields.
