@@ -181,8 +181,7 @@
 
 <b-modal id="boost-settings" title="Boost Settings"
          size="lg" button-size="sm">
-  Hello Boosting...
-  <b-table striped small=true :items="boostParams">
+  <b-table small striped :items="boostParams">
   </b-table>
 </b-modal>
 
@@ -193,6 +192,12 @@
 
 </div>
 </template>
+
+<style>
+.table-sm td,.table-sm th {
+  padding: .1rem !important;
+}
+</style>
 
 <!-- JavaScript -->
 <script>
