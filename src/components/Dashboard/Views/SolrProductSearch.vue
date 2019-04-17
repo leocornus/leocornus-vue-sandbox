@@ -313,23 +313,6 @@ export default {
         // boosting parameters.
         boostParams: [
           {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
-          {field:"category", value:"abc", weight:2},
           {field:"keywords", value:"def", weight:3}
         ],
 
@@ -490,8 +473,8 @@ export default {
             // get the default field list.
             this.fieldList = newColl.hasOwnProperty('fieldList') ? 
                              newColl.fieldList : "";
-            this.boostQuery = newColl.hasOwnProperty('boostQuery') ? 
-                              newColl.boostQuery : "";
+            this.boostParams = newColl.hasOwnProperty('boostQuery') ? 
+                              newColl.boostParams : [];
             this.facetFields = newColl.hasOwnProperty('facetFields') ? 
                              newColl.facetFields : "";
             this.sort = newColl.hasOwnProperty('sort') ? 
