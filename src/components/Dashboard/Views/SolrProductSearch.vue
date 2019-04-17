@@ -180,6 +180,7 @@
 </b-modal>
 
 <b-modal id="boost-settings" title="Boost Settings"
+         @ok="simpleSearch"
          size="lg" button-size="sm">
   <b-row>
     <b-col cols="7" style="max-height: 220px; overflow-y: auto">
@@ -580,7 +581,8 @@ export default {
 
             // check the settings.
             if(this.page.hasOwnProperty('buildBoostQuery')) {
-                this.boostQuery = this.page.buildBoostQuery(this.query);
+                this.boostQuery = this.page.buildBoostQuery(this.query,
+                                                            this.boostParams);
             } else {
                 this.boostQuery ="";
             }
