@@ -173,13 +173,25 @@
            placeholder="for example: id,category">
   </b-input-group>
 
+  <span class="d-none">Set Query Fields</span>
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="qf-addon" class="input-group-text">QF: </span>
+    </div>
+    <b-form-input type="text" class="form-control" id="queryFields"
+           aria-describedby="qf-addon"
+           v-model="queryFields"
+           placeholder="for example: category tag">
+    </b-form-input>
+  </b-input-group>
+
   <span class="d-none">Set Boost Query</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
       <span id="bq-addon" class="input-group-text">BQ: </span>
     </div>
     <b-form-input type="text" class="form-control" id="boostQuery"
-           aria-describedby="facetFields-addon"
+           aria-describedby="bq-addon"
            v-model="boostQuery" readonly
            placeholder="for example: category:abc OR tag:cde">
     </b-form-input>
@@ -302,6 +314,8 @@ export default {
         fieldList: "",
         // the boostQuery field.
         boostQuery: "",
+        // the query fields.
+        queryFields: "",
 
         totalHits: 0,
         facets: null,
@@ -507,7 +521,8 @@ export default {
               start: startRow,
               sort: thisVm.sort
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
-               thisVm.getFilterQuery(), thisVm.getBoostQuery());
+               thisVm.getFilterQuery(), thisVm.getBoostQuery(),
+               thisVm.getQueryFields());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
@@ -594,6 +609,20 @@ export default {
                   // filter query list.
                   //fq: ["c4c_type:project"],
                   fq: this.filterQuery.split(",")
+                }
+            }
+        },
+
+        /**
+         * prepare the query fields for search.
+         */
+        getQueryFields() {
+
+            if(this.queryFields === "") {
+                return {};
+            } else {
+                return {
+                  qf: this.queryFields
                 }
             }
         },
