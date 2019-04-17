@@ -182,8 +182,13 @@
 <b-modal id="boost-settings" title="Boost Settings"
          size="lg" button-size="sm">
   <b-row>
-    <b-col cols="7" style="max-height: 220px; overflow-y:scroll">
+    <b-col cols="7" style="max-height: 220px; overflow-y: auto">
       <b-table small striped :items="boostParams" :fields="boostParamFields">
+        <template slot="actions" scope="row">
+          <b-button size="sm" variant="danger" @click="deleteBoost(row.item)" class="mr-1">
+            Delete
+          </b-button>
+        </template>
       </b-table>
     </b-col>
     <b-col>
@@ -332,7 +337,7 @@ export default {
           'field',
           'value',
           {key: 'weight', label: 'Weight', sortable: true},
-          'action'
+          'actions'
         ],
         boostField: "",
         boostValue: "",
@@ -718,6 +723,20 @@ export default {
             vm.boostField = "";
             vm.boostValue = "";
             vm.boostWeight = 0.1;
+        },
+
+        /**
+         * delete a boost parameter
+         */
+        deleteBoost(item) {
+
+            // here are how we delete a element in an array by value
+
+            console.log(item);
+            let i = this.boostParams.indexOf(item);
+            if (i > -1) {
+                this.boostParams.splice(i, 1);
+            }
         },
         //=====================================================================
 
