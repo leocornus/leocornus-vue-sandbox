@@ -589,11 +589,15 @@ export default {
                 this.boostQuery = this.page.buildBoostQuery(this.query,
                                                             this.boostParams);
             } else {
-                this.boostQuery ="";
+                this.boostQuery = "";
             }
 
-            return {
-                "bq": this.boostQuery
+            if (this.boostQuery === "") {
+                return {};
+            } else {
+                return {
+                    "bq": this.boostQuery
+                };
             }
         },
 
