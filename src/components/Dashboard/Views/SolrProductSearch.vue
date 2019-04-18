@@ -204,7 +204,7 @@
   <b-row>
     <b-col cols="7" style="max-height: 220px; overflow-y: auto">
       <b-table small striped :items="boostParams" :fields="boostParamFields">
-        <template slot="actions" scope="row">
+        <template slot="actions" slot-scope="row">
           <b-button size="sm" variant="danger" @click="deleteBoost(row.item)" class="mr-1">
             Delete
           </b-button>
