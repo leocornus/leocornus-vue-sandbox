@@ -40,7 +40,7 @@
     <!-- result list -->
     <p>
       <div class="row">
-        <div class="col-3">
+        <div :class="filterClass">
 <b-card v-if="filters" no-body class="border-info mb-2">
   <b-card-header class="bg-info text-black" id="filters">
     Filters
@@ -60,7 +60,7 @@
               v-on:bucket-select="handleBucketSelect">
           </facet-buckets>
         </div>
-        <div class="col-9 accordion">
+        <div class="accordion" :class="resultClass">
 
           <!-- Action icons -->
           <b-row class="border border-info border-0">
@@ -367,6 +367,30 @@ export default {
               return null;
           } else {
               return this.filterQuery.split(",")
+          }
+      },
+
+      /**
+       * class for the filter column.
+       */
+      filterClass: function() {
+
+          if (this.filterQuery === "" && this.facets === null) {
+              return "d-none";
+          } else {
+              return "col-3";
+          }
+      },
+
+      /**
+       * class for the result column.
+       */
+      resultClass: function() {
+
+          if (this.filterQuery === "" && this.facets === null) {
+              return "col-12";
+          } else {
+              return "col-9";
           }
       },
 
