@@ -494,7 +494,7 @@ export default {
             // get the default field list.
             this.fieldList = newColl.hasOwnProperty('fieldList') ? 
                              newColl.fieldList : "";
-            this.boostParams = newColl.hasOwnProperty('boostQuery') ? 
+            this.boostParams = newColl.hasOwnProperty('boostParams') ? 
                               newColl.boostParams : [];
             this.queryFields = newColl.hasOwnProperty('queryFields') ? 
                               newColl.queryFields : [];
