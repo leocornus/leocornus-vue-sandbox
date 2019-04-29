@@ -1,12 +1,12 @@
 <template>
 <b-card no-body class="mb-3 border border-info border-top-0 border-left-0 border-right-0">
-  <div class="text-warning">
+  <div class="small text-warning">
     {{doc['product_spec_sub_type']}} - {{doc['product_spec_type']}} - {{doc['product_type']}}
   </div>
   <div>
     <b-link href="#" @click="$emit('show-details', doc[idFieldName])"
             class="font-weight-bold">
-      {{doc['sku']}}
+      {{doc['designation']}} - {{doc['sku']}}
     </b-link>
   </div>
   <div>
@@ -14,12 +14,10 @@
     {{doc['product_title_fr']}}
   </div>
   <div class="small">
-    Designation: {{doc['designation']}}
-  </div>
-  <div class="small">
     <span class="text-success">Score 
       <span class="font-weight-bold">{{doc['score']}}</span>
     </span>,
+    Edition Year: {{doc['edition_year']}},
     {{doc['language']}},
     <span class="text-danger">PUBLICATION YEAR</span>,
     Published by <span class="font-weight-bold">{{doc['publisher']}}</span>
