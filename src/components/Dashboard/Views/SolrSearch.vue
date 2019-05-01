@@ -67,10 +67,10 @@
           <!-- Action icons -->
           <b-row>
             <b-col class="mt-1">
-              <b-link href="#" @click="">
+              <b-link href="#" @click="currentView='product-preview'">
                 <font-awesome-icon icon="chart-bar" size="lg"/>
               </b-link>
-              <b-link href="#" @click="">
+              <b-link href="#" @click="currentView='listing-details-table'">
                 <font-awesome-icon icon="list" size="lg"/>
               </b-link>
             </b-col>
@@ -80,12 +80,13 @@
                         v-model="currentPage" align="right"></b-pagination>
             </b-col>
           </b-row>
-          <!-- results-list :docs="results" v-if="results">
-          </results-list -->
-          <product-preview :docs="results"
-              :idFieldName="idField" :thePage="page"
+          <!-- product-preview -->
+          <component :is="currentView"
+              :docs="results" v-if="results"
+              :idFieldName="idField" :thePage="page" :fieldList="fieldList"
               v-on:show-details="showItemDetails">
-          </product-preview>
+          <!-- /product-preview -->
+          </component>
           <!-- listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
                                  :idFieldName="idField" :thePage="page"
                                  v-on:show-details="showItemDetails">
@@ -275,6 +276,8 @@ export default {
         // pagination properties.
         currentPage: 1,
         perPage: 15,
+        // for the dynamic component.
+        currentView: 'listing-details-table',
 
         resultSummary: "Click search to start..",
 
