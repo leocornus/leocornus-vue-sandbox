@@ -75,9 +75,8 @@
           </b-row>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <product-preview v-for="(doc, index) in results"
-              :doc="doc" :key="doc.id"
-              :index="index" :idFieldName="idField" :thePage="page"
+          <product-preview
+              :docs="results" :idFieldName="idField" :thePage="page"
               v-on:show-details="showItemDetails">
           </product-preview>
           <!-- listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
