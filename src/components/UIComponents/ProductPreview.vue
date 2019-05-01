@@ -1,5 +1,8 @@
 <template>
-<b-card no-body class="mb-3 border border-info border-top-0 border-left-0 border-right-0">
+<div>
+<b-card no-body class="mb-3 border border-info border-top-0 border-left-0 border-right-0"
+    v-for="(doc, index) in docs" :doc="doc" :key="doc.id"
+>
   <div class="small text-warning">
     {{doc['product_spec_sub_type']}} - {{doc['product_spec_type']}} - {{doc['product_type']}}
   </div>
@@ -23,6 +26,7 @@
     Published by <span class="font-weight-bold">{{doc['publisher']}}</span>
   </div>
 </b-card>
+</div>
 </template>
 
 <script>
@@ -56,8 +60,7 @@ export default {
 
     // the doc will have all details and a index field.
     props: {
-        "doc": Object,
-        "index": Number,
+        "docs": Array,
         // set the name for id field.
         "idFieldName": {
             type: String,
