@@ -187,10 +187,20 @@
   </b-input-group>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
+      <span id="qf-addon" class="input-group-text">QF: </span>
+    </div>
+    <b-form-input type="text" class="form-control" id="queryFields"
+           aria-describedby="qf-addon"
+           v-model="queryFields"
+           placeholder="for example: category tag">
+    </b-form-input>
+  </b-input-group>
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
       <span id="bq-addon" class="input-group-text">BQ: </span>
     </div>
     <input type="text" class="form-control" id="boostQuery"
-           aria-describedby="facetFields-addon"
+           aria-describedby="boostQuery-addon"
            v-model="boostQuery"
            placeholder="for example: category:abc OR tag:cde">
   </b-input-group>
@@ -255,6 +265,8 @@ export default {
         fieldList: "",
         // the boostQuery field.
         boostQuery: "",
+        // query fields
+        queryFields: "",
 
         totalHits: 0,
         facets: null,
@@ -418,6 +430,8 @@ export default {
                              newColl.fieldList : "";
             this.boostQuery = newColl.hasOwnProperty('boostQuery') ? 
                               newColl.boostQuery : "";
+            this.queryFields = newColl.hasOwnProperty('queryFields') ? 
+                              newColl.queryFields : "";
             this.facetFields = newColl.hasOwnProperty('facetFields') ? 
                              newColl.facetFields : "";
             this.sort = newColl.hasOwnProperty('sort') ? 
@@ -443,7 +457,8 @@ export default {
               start: startRow,
               sort: thisVm.sort
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
-               thisVm.getFilterQuery(), thisVm.getBoostQuery());
+               thisVm.getFilterQuery(), thisVm.getBoostQuery(),
+               thisVm.getQueryFields());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
@@ -501,7 +516,7 @@ export default {
         },
 
         /**
-         * return the boost query field.
+         * return the boost query.
          */
         getBoostQuery() {
 
@@ -510,6 +525,20 @@ export default {
             } else {
                 return {
                     "bq": this.boostQuery
+                }
+            }
+        },
+
+        /**
+         * return the boost query.
+         */
+        getQueryFields() {
+
+            if(this.queryFields === "") {
+                return {};
+            } else {
+                return {
+                    "qf": this.queryFields
                 }
             }
         },
