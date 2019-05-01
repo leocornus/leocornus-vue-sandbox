@@ -67,12 +67,6 @@
           <!-- Action icons -->
           <b-row>
             <b-col class="mt-1">
-              <b-link href="#" @click="">
-                <font-awesome-icon icon="chart-bar" size="lg"/>
-              </b-link>
-              <b-link href="#" @click="">
-                <font-awesome-icon icon="list" size="lg"/>
-              </b-link>
             </b-col>
             <b-col>
           <b-pagination :total-rows="totalHits" :per-page="perPage"
@@ -98,22 +92,6 @@
       </div>
     </p>
   </div>
-  </b-tab>
-
-  <b-tab title="Fields">
-    All fields are list here: output of admin/luke/!
-    <b-button variant="outline-primary"
-            v-on:click="adminLuke">Reload</b-button>
-    <b-table striped hover :items="luke.items" :fields="luke.fields"></b-table>
-    <pre style="height: 220px">{{JSON.stringify(luke,null,2)}}</pre>
-  </b-tab>
-
-  <b-tab title="Schema">
-    All fields are list here: output of schema API.
-    <b-button variant="outline-primary"
-            v-on:click="adminSchema">Reload</b-button>
-    <b-table striped hover :items="schema.items" :fields="schema.fields"></b-table>
-    <pre style="height: 220px">{{JSON.stringify(schema,null,2)}}</pre>
   </b-tab>
 </b-tabs>
 </b-card>
