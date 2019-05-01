@@ -82,15 +82,14 @@
           </b-row>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <!-- product-preview v-for="(doc, index) in results"
-              :doc="doc" :key="doc.id"
-              :index="index" :idFieldName="idField" :thePage="page"
+          <product-preview :docs="results"
+              :idFieldName="idField" :thePage="page"
               v-on:show-details="showItemDetails">
-          </product-preview -->
-          <listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
+          </product-preview>
+          <!-- listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
                                  :idFieldName="idField" :thePage="page"
                                  v-on:show-details="showItemDetails">
-          </listing-details-table>
+          </listing-details-table -->
 
           <b-pagination :total-rows="totalHits" :per-page="perPage" v-if="results"
                         v-model="currentPage" align="right"></b-pagination>
@@ -226,7 +225,7 @@ import bFormInput from 'bootstrap-vue/es/components/form-input/form-input'
 
 import axios from 'axios'
 import ListingDetailsTable from '@/components/UIComponents/ListingDetailsTable.vue'
-//import ProductPreview from '@/components/UIComponents/ProductPreview.vue'
+import ProductPreview from '@/components/UIComponents/ProductPreview.vue'
 import FacetBuckets from '@/components/UIComponents/FacetBuckets.vue'
 
 import solr from '@/libs/solr'
@@ -234,7 +233,7 @@ import solr from '@/libs/solr'
 export default {
     components: {
       'listing-details-table': ListingDetailsTable,
-      //'product-preview': ProductPreview,
+      'product-preview': ProductPreview,
       'facet-buckets': FacetBuckets,
       'b-input-group': bInputGroup,
       'b-input-group-append': bInputGroupAppend,
