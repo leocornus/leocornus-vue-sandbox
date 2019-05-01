@@ -1,6 +1,6 @@
 <template>
 
-  <b-table striped :items="docs" :fields="fields">
+  <b-table striped small :items="docs" :fields="fields">
     <template :slot="idFieldName" slot-scope="data">
       <b-link href="#" @click="$emit('show-details', data.item[idFieldName])">
         <i class="nc-icon nc-paper-2 text-primary"></i>
