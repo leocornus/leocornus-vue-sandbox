@@ -17,9 +17,8 @@
     <span class="text-success">Score 
       <span class="font-weight-bold">{{doc['score']}}</span>
     </span>,
-    Edition Year: {{doc['edition_year']}},
+    Publication Year: {{doc['publication_year']}},
     {{doc['language']}},
-    <span class="text-danger">PUBLICATION YEAR</span>,
     Published by <span class="font-weight-bold">{{doc['publisher']}}</span>
   </div>
 </b-card>
