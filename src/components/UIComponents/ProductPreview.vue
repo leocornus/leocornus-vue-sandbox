@@ -50,12 +50,6 @@ export default {
       'b-collapse': bCollapse
     },
 
-    directives: {
-      // Vue will automatically prefix the directive name with 'v-'
-      // so we will use it like this: v-b-toggle.
-      'b-toggle': vBToggle
-    },
-
     name: "product-preview",
 
     // the doc will have all details and a index field.
@@ -67,109 +61,6 @@ export default {
             default: "id"
         },
         "thePage": Object
-    },
-
-    computed: {
-
-        // for all th IDs, we need replace the following special chars with
-        // empty string:
-        // @ . /
-        docID() {
-            let theId = this.doc[this.idFieldName];
-            theId = (typeof theId === "object") ? theId[0] : theId;
-            return theId.replace(/[@\.\/]/g, '');
-        },
-
-        listingID() {
-            return this.DocID;
-        },
-
-        collapseID() {
-            return "collapse" + this.docID;
-        },
-
-        targetCollapseID() {
-            return "'collapse" + this.docID;
-        },
-
-        /**
-         * title for each doc.
-         * we will depends on the parent to customize the caption
-         */
-        caption() {
-
-            // by default, we will using id as the caption.
-            var caption = this.docID;
-
-            // check the parent component:
-            if(this.thePage.hasOwnProperty("customizeListingDetailsCaption")) {
-                caption = this.thePage.customizeListingDetailsCaption(this.doc);
-            }
-
-            return caption;
-        },
-
-        /**
-         * preparing the fields and values for each doc.
-         */
-        fields() {
-
-            var vm = this;
-
-            // get the fields name for each doc.
-            var docFields = [];
-
-            Object.keys(vm.doc).forEach(function(fieldName) {
-
-                var theName = fieldName;
-
-                // if we not process the field value, set the value as it is.
-                var theValue = vm.doc[fieldName];
-
-                var docField = {
-                    fieldName: theName,
-                    fieldValue: theValue
-                };
-                docFields.push(docField);
-            });
-
-            // sort by field name.
-            docFields.sort(function(a, b) {
-                if(a.fieldName < b.fieldName) {
-                    return -1;
-                }
-
-                if(a.fieldName > b.fieldName) {
-                    return 1;
-                }
-
-                return 0;
-            });
-
-            // using array map to customize field values:
-            if(vm.thePage.hasOwnProperty("customizeListingDetailsPreviewField")) {
-                //console.log(vm.$localSettings.customizeField);
-                // the customizeField will follow the specification of
-                // Array.map callback function.
-                return docFields.map(vm.thePage.customizeListingDetailsField);
-            } else {
-                return docFields;
-            }
-        }
-    },
-
-    /**
-     * methods.
-     */
-    methods: {
-
-        /**
-         * format the index.
-         */
-        formatIndex(index) {
-
-            return index + ".)";
-        }
     }
 }
 </script>
