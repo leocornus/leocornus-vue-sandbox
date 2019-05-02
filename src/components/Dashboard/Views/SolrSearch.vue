@@ -119,7 +119,7 @@
 </b-card>
 
 <b-modal id="query-params" title="Query Parameters" ok-only>
-  <pre style="height: 220px">{{JSON.stringify(this.buildQuery(),null,2)}}</pre>
+  <div ref="jeQueryParams" style="height:250px"></div>
 </b-modal>
 
 <b-modal id="search-settings" title="Search Settings"
@@ -218,6 +218,10 @@
 <script>
 // TODO: need merge this into SolrPage ocmponent
 
+// import JSON Editor.
+import JSONEditor from 'jsoneditor/dist/jsoneditor.min.js'
+import 'jsoneditor/dist/jsoneditor.min.css'
+
 // components from bootstrap-vue.
 import bButton from 'bootstrap-vue/es/components/button/button'
 import bInputGroup from 'bootstrap-vue/es/components/input-group/input-group'
@@ -280,6 +284,10 @@ export default {
         currentView: 'listing-details-table',
 
         resultSummary: "Click search to start..",
+
+        // the JSON editor for displaying:
+        // using the mounted to initialize the Editor.
+        jeQueryParams: null,
 
         // selectedItem will show in the details modal.
         selectedItem: {},
@@ -352,6 +360,16 @@ export default {
 
             // this will show how to use query parameters in a JSON request.
             var postParams = self.buildQuery();
+            // set to query params modal.
+            if(self.jeQueryParams) {
+
+                // swith back and force to refresh the view.
+                self.jeQueryParams.setMode("view");
+                self.jeQueryParams.set(postParams);
+                self.jeQueryParams.expandAll();
+                //self.jeQueryParams.setTextSelection(0,1);
+                self.jeQueryParams.setMode("code");
+            } 
 
             var endPoint = this.restBaseUrl + "select";
             // track the post parameters.
@@ -746,6 +764,23 @@ export default {
       this.simpleSearch();
       this.adminLuke();
       this.adminSchema();
+    },
+
+    /**
+     * mounted
+     */
+    mounted() {
+
+        // get the editor ref for query parameter.
+        const queryParams = this.$refs.jeQueryParams
+
+        // set options for JSON Editor.
+        const options = {
+            mode: "view",
+            modes: ["view","code"]
+        }
+
+        this.jeQueryParams = new JSONEditor(queryParams, options)
     }
 }
 </script>
