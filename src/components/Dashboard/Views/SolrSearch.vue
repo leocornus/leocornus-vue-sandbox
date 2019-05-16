@@ -152,6 +152,10 @@
            aria-describedby="sort-addon"
            v-model="sort"
            placeholder="set sort here: id desc,type asc"/>
+    <b-form-checkbox id="debug" value="true" unchecked-value="false"
+         aria-describedby="debug-addon" v-model="debugQuery" switch>
+       Debug
+    </b-form-checkbox>
   </b-input-group>
     </b-col>
   </b-row>
