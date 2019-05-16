@@ -549,7 +549,7 @@ export default {
         },
 
         /**
-         * return the boost query.
+         * return the boost function.
          */
         getBoostFunction() {
 
