@@ -202,7 +202,7 @@
     </div>
     <b-form-input type="text" class="form-control" id="boostQuery"
            aria-describedby="bq-addon"
-           v-model="boostQuery" 
+           v-model="boostQuery" readonly
            placeholder="for example: category:abc OR tag:cde">
     </b-form-input>
   </b-input-group>
