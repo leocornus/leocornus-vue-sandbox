@@ -185,6 +185,16 @@
     </b-form-input>
   </b-input-group>
 
+  <b-input-group class="mb-2" size="sm">
+    <div class="input-group-prepend">
+      <span id="bf-addon" class="input-group-text">BF: </span>
+    </div>
+    <input type="text" class="form-control" id="boostFunction"
+           aria-describedby="boostFunction-addon"
+           v-model="boostFunction"
+           placeholder="for example: recip()">
+  </b-input-group>
+
   <span class="d-none">Set Boost Query</span>
   <b-input-group class="mb-2" size="sm">
     <div class="input-group-prepend">
@@ -192,7 +202,7 @@
     </div>
     <b-form-input type="text" class="form-control" id="boostQuery"
            aria-describedby="bq-addon"
-           v-model="boostQuery" readonly
+           v-model="boostQuery" 
            placeholder="for example: category:abc OR tag:cde">
     </b-form-input>
   </b-input-group>
@@ -314,6 +324,8 @@ export default {
         fieldList: "",
         // the boostQuery field.
         boostQuery: "",
+        // the boostFunction field.
+        boostFunction: "",
         // the query fields.
         queryFields: "",
 
@@ -520,6 +532,8 @@ export default {
                              newColl.fieldList : "";
             this.boostParams = newColl.hasOwnProperty('boostParams') ? 
                               newColl.boostParams : [];
+            this.boostFunction = newColl.hasOwnProperty('boostFunction') ? 
+                              newColl.boostFunction: [];
             this.queryFields = newColl.hasOwnProperty('queryFields') ? 
                               newColl.queryFields : [];
             this.facetFields = newColl.hasOwnProperty('facetFields') ? 
@@ -548,7 +562,7 @@ export default {
               sort: thisVm.sort
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
                thisVm.getFilterQuery(), thisVm.getBoostQuery(),
-               thisVm.getQueryFields());
+               thisVm.getBoostFunction(), thisVm.getQueryFields());
 
             // this will show how to use query parameters in a JSON request.
             var postParams = {
@@ -601,6 +615,20 @@ export default {
                 return {
                   // field list, control what fields to return in response.
                   fl: fields
+                };
+            }
+        },
+
+        /**
+         * return the boost function.
+         */
+        getBoostFunction() {
+
+            if (this.boostFunction === "") {
+                return {};
+            } else {
+                return {
+                  "bf": this.boostFunction
                 };
             }
         },
