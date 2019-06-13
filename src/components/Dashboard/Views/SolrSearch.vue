@@ -296,6 +296,9 @@ export default {
         stats: null,
         results: null,
 
+        // debugQuery, default is false.
+        debugQuery: false,
+
         // pagination properties.
         currentPage: 1,
         perPage: 15,
@@ -496,7 +499,8 @@ export default {
               rows: thisVm.perPage,
               defType: "edismax",
               start: startRow,
-              sort: thisVm.sort
+              sort: thisVm.sort,
+              debugQuery: thisVm.debugQuery
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
                thisVm.getFilterQuery(), thisVm.getBoostQuery(),
                thisVm.getBoostFunction(), thisVm.getQueryFields());
