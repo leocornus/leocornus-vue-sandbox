@@ -143,7 +143,7 @@
            v-model="perPage"/>
   </b-input-group>
     </b-col>
-    <b-col>
+    <b-col sm="5">
   <b-input-group class="mb-2" size="sm">
     <b-input-group-prepend>
       <span id="sort-addon" class="input-group-text">Sort: </span>
@@ -152,6 +152,10 @@
            aria-describedby="sort-addon"
            v-model="sort"
            placeholder="set sort here: id desc,type asc"/>
+  </b-input-group>
+    </b-col>
+    <b-col sm="2">
+  <b-input-group class="mb-2" size="sm">
     <b-form-checkbox id="debug" value="true" unchecked-value="false"
          aria-describedby="debug-addon" v-model="debugQuery" switch>
        Debug
