@@ -24,9 +24,11 @@ module.exports = {
     env: require('./dev.env'),
     port: 18080,
     autoOpenBrowser: true,
-    assetsSubDirectory: 'static',
-    //assetsPublicPath: '/',
+    // for dev server behind reverse Proxy server
+    assetsSubDirectory: '/static',
     assetsPublicPath: '',
+    //assetsSubDirectory: 'static',
+    //assetsPublicPath: '/',
     proxyTable: {},
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
