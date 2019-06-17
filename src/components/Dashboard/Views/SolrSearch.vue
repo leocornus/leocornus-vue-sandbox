@@ -82,7 +82,7 @@
           </b-row>
           <!-- product-preview -->
           <component :is="currentView"
-              :docs="results" v-if="results"
+              :docs="results" v-if="results" :debugQuery="debugQuery"
               :idFieldName="idField" :thePage="page" :fieldList="fieldList"
               v-on:show-details="showItemDetails">
           <!-- /product-preview -->
@@ -298,6 +298,8 @@ export default {
 
         // debugQuery, default is false.
         debugQuery: false,
+        // debug explain if debug query is on
+        debugExplain: null,
 
         // pagination properties.
         currentPage: 1,
@@ -410,16 +412,16 @@ export default {
                 self.totalHits = response.data.response.numFound;
 
                 // TODO: add explain for each doc if debug query is on.
+                self.results = response.data.response.docs;
                 if( response.data.hasOwnProperty('debug') ) {
-                    self.fieldList = self.fieldList + ',ex';
-                    self.results = response.data.response.docs.map( doc => {
-                        // add the explain or scoring
-                        doc['ex'] = response.data.debug.explain[doc[self.idField]];
-                        //console.log(doc['ex']);
-                        return doc;
-                    });
-                } else {
-                    self.results = response.data.response.docs;
+                    self.debugExplain = response.data.debug;
+                    //self.fieldList = self.fieldList + ',ex';
+                    //self.results = response.data.response.docs.map( doc => {
+                    //    // add the explain or scoring
+                    //    doc['ex'] = response.data.debug.explain[doc[self.idField]];
+                    //    //console.log(doc['ex']);
+                    //    return doc;
+                    //});
                 }
                 //console.log(self.results);
 
