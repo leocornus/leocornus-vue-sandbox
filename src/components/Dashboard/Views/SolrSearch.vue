@@ -303,7 +303,8 @@ export default {
         results: null,
 
         // debugQuery, default is false.
-        debugQuery: false,
+        // it is easier to treat it as String
+        debugQuery: "false",
         // debug explain if debug query is on
         debugExplain: null,
         explainItem: null,
