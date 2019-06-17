@@ -19,7 +19,9 @@
   <div class="small">
     <span class="text-success">Score: 
       <span class="font-weight-bold">{{doc['score']}}</span>
-    </span>,
+    </span><b-link href="#" @click="$emit('show-explain', doc[idFieldName])"
+            v-if="debugQuery === 'true'" class="font-weight-bold">
+    ??</b-link>,
     Publication Year: {{doc['publication_year']}},
     {{doc['language']}},
     Published by <span class="font-weight-bold">{{doc['publisher']}}</span>
@@ -58,6 +60,10 @@ export default {
         "idFieldName": {
             type: String,
             default: "id"
+        },
+        "debugQuery": {
+            type: String,
+            default: "false"
         },
         "thePage": Object
     }
