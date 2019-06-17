@@ -406,11 +406,22 @@ export default {
             axios.post(endPoint, postParams)
             .then(function(response) {
 
-                console.log(response.data);
+                //console.log(response.data);
                 self.totalHits = response.data.response.numFound;
 
-                self.results = response.data.response.docs;
-                console.log(self.results);
+                // TODO: add explain for each doc if debug query is on.
+                if( response.data.hasOwnProperty('debug') ) {
+                    self.fieldList = self.fieldList + ',ex';
+                    self.results = response.data.response.docs.map( doc => {
+                        // add the explain or scoring
+                        doc['ex'] = response.data.debug.explain[doc[self.idField]];
+                        //console.log(doc['ex']);
+                        return doc;
+                    });
+                } else {
+                    self.results = response.data.response.docs;
+                }
+                //console.log(self.results);
 
                 // check if we have facets in response.
                 // Object hasOwnProperty is like hasKey but more complex.
