@@ -75,8 +75,9 @@
           </b-row>
           <!-- results-list :docs="results" v-if="results">
           </results-list -->
-          <product-preview
+          <product-preview v-if="results" :debugQuery="debugQuery"
               :docs="results" :idFieldName="idField" :thePage="page"
+              v-on:show-explain="showItemExplain"
               v-on:show-details="showItemDetails">
           </product-preview>
           <!-- listing-details-table :docs="results" v-if="results" :fieldList="fieldList"
@@ -126,7 +127,7 @@
            v-model="perPage"/>
   </b-input-group>
     </b-col>
-    <b-col>
+    <b-col sm="5">
   <b-input-group class="mb-2" size="sm">
     <b-input-group-prepend>
       <span id="sort-addon" class="input-group-text">Sort: </span>
@@ -135,6 +136,14 @@
            aria-describedby="sort-addon"
            v-model="sort"
            placeholder="set sort here: id desc,type asc"/>
+  </b-input-group>
+    </b-col>
+    <b-col sm="2">
+  <b-input-group class="mb-2" size="sm">
+    <b-form-checkbox id="debug" value="true" unchecked-value="false"
+         aria-describedby="debug-addon" v-model="debugQuery" switch>
+       Debug
+    </b-form-checkbox>
   </b-input-group>
     </b-col>
   </b-row>
@@ -263,6 +272,11 @@
   <pre style="height: 220px">{{JSON.stringify(this.selectedItem, null,2)}}</pre>
 </b-modal>
 
+<b-modal id="item-explain" title="Item Explain" ok-only
+         ref="itemExplainModal" button-size="sm" size="lg">
+  <pre style="height: 220px">{{explainItem}}</pre>
+</b-modal>
+
 </div>
 </template>
 
@@ -332,6 +346,13 @@ export default {
         facets: null,
         stats: null,
         results: null,
+
+        // debugQuery, default is false.
+        // it is easier to treat it as String
+        debugQuery: "false",
+        // debug explain if debug query is on
+        debugExplain: null,
+        explainItem: null,
 
         // pagination properties.
         currentPage: 1,
@@ -465,11 +486,14 @@ export default {
             axios.post(endPoint, postParams)
             .then(function(response) {
 
-                console.log(response.data);
+                //console.log(response.data);
                 self.totalHits = response.data.response.numFound;
 
                 self.results = response.data.response.docs;
-                console.log(self.results);
+                //console.log(self.results);
+                if( response.data.hasOwnProperty('debug') ) {
+                    self.debugExplain = response.data.debug;
+                }
 
                 // check if we have facets in response.
                 // Object hasOwnProperty is like hasKey but more complex.
@@ -558,7 +582,8 @@ export default {
               rows: thisVm.perPage,
               defType: "edismax",
               start: startRow,
-              sort: thisVm.sort
+              sort: thisVm.sort,
+              debugQuery: thisVm.debugQuery
             }, thisVm.getFacetFields(), thisVm.getFieldList(),
                thisVm.getFilterQuery(), thisVm.getBoostQuery(),
                thisVm.getBoostFunction(), thisVm.getQueryFields());
@@ -778,6 +803,20 @@ export default {
                 vm.selectedItem = response.data.response.docs[0];
                 vm.$refs.itemDetailsModal.show();
             });
+        },
+
+        /**
+         * show details for the selected item.
+         * @param: itemId the unique id for the item.
+         */
+        showItemExplain( itemId ) {
+
+            var vm = this;
+            //console.log(itemId);
+            vm.explainItem = vm.debugExplain.explain[itemId];
+            //console.log(vm.debugExplain);
+            //console.log(vm.explainItem);
+            vm.$refs.itemExplainModal.show();
         },
 
         //=====================================================================
