@@ -84,6 +84,7 @@
           <component :is="currentView"
               :docs="results" v-if="results" :debugQuery="debugQuery"
               :idFieldName="idField" :thePage="page" :fieldList="fieldList"
+              v-on:show-explain="showItemExplain"
               v-on:show-details="showItemDetails">
           <!-- /product-preview -->
           </component>
@@ -228,6 +229,11 @@
   <pre style="height: 220px">{{JSON.stringify(this.selectedItem, null,2)}}</pre>
 </b-modal>
 
+<b-modal id="item-explain" title="Item Explain" ok-only
+         ref="itemExplainModal" button-size="sm" size="lg">
+  <pre style="height: 220px">{{explainItem}}</pre>
+</b-modal>
+
 </div>
 </template>
 
@@ -300,6 +306,7 @@ export default {
         debugQuery: false,
         // debug explain if debug query is on
         debugExplain: null,
+        explainItem: null,
 
         // pagination properties.
         currentPage: 1,
@@ -725,6 +732,20 @@ export default {
                 vm.selectedItem = response.data.response.docs[0];
                 vm.$refs.itemDetailsModal.show();
             });
+        },
+
+        /**
+         * show details for the selected item.
+         * @param: itemId the unique id for the item.
+         */
+        showItemExplain( itemId ) {
+
+            var vm = this;
+            //console.log(itemId);
+            vm.explainItem = vm.debugExplain.explain[itemId];
+            //console.log(vm.debugExplain);
+            //console.log(vm.explainItem);
+            vm.$refs.itemExplainModal.show();
         },
 
         /**
