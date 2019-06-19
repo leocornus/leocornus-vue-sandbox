@@ -527,18 +527,21 @@ export default {
             this.collectionLabel = newColl.name;
             this.restBaseUrl = newColl.url;
 
+            this.idField = newColl.hasOwnProperty('idField') ?
+                           newColl.idField : "id";
+
             // get the default field list.
-            this.fieldList = newColl.hasOwnProperty('fieldList') ? 
+            this.fieldList = newColl.hasOwnProperty('fieldList') ?
                              newColl.fieldList : "";
-            this.boostParams = newColl.hasOwnProperty('boostParams') ? 
+            this.boostParams = newColl.hasOwnProperty('boostParams') ?
                               newColl.boostParams : [];
-            this.boostFunction = newColl.hasOwnProperty('boostFunction') ? 
+            this.boostFunction = newColl.hasOwnProperty('boostFunction') ?
                               newColl.boostFunction: [];
-            this.queryFields = newColl.hasOwnProperty('queryFields') ? 
+            this.queryFields = newColl.hasOwnProperty('queryFields') ?
                               newColl.queryFields : [];
-            this.facetFields = newColl.hasOwnProperty('facetFields') ? 
+            this.facetFields = newColl.hasOwnProperty('facetFields') ?
                              newColl.facetFields : "";
-            this.sort = newColl.hasOwnProperty('sort') ? 
+            this.sort = newColl.hasOwnProperty('sort') ?
                              newColl.sort : "";
             // TODO: get default values for other fields
         },
