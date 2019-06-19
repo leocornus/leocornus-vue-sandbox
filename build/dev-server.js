@@ -31,7 +31,9 @@ var devMiddleware = require('webpack-dev-middleware')(compiler, {
 })
 
 var hotMiddleware = require('webpack-hot-middleware')(compiler, {
-  log: false,
+  // log - A function used to log lines, pass false to disable.
+  // Defaults to console.log
+  log: console.log,
   heartbeat: 2000
 })
 // force page reload when html-webpack-plugin template changes
@@ -63,6 +65,7 @@ app.use(hotMiddleware)
 
 // serve pure static assets
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+console.log(staticPath)
 app.use(staticPath, express.static('./static'))
 
 var uri = 'http://localhost:' + port
