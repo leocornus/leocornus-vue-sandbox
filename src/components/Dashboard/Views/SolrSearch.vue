@@ -547,6 +547,8 @@ export default {
             } else {
                 return {
                   facet: "on",
+                  // set to negative number to return unlimit facets
+                  "facet.limit": -1,
                   // using array for multiple values
                   // in association with multiple values in HTTP parameters.
                   // ?facet_field=project_id&facet_field=customer_id
