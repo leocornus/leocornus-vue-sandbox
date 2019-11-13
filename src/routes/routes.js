@@ -28,6 +28,7 @@ import SolrTracking from '../components/Dashboard/Views/SolrTracking.vue'
 import SolrLogging from '../components/Dashboard/Views/SolrLogging.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
+import RevaSolrSearch from '../components/Dashboard/Views/RevaSolrSearch.vue'
 // Game
 import GameBoard from '../components/Dashboard/Views/GameBoard.vue'
 import TeamBoard from '../components/Dashboard/Views/TeamBoard.vue'
@@ -90,12 +91,17 @@ const routes = [
   {
     path: '/reva',
     component: OneColumnLayout,
-    redirect: '/reva/revasearch',
+    redirect: '/reva/revasolrsearch',
     children: [
       {
         path: 'revasearch',
         name: 'Reva Search',
         component: RevaSearch
+      },
+      {
+        path: 'revasolrsearch',
+        name: 'Reva Solr Search',
+        component: RevaSolrSearch
       },
       {
         path: 'attivioinspector',
