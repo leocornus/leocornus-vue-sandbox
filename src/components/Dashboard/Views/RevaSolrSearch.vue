@@ -274,7 +274,7 @@ export default {
         idField: '.id',
         // , separated string for the facet fields.
         // default is table field and listvalue_i field with statistics.
-        facetFields: "table,city,agentname,neighbourhoodname,agentphone,listvalue_i(statistics=true)",
+        facetFields: "table,city,agentname,neighbourhoodname,agentphone",
 
         query: '*:*',
 
@@ -403,7 +403,7 @@ export default {
             var postParams = vm.buildQuery();
 
             // get ready the end point.
-            var endPoint = this.restBaseUrl + "searchApi/search";
+            var endPoint = this.restBaseUrl + "select";
 
             // track the post parameters.
             // the Object assign will merge / copy source object to target
@@ -418,7 +418,7 @@ export default {
             axios.post(endPoint, postParams)
             .then(function(response) {
 
-                console.log(response.data);
+                //console.log(response.data);
                 vm.totalHits = response.data.totalHits;
 
                 // tweak the structure.
@@ -488,17 +488,19 @@ export default {
             // the parameters for query.
             // this will show how to use query parameters in a JSON request.
             //console.log(thisVm.getQueryString());
-            var postParams = {
-                workflow: "search",
-                query: thisVm.getQueryString(),
-                sort: thisVm.getQuerySort(),
-                searchProfile: "checkcity",
-                //queryLanguage: "simple",
-                queryLanguage: "advanced",
+            var params = Object.assign(
+            {
+                //debugQuery: thisVm.debugQuery,
+                defType: "edismax",
+                start: startRow,
                 rows: thisVm.perPage,
-                offset: startRow,
-                facets: thisVm.getFacetFields()
-            }
+                sort: thisVm.sort
+            }, thisVm.getFacetFields());
+
+            let postParams = {
+                query: thisVm.getQueryString(),
+                params: params
+            };
 
             return postParams;
         },
@@ -607,31 +609,26 @@ export default {
 
         /**
          * this will return the facet fields query parameters.
-         * Attivio's faceting is different from Solr.
          */
         getFacetFields() {
 
-            // check the local settings for customization.
-            // {
-            //   attivio: {
-            //     reva: {
-            //       customizeGetFacetFields: function() {
-            //       }
-            //     }
-            //   }
-            // }
-
             if(this.facetFields === "") {
-                return [];
+                return {};
             } else {
-                return this.facetFields.trim().split(",");
+                return {
+                  facet: "on",
+                  // set to negative number to return unlimit facets
+                  //"facet.limit": this.facetLimit,
+                  "facet.limit": -1,
+                  // using array for multiple values
+                  // in association with multiple values in HTTP parameters.
+                  // ?facet_field=project_id&facet_field=customer_id
+                  //"facet.field":["project_id", "customer_id"]
+                  // here is for single value
+                  //"facet.field":"customer_id"
+                  "facet.field": this.facetFields.split(",")
+                };
             }
-            //if(this.page.hasOwnProperty("customizeGetFacetFields")) {
-            //    return this.page.customizeGetFacetFields();
-            //} else {
-            //    // by default, this is no facet.
-            //    return [];
-            //}
         },
 
         /**
@@ -973,7 +970,7 @@ export default {
     created() {
 
         // the page settings.
-        this.page = this.$localSettings.attivio["reva"];
+        this.page = this.$localSettings.attivio["revaSolr"];
 
         this.baseUrlOptions =
           this.page.collections.map(obj =>{
