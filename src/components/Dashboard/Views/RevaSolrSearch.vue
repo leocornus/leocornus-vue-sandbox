@@ -56,7 +56,7 @@
     </li>
   </ul>
 </b-card>
-          <stats-card v-for="stat, index) in stats" :stats="stat" 
+          <stats-card v-for="(stat, index) in stats" :stats="stat" 
               :key="'stats-' + index" 
               v-if="stats">
           </stats-card>
@@ -419,38 +419,29 @@ export default {
             .then(function(response) {
 
                 //console.log(response.data);
-                vm.totalHits = response.data.totalHits;
-
-                // tweak the structure.
-                if(response.data.hasOwnProperty("documents")) {
-                    vm.results = vm.formatDocuments(response.data.documents);
-                }
+                vm.totalHits = response.data.response.numFound;
+                vm.results = response.data.response.docs;
                 //console.log(vm.results);
 
-                // check if we have facets in response.
-                // Attivio has the following format for facets buckets.
-                //  [
-                //    { label:"field name",
-                //      buckets: [
-                //        {value: "field value one",
-                //         count: 120},
-                //        {value: "field value two",
-                //         count: 20},
-                //      ]
-                //    }
-                //  ]
-                // Object hasOwnProperty is like hasKey but more complex.
-                vm.facets = response.data.facets;
-                // TODO: need smart way to find statistics facet
-                //vm.stats = vm.facets[vm.facets.length - 1].statistics;
-                vm.stats = vm.getReadyStats();
-                //console.log("statistics: " + self.stats);
+                // get ready summary
                 //vm.resultSummary = "Found " + vm.totalHits + " events in total!"
-                var startRow = postParams.offset;
+                var startRow = postParams.params.start;
                 vm.resultSummary =
                     "Showing " + (vm.totalHits == 0 ? 0 : (startRow + 1)) + " - " +
                     Math.min(startRow + vm.perPage, vm.totalHits) + " of " +
                     vm.totalHits + " Items";
+
+                // get ready facets.
+                if(response.data.hasOwnProperty('facet_counts')) {
+                //self.facets = response.data.facets;
+                    vm.facets = vm.getReadyFacets(response.data.facet_counts.facet_fields);
+                }
+
+                // TODO: need smart way to find statistics facet
+                //vm.stats = vm.facets[vm.facets.length - 1].statistics;
+                //vm.stats = vm.getReadyStats();
+                //console.log("statistics: " + self.stats);
+
                 if(vm.totalHits > 0) {
                     console.log('total hits: ' + vm.totalHits);
                     //console.log(JSON.stringify(self.facets));
@@ -688,6 +679,7 @@ export default {
                 // get ready the facet object.
                 var facetItem = {
                   label: fieldName,
+                  name: fieldName,
                   buckets: facetBuckets
                 };
 
