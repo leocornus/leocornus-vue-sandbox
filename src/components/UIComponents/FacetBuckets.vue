@@ -64,7 +64,7 @@ export default {
 
         // ids for collapse.
         facetID() {
-            // replace the white space with -.
+            // TODO: replace the white space with -.
             return this.facet.name;
         },
 
