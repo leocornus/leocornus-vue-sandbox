@@ -5,7 +5,7 @@
   <b-img left class="mr-4" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
   </b-link>
 
-  <h3 class="mt-0">{{previewTitle}}</h4>
+  <h3 class="mt-0">{{previewTitle}}</h3>
   <p>{{previewDesc}}</p>
 </div>
 
@@ -113,7 +113,7 @@ export default {
          */
         previewTitle() {
 
-            // check the parent component:
+            // check if we have the preview title:
             if(this.thePage.hasOwnProperty("customizePreviewTitle")) {
                 return this.thePage.customizePreviewTitle(this.doc);
             } else {
