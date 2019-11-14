@@ -5,8 +5,8 @@
   <b-img left class="mr-4" :src="doc['img.uri.thumbnail'][0]" alt="Media Aside" />
   </b-link>
 
-  <h3 class="mt-0">{{doc.title[0] + ', ' + doc.city[0]}}</h3>
-  <p>{{doc['teaser'][0]}}</p>
+  <h3 class="mt-0">{{previewTitle}}</h4>
+  <p>{{previewDesc}}</p>
 </div>
 
 <b-card-header :id="listingID" class="p-0">
@@ -106,6 +106,34 @@ export default {
 
         targetCollapseID() {
             return "'collapse" + this.docID;
+        },
+
+        /**
+         * preview title for each doc.
+         */
+        previewTitle() {
+
+            // check the parent component:
+            if(this.thePage.hasOwnProperty("customizePreviewTitle")) {
+                return this.thePage.customizePreviewTitle(this.doc);
+            } else {
+                // by default, we will using id as the caption.
+                return this.docID;
+            }
+        },
+
+        /**
+         * preview title for each doc.
+         */
+        previewDesc() {
+
+            // check the parent component:
+            if(this.thePage.hasOwnProperty("customizePreviewDesc")) {
+                return this.thePage.customizePreviewDesc(this.doc);
+            } else {
+                // by default, we will using id as the caption.
+                return this.docID;
+            }
         },
 
         /**
