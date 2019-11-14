@@ -486,7 +486,8 @@ export default {
                 start: startRow,
                 rows: thisVm.perPage,
                 sort: thisVm.sort
-            }, thisVm.getFacetFields());
+            }, thisVm.getFacetFields(),
+               thisVm.getFilterQuery());
 
             let postParams = {
                 query: thisVm.getQueryString(),
@@ -521,14 +522,7 @@ export default {
                     queryString = "*:*";
                 }
 
-                if(this.filterQuery === "") {
-                    // by default, search everything
-                    return queryString;
-                } else {
-                    // apply the filer.
-                    return 'FILTER(' + queryString +
-                           ',AND(' + this.filterQuery + '))';
-                }
+                return queryString;
             }
         },
 
@@ -751,22 +745,6 @@ export default {
 
             // load items to refresh the list.
             this.loadItems();
-
-            // update fields on settings modal.
-            switch(fieldName.toLowerCase()) {
-                case 'city':
-                    this.city = bucketValue;
-                    break;
-                case 'neighbourhoodname':
-                    this.neighbourhood = bucketValue;
-                    break;
-                case 'residencetype':
-                    this.residenceType = bucketValue;
-                    break;
-                default:
-                    // Do nothing here, just skip!
-                    break;
-            }
         },
 
         /**
