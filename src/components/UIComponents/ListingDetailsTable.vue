@@ -19,6 +19,12 @@
     <template slot="_modified_" slot-scope="data">
      {{ new Date(data.item._modified_).toLocaleString() }}
     </template>
+    <template slot="i_ModificationDate" slot-scope="data">
+     {{ new Date(data.item.i_ModificationDate).toLocaleString() }}
+    </template>
+    <template slot="i_DateImported" slot-scope="data">
+     {{ new Date(data.item.i_DateImported).toLocaleString() }}
+    </template>
   </b-table>
 
 </template>
