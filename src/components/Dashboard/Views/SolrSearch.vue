@@ -35,6 +35,9 @@
         <b-button v-b-modal.search-settings>
           <i class="nc-icon nc-settings-gear-64 text-warning"></i> Settings
         </b-button>
+        <b-button variant="success">
+          Save
+        </b-button>
       </b-input-group-append>
     </b-input-group>
 
