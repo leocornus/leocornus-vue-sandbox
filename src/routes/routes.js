@@ -29,6 +29,7 @@ import SolrLogging from '../components/Dashboard/Views/SolrLogging.vue'
 import AttivioInspector from '../components/Dashboard/Views/AttivioInspector.vue'
 import RevaSearch from '../components/Dashboard/Views/RevaSearch.vue'
 import RevaSolrSearch from '../components/Dashboard/Views/RevaSolrSearch.vue'
+import IHFPage from '../components/Dashboard/Views/IHFPage.vue'
 // Game
 import GameBoard from '../components/Dashboard/Views/GameBoard.vue'
 import TeamBoard from '../components/Dashboard/Views/TeamBoard.vue'
@@ -40,6 +41,7 @@ const routes = [
     path: '/',
     component: DashboardLayout,
     redirect: '/solr/solrsearch'
+    //redirect: '/reva'
     //redirect: '/admin/overview'
   },
   {
@@ -93,6 +95,11 @@ const routes = [
     component: OneColumnLayout,
     redirect: '/reva/revasolrsearch',
     children: [
+      {
+        path: 'ihomefinder',
+        name: 'IHF Data',
+        component: IHFPage
+      },
       {
         path: 'revasearch',
         name: 'Reva Search',
